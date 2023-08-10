@@ -1,0 +1,111 @@
+import { useEffect, useState } from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { Grid, Container, Button, Box, Paper } from '@mui/material';
+import FormikControl from './FormikControl';
+import { INITIAL_VALUES, validationSchema } from '../../utils/utils';
+import { Rowing } from '@mui/icons-material';
+import Header1 from '../Header1';
+import Header2 from '../Header2';
+import FormikTable from './FormikTable';
+import { useFormikContext } from 'formik';
+
+const FormikContainer = () => {
+  // const validationSchema = Yup.object({
+  //   invoiceNumber: Yup.string().required('Required'),
+  //   buyerData: Yup.object().required('Required'),
+  //   // date: Yup.toISOString().required('Required'),
+  //   // deiveryDate: Yup.string().required('Required'),
+  //   sellerData: Yup.object().required('Required')
+  // });
+  const onSubmit = (values) => console.log('Form data', values);
+  const [{ subtotal, totalTax, totalDiscount, total }, setResult] = useState({
+    subtotal: 0,
+    totalTax: 0,
+    totalDiscount: 0,
+    total: 0
+  });
+  return (
+    <Container maxWidth="lg">
+      <Formik
+        initialValues={INITIAL_VALUES}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
+        {(formik) => (
+          <Form>
+            <Grid container justifyContent={'center'} spacing={2}>
+              {/* <Header1 /> */}
+              <Header1 setFieldValue={formik.setFieldValue}/>
+              <Header2 setFieldValue={formik.setFieldValue}/>
+              <Paper sx={{ width: '100%', marginTop: 2 }}>
+                <FormikTable values={formik.values?.products} name="products" />
+              </Paper>
+              <>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={6} lg={6} marginTop={2}>
+                    <Grid xs={12} sm={12} md={12} lg={12}>
+                      <FormikControl
+                        control="input"
+                        label={'Notes'}
+                        name="comments"
+                        multiline
+                        InputProps={{
+                          rows: 5
+                      }}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={6} lg={6} marginTop={2}>
+                    <Grid xs={12} sm={12} md={12} lg={12}>
+                      <FormikControl
+                        control="input"
+                        type="number"
+                        label="Tax(%)"
+                        name={`taxRate`}
+                      />
+                    </Grid>
+                    <Grid>
+                      <FormikControl
+                        control="input"
+                        type="number"
+                        label="Discount(%)"
+                        name={`discountRate`}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      spacing={2}
+                      marginTop={1}
+                      justifyContent="space-between"
+                    >
+                      <Grid item>
+                        <Grid>Sub Total:</Grid>
+                        <Grid>Tax:</Grid>
+                        <Grid>Discount:</Grid>
+                        <Grid>Total:</Grid>
+                      </Grid>
+                      <Grid item>
+                        <Grid>{formik.values.subTotal}</Grid>
+                        <Grid>{formik.values.totalTax}</Grid>
+                        <Grid>{formik.values.totalDiscount}</Grid>
+                        <Grid>{formik.values.total}</Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </>
+            </Grid>
+            <Grid item>
+              <Button type="submit">Submit</Button>
+            </Grid>
+
+            <pre>{JSON.stringify(formik.values, null, 2)}</pre>
+          </Form>
+        )}
+      </Formik>
+    </Container>
+  );
+};
+
+export default FormikContainer;

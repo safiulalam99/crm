@@ -1,0 +1,41 @@
+[
+    {
+        "id": "1",
+        "name": "YOURCARE SKOVSGAARD AGENCY APS",
+        "address": "KNUDSMINDE 5 B & C",
+        "country": "DENMARK",
+        "vatNumber": "DK 33355424",
+        "contractNumber": "DK23082021",
+        "representative": "John Doe",
+        "paymentTerm": "30 days",
+        "deliveryTerm": "FOB",
+        "currency": "DKK",
+        "registrationNumber": "12345678"
+    },
+    {
+        "id": "2",
+        "name": "ACME CORPORATION APS",
+        "address": "123 MAIN ST",
+        "country": "DENMARK",
+        "vatNumber": "DK 87654321",
+        "contractNumber": "DK24082021",
+        "representative": "Jane Doe",
+        "paymentTerm": "60 days",
+        "deliveryTerm": "CIF",
+        "currency": "DKK",
+        "registrationNumber": "23456789"
+    },
+    {
+        "id": "3",
+        "name": "GLOBEX INDUSTRIES APS",
+        "address": "456 ELM ST",
+        "country": "DENMARK",
+        "vatNumber": "DK 11223344",
+        "contractNumber": "DK25082021",
+        "representative": "Richard Roe",
+        "paymentTerm": "45 days",
+        "deliveryTerm": "EXW",
+        "currency": "DKK",
+        "registrationNumber": "34567890"
+    }
+]
