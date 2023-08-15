@@ -38,7 +38,7 @@ const UserSettings = Loader(
 );
 
 // Components
-const CreateInvoice = Loader(lazy(() => import('src/content/applications/Invoice')));
+const CreateInvoice = Loader(lazy(() => import('src/content/pages/Invoice')));
 const InvoicePage = Loader(lazy(() => import('src/content/pages/InvoicePage')));
 const CustomersPage = Loader(lazy(() => import('src/content/pages/CustomersPage')));
 
@@ -47,7 +47,7 @@ const Modals = Loader(
 );
 
 const InvoicePreview = Loader(
-  lazy(() => import('src/content/applications/InvoicePreview'))
+  lazy(() => import('src/content/pages/InvoicePreview'))
 );
 const Tabs = Loader(lazy(() => import('src/content/pages/Components/Tabs')));
 
@@ -155,7 +155,7 @@ const routes: RouteObject[] = [
         element: <CustomersPage />
       },
       {
-        path: 'pre',
+        path: 'invoice/preview/:id',
         element: <InvoicePreview />
       },
       {

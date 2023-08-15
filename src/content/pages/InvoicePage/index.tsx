@@ -9,10 +9,13 @@ import useInvoices from '../../../services/GET_Invoices';
 import { Link } from 'react-router-dom';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 
-
 function ApplicationsTransactions() {
-  const { invoiceData, error: invoiceDataError, isLoading: invoiceDataLoading } = useInvoices();
-  
+  const {
+    invoiceData,
+    error: invoiceDataError,
+    isLoading: invoiceDataLoading
+  } = useInvoices();
+
   return (
     <>
       <Helmet>
@@ -47,7 +50,14 @@ function ApplicationsTransactions() {
         >
           <Grid item xs={12}>
             {invoiceDataLoading ? (
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '200px'
+                }}
+              >
                 <SuspenseLoader />
               </div>
             ) : invoiceData ? (

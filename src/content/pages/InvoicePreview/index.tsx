@@ -8,7 +8,7 @@ import FormikContainer from 'src/components/Formik/FormikContainer';
 import supabase from '../../../config/supabaseClient.js';
 import InvoiceTemplate from 'src/components/InvoiceTemplate/index.js';
 import InvoicePDF from 'src/components/InvoicePDF';
-import { Document, render } from '@react-pdf/renderer';
+import { useParams } from 'react-router-dom';
 
 const data = {
   invoiceNumber: '1234das',
@@ -97,6 +97,41 @@ const data = {
 };
 
 function InvoicePreview() {
+  const [invoiceData, setInvoiceData] = useState(null);
+  const { id } = useParams();
+  console.log(id);
+  useEffect(() => {
+    const fetchInvoiceData = async () => {
+      // Call your API to fetch the data using the id
+      const { data, error } = await supabase
+        .from('invoices')
+        .select(`
+        *,
+        buyerData:buyers (
+          *,
+          currency:currencies(*)
+        ),
+        sellerData:sellers (*),
+        products:invoice_products (
+          *,
+          name:products (*)
+        )
+      `)
+        .eq('invoicenumber', id)
+        .single();
+
+      if (data) {
+        setInvoiceData(data);
+      } else {
+        console.error('Error fetching invoice data:', error);
+      }
+    };
+
+    fetchInvoiceData();
+  }, [id]);
+
+  console.log(invoiceData);
+
   return (
     <>
       <Container>
@@ -104,9 +139,10 @@ function InvoicePreview() {
         <h1>Create</h1>
         &nbsp;
         <Container style={{ background: 'white' }} maxWidth="lg">
-          {/* <InvoiceTemplate {...data} /> */}
-          <InvoicePDF {...data} />
+          {invoiceData ? <InvoicePDF {...invoiceData} /> : 'Loading...'}
         </Container>
+        <pre>{JSON.stringify(invoiceData, null, 2)}</pre>
+
       </Container>
     </>
   );

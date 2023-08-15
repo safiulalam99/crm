@@ -40,7 +40,7 @@ const UserSettings = Loader(
 
 // Components
 const Invoice = Loader(
-  lazy(() => import('src/content/applications/Invoice'))
+  lazy(() => import('src/content/pages/Invoice'))
 );
 const InvoiceV2 = Loader(
   lazy(() => import('src/content/applications/InvoiceV2'))

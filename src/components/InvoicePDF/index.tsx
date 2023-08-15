@@ -15,7 +15,13 @@ import { Image } from '@mui/icons-material';
 import OrderConfirmationPrint from '../OrderConfirmationPrint';
 
 interface Product {
-  id?: string;
+  id?: number;
+  invoicenumber: string;
+  product_id: number;
+  units: number;
+  unitprice: number;
+  unitvat: number;
+  unittotal: number;
   name: {
     id: number;
     name: string;
@@ -23,14 +29,28 @@ interface Product {
     category: string;
     price: number;
   };
-  units: string;
-  unitPrice: number;
-  unitVat: number;
-  unitTotal: number;
 }
 
 interface InvoiceProps {
-  invoiceNumber: string;
+  invoicenumber: string;
+  vattype: string;
+  date: string;
+  deliveryterm: string | null;
+  deliverydate: string;
+  paymentsplit: string;
+  subtotal: number;
+  total: number;
+  taxrate: number;
+  totaltax: number;
+  totaldiscount: number;
+  discountrate: number;
+  numberinwords: string | null;
+  comments: string;
+  paymentstatus: string;
+  buyer_id: number;
+  seller_id: number;
+  currency_id: number;
+  time_stamp: string;
   buyerData: {
     id: number;
     name: string;
@@ -41,8 +61,13 @@ interface InvoiceProps {
     representative: string;
     paymentterm: string;
     deliveryterm: string;
-    currency: string;
     registrationnumber: string;
+    currency_id: number;
+    currency: {
+      id: number;
+      name: string;
+      symbol: string;
+    };
   };
   sellerData: {
     id: number;
@@ -53,22 +78,14 @@ interface InvoiceProps {
     managingdirector: string;
     country: string;
   };
-  date: string;
-  currency: {
-    name: string;
-    symbol: string;
-  };
-  deliveryDate: string;
   products: Product[];
-  subTotal: number;
-  total: number;
-  taxRate: number;
-  totalTax: number;
-  totalDiscount: number;
-  discountRate: number;
-  comments: string;
-  paymentStatus: string;
 }
+
+const commentStyle = {
+  wordWrap: 'break-word',  // This will break the word at the end of the line.
+  overflowWrap: 'break-word', // It breaks the line as necessary to prevent overflow.
+  maxWidth: '100%', // Ensures the container doesn't exceed its parent's width.
+};
 
 const InvoicePDF: React.FC<InvoiceProps> = (props) => {
   const handlePrint = () => {
@@ -95,6 +112,10 @@ const InvoicePDF: React.FC<InvoiceProps> = (props) => {
     #inv-grid .MuiTableHead-root .MuiTableRow-root {
       background-color: #f5f5f5; /* light gray color */
     }
+    /* Page Break */
+    #inv-grid {
+      page-break-after: always; /* This forces a page break after the end of the content in #inv-grid */
+    }
   }
 `;
 
@@ -108,127 +129,143 @@ const InvoicePDF: React.FC<InvoiceProps> = (props) => {
         elevation={3}
         style={{ padding: '30px', margin: '30px' }}
       >
-        <Grid id="inv-grid" container spacing={3}>
-          <Grid item xs={6}>
+        <div style={{ pageBreakAfter: 'always' }}>
+          <Grid id="inv-grid" container spacing={3}>
             <Grid item xs={6}>
-              <img
-                width="100"
-                height="100"
-                src="\public\icon-192x192.png"
-                alt="Company Logo"
-                style={{ marginBottom: '10px' }}
-              />
-              <Typography variant="h5">
-                Invoice: {props.invoiceNumber}
+              <Grid item xs={6}>
+                <img
+                  width="100"
+                  height="100"
+                  src="\public\icon-192x192.png"
+                  alt="Company Logo"
+                  style={{ marginBottom: '10px' }}
+                />
+                <Typography variant="h5">
+                  Invoice: {props.invoicenumber}
+                </Typography>
+              </Grid>
+              <Typography variant="h5">{props.sellerData.name}</Typography>
+              <Typography>{props.sellerData.address}</Typography>
+              <Typography>VAT Number: {props.sellerData.vatnumber}</Typography>
+              <Typography>Country: {props.sellerData.country}</Typography>
+            </Grid>
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <Typography>
+                Date: {new Date(props.date).toLocaleDateString()}
+              </Typography>
+              <Typography>
+                Delivery Date:{' '}
+                {new Date(props.deliverydate).toLocaleDateString()}
               </Typography>
             </Grid>
-            <Typography variant="h5">{props.sellerData.name}</Typography>
-            <Typography>{props.sellerData.address}</Typography>
-            <Typography>VAT Number: {props.sellerData.vatnumber}</Typography>
-            <Typography>Country: {props.sellerData.country}</Typography>
-          </Grid>
-
-          <Grid item xs={6} style={{ textAlign: 'right' }}>
-            <Typography>
-              Date: {new Date(props.date).toLocaleDateString()}
-            </Typography>
-            <Typography>
-              Delivery Date: {new Date(props.deliveryDate).toLocaleDateString()}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography fontWeight={'bold'}  variant="h6">Buyer Details:</Typography>
-            <Typography >{props.buyerData.name}</Typography>
-            <Typography>{props.buyerData.address}</Typography>
-            <Typography>{props.buyerData.country}</Typography>
-            <Typography>{props.buyerData.contractnumber}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Product Name</TableCell>
-                  <TableCell>Units</TableCell>
-                  <TableCell>Unit Price</TableCell>
-                  <TableCell>Total</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {props.products.map((product, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{product.name.name}</TableCell>
-                    <TableCell>{product.units}</TableCell>
-
-                    <TableCell>
-                      {props.currency.symbol} {product.unitPrice}
-                    </TableCell>
-                    <TableCell>
-                      {props.currency.symbol} {product.unitTotal}
-                    </TableCell>
+            <Grid item xs={12}>
+              <Typography fontWeight={'bold'} variant="h6">
+                Buyer Details:
+              </Typography>
+              <Typography>{props.buyerData.name}</Typography>
+              <Typography>{props.buyerData.address}</Typography>
+              <Typography>{props.buyerData.country}</Typography>
+              <Typography>{props.buyerData.contractnumber}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Product Name</TableCell>
+                    <TableCell>Units</TableCell>
+                    <TableCell>Unit Price</TableCell>
+                    <TableCell>Total</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {props.products ? (
+                    props.products.map((product, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{product.name.name}</TableCell>
+                        <TableCell>{product.units}</TableCell>
+                        <TableCell>
+                          {props.buyerData.currency.symbol} {product.unitprice}
+                        </TableCell>
+                        <TableCell>
+                          {props.buyerData.currency.symbol} {product.unittotal}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={4}>Loading...</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </Grid>
+            <Grid item xs={6}>
+  <Typography style={commentStyle}>
+    Comments: {props.comments}
+  </Typography>
+</Grid>
+
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginBottom: '8px'
+                }}
+              >
+                <Typography component="span">Sub Total:</Typography>
+                <Typography component="span">
+                  {props.buyerData.currency.symbol} {props.subtotal}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginBottom: '8px'
+                }}
+              >
+                <Typography component="span">
+                  Tax ({props.taxrate}%):
+                </Typography>
+                <Typography component="span">
+                  {props.buyerData.currency.symbol} {props.totaltax}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginBottom: '8px'
+                }}
+              >
+                <Typography component="span">
+                  Discount ({props.discountrate}%):
+                </Typography>
+                <Typography color={'green'} component="span">
+                  -{props.buyerData.currency.symbol} {props.totaldiscount}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginBottom: '8px'
+                }}
+              >
+                <Typography component="span" variant="h6">
+                  Total:
+                </Typography>
+                <Typography component="span" variant="h6">
+                  {props.buyerData.currency.symbol} {props.total}
+                </Typography>
+              </div>
+            </Grid>
+            <div style={{ pageBreakBefore: 'always' }}>
+              <OrderConfirmationPrint />
+            </div>{' '}
           </Grid>
-          <Grid item xs={6}>
-            <Typography>Comments: {props.comments}</Typography>
-          </Grid>
-          <Grid item xs={6} style={{ textAlign: 'right' }}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginBottom: '8px'
-              }}
-            >
-              <Typography component="span">Sub Total:</Typography>
-              <Typography component="span">
-                {props.currency.symbol} {props.subTotal}
-              </Typography>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginBottom: '8px'
-              }}
-            >
-              <Typography component="span">Tax ({props.taxRate}%):</Typography>
-              <Typography component="span">
-                {props.currency.symbol} {props.totalTax}
-              </Typography>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginBottom: '8px'
-              }}
-            >
-              <Typography component="span">
-                Discount ({props.discountRate}%):
-              </Typography>
-              <Typography color={'green'} component="span">
-                -{props.currency.symbol} {props.totalDiscount}
-              </Typography>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginBottom: '8px'
-              }}
-            >
-              <Typography component="span" variant="h6">
-                Total:
-              </Typography>
-              <Typography component="span" variant="h6">
-                {props.currency.symbol} {props.total}
-              </Typography>
-            </div>
-          </Grid>
-        </Grid>
-        <OrderConfirmationPrint />
+        </div>
       </Paper>
       <style dangerouslySetInnerHTML={{ __html: printStyles }} />
     </>

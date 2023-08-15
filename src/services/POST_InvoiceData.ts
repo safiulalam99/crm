@@ -50,6 +50,7 @@ export const onSubmitInvoice = async (values, actions) => {
     // Handle successful insertion
     alert('Invoice data successfully inserted!');
     actions.resetForm();
+    
   } catch (error) {
     console.error('Error inserting invoice data:', error);
     alert('There was an error inserting the invoice data.');
