@@ -18,7 +18,7 @@ export const INITIAL_VALUES = {
   invoiceNumber: '',
   buyerData: null,
   sellerData: null,
-  vatType: '',
+  vatType: {},
   date: null,
   currency: {
     name: 'Euro',
@@ -44,7 +44,7 @@ export const validationSchema = Yup.object().shape({
   invoiceNumber: Yup.string().required('Invoice number is required'),
   buyerData: Yup.object().required('Buyer data is required'),
   sellerData: Yup.object().nullable().required('Seller data is required'),
-  vatType: Yup.string(),
+  vatType: Yup.object(),
   date: Yup.date().nullable().required('Date is required'),
   currency: Yup.object().shape({
     name: Yup.string(),

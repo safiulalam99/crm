@@ -1,8 +1,6 @@
 import React from 'react';
 import { Box, CardActions, Typography, Button } from '@mui/material';
 import FormikControl from '../Formik/FormikControl';
-import buyerData from '../../Data/buyer.json';
-import sellerData from '../../Data/seller.json';
 import {
   Container,
   Grid,
@@ -12,12 +10,24 @@ import {
   Divider
 } from '@mui/material';
 import { Formik, useField } from 'formik';
+import useBuyers from '../../services/GET_buyers_data'; // Adjust the path to your hook
+import useSellers from '../../services/GET_seller_data'; // Adjust the path to your hook
+import useProducts from '../../services/GET_PRODUCTS'; // Adjust the path to your hook
 
 const FormikRow = ({setFieldValue}) => {
+  const { buyers, error: buyerError, isLoading: buyerLoading } = useBuyers();
+  const { sellers, error: sellerError, isLoading: sellerLoading } = useSellers();
+
   const [buyerField, buyerMeta, buyerHelpers] = useField('buyerData');
   const selectedBuyer = buyerField.value;
   const [sellerField, sellerMeta, sellerHelpers] = useField('sellerData');
   const selectedSeller = sellerField.value;
+
+  if (buyerLoading || sellerLoading) return <p>Loading...</p>;
+  if (buyerError) return <p>Error: {buyerError.message}</p>;
+  if (sellerError) return <p>Error: {sellerError.message}</p>;
+
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -29,7 +39,7 @@ const FormikRow = ({setFieldValue}) => {
               type="text"
               label="To: "
               name="buyerData"
-              options={buyerData}
+              options={buyers}
               getOptionLabel={(option: any) => option?.name}
               onChange={(event, value) => setFieldValue("buyerData", value)}
 
@@ -59,7 +69,7 @@ const FormikRow = ({setFieldValue}) => {
               type="text"
               label="To: "
               name="sellerData"
-              options={sellerData}
+              options={sellers}
               getOptionLabel={(option: any) => option?.name}
               onChange={(event, value) => setFieldValue("sellerData", value)}
 

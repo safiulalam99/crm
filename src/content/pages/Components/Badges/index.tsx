@@ -168,7 +168,6 @@ function Badges() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   );
 }

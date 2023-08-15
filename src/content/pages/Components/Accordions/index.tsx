@@ -89,7 +89,6 @@ function Accordions() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   );
 }

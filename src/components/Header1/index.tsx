@@ -38,7 +38,7 @@ const FormikRow = () => {
         <FormikControl
           control="date"
           // type="date"
-          label="Due Date"
+          label="Delivery Date"
           name="deliveryDate"
         />
       </Grid>

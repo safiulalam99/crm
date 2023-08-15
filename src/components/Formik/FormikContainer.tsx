@@ -9,35 +9,26 @@ import Header1 from '../Header1';
 import Header2 from '../Header2';
 import FormikTable from './FormikTable';
 import { useFormikContext } from 'formik';
+import supabase from '../../config/supabaseClient.js';
+import buyerData from '../../Data/buyer.json';
+import sellerData from '../../Data/seller.json';
+import { onSubmitInvoice } from '../../services/POST_InvoiceData';
 
 const FormikContainer = () => {
-  // const validationSchema = Yup.object({
-  //   invoiceNumber: Yup.string().required('Required'),
-  //   buyerData: Yup.object().required('Required'),
-  //   // date: Yup.toISOString().required('Required'),
-  //   // deiveryDate: Yup.string().required('Required'),
-  //   sellerData: Yup.object().required('Required')
-  // });
-  const onSubmit = (values) => console.log('Form data', values);
-  const [{ subtotal, totalTax, totalDiscount, total }, setResult] = useState({
-    subtotal: 0,
-    totalTax: 0,
-    totalDiscount: 0,
-    total: 0
-  });
+
   return (
     <Container maxWidth="lg">
       <Formik
         initialValues={INITIAL_VALUES}
         validationSchema={validationSchema}
-        onSubmit={onSubmit}
+        onSubmit={onSubmitInvoice}
       >
         {(formik) => (
           <Form>
             <Grid container justifyContent={'center'} spacing={2}>
               {/* <Header1 /> */}
-              <Header1 setFieldValue={formik.setFieldValue}/>
-              <Header2 setFieldValue={formik.setFieldValue}/>
+              <Header1 setFieldValue={formik.setFieldValue} />
+              <Header2 setFieldValue={formik.setFieldValue} />
               <Paper sx={{ width: '100%', marginTop: 2 }}>
                 <FormikTable values={formik.values?.products} name="products" />
               </Paper>
@@ -52,7 +43,7 @@ const FormikContainer = () => {
                         multiline
                         InputProps={{
                           rows: 5
-                      }}
+                        }}
                       />
                     </Grid>
                   </Grid>

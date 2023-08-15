@@ -17,6 +17,7 @@ import { INITIAL_VALUES } from 'src/utils/utils';
 import { useFormikContext } from 'formik';
 import _ from 'lodash';
 import { convertNumberToWords } from 'src/services/services';
+import useProducts from '../../services/GET_PRODUCTS'; 
 
 interface Column {
   id: 'Product' | 'Quantity' | 'Unit Price' | 'Amount' | 'Action';
@@ -58,6 +59,8 @@ const generateId = () => {
 
 const FormikTable = (props) => {
   const { label, name, values, ...rest } = props;
+  const { products, error: productError, isLoading: productLoading } = useProducts();
+
   const handleUnitsChange = (index, units) => {
     const unitPrice = Number(values[index].unitPrice);
     const unitTotal = parseFloat((units * unitPrice).toFixed(2));
@@ -131,6 +134,9 @@ const FormikTable = (props) => {
     // debouncedSave(values);
   }, [values, formik.values.taxRate, formik.values.discountRate]);
   
+  
+  if (productLoading) return <p>Loading...</p>;
+  if (productError) return <p>Error: {productError.message}</p>;
   convertNumberToWords(123)
   
   return (
@@ -162,7 +168,7 @@ const FormikTable = (props) => {
                             control="autocomplete"
                             type="text"
                             name={`${name}.${index}.name`}
-                            options={productData}
+                            options={products}
                             getOptionLabel={(option: any) => option?.name}
                             onChange={(e, product) => handleProductChange(index, product)}
                             />

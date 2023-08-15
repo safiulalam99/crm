@@ -210,7 +210,6 @@ function Buttons() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   );
 }

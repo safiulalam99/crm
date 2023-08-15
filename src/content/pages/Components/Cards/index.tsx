@@ -233,7 +233,6 @@ function Cards() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   );
 }

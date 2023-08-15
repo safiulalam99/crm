@@ -220,7 +220,6 @@ function DashboardTasks() {
           </Grid>
         </Card>
       </Container>
-      <Footer />
     </>
   );
 }

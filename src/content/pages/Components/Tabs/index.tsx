@@ -111,7 +111,6 @@ function TabsDemo() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   );
 }
