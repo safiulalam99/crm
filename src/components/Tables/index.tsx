@@ -5,7 +5,7 @@ function formatDate(isoString) {
     const date = new Date(isoString);
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
   }
-  
+
 const columns: GridColDef[] = [
   {
     field: 'time_stamp',
@@ -14,7 +14,7 @@ const columns: GridColDef[] = [
     valueFormatter: (params) => formatDate(params.value)
   },
   { field: 'invoicenumber', headerName: 'Invoice#', width: 130 },
-  { field: 'name', headerName: 'Customer', width: 130 }, // Extracted from buyers.name
+  { field: 'name', headerName: 'Customer', width: 130 }, 
   { field: 'deliverydate', headerName: 'Due Date', width: 130 },
   { field: 'total', headerName: 'Amount', width: 90 }
 ];
@@ -31,8 +31,9 @@ export default function DataTable(props) {
   }));
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 400, width: '70%',justifyContent: "center" }}>
       <DataGrid
+      autoHeight={rows.length}
         rows={rows}
         columns={columns}
         initialState={{

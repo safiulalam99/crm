@@ -1,0 +1,7 @@
+[
+    {"label": "Euro", "symbol":"€", "value": "1"},
+    {"label": "US Dollar", "symbol":"$", "value": ""},
+    {"label": "Canadian Dollar", "symbol":"CAD", "value": "3"},
+    {"label": "British Pound", "symbol":"£", "value": "4"},
+    {"label": "Australian Dollar", "symbol":"AUD", "value": "5"}
+]

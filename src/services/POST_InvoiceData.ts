@@ -41,6 +41,7 @@ export const onSubmitInvoice = async (values, actions, navigate) => {
             product_id: product.name.id,
             unitprice: product.unitPrice,
             units: product.units,
+            productlot: product.productlot,
             unittotal: product.unitTotal,
             unitvat: product.unitVat
           }

@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 export const INITIAL_PRODUCT = {
   name: {},
   units: 0,
+  productlot:0,
   unitPrice: 0,
   unitVat: 0,
   unitTotal: 0
@@ -57,6 +58,7 @@ export const validationSchema = Yup.object().shape({
     Yup.object().shape({
       name: Yup.object().required('Product name is required'),
       units: Yup.number().min(0, 'Units must be 0 or more').required('Units are required'),
+      productlot: Yup.number().min(0, 'product lot must be 0 or more').required('product lot are required'),
       unitPrice: Yup.number().min(0, 'Unit price must be 0 or more').required('Unit price is required'),
       unitVat: Yup.number().min(0, 'Unit VAT must be 0 or more').required('Unit VAT is required'),
       unitTotal: Yup.number().min(0, 'Unit total must be 0 or more').required('Unit total is required')

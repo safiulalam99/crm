@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import supabase from '../config/supabaseClient'; // Adjust the path to your Supabase configuration
+import supabase from '../config/supabaseClient'; 
 
 type Buyer = {
   address: string

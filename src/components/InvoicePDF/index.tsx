@@ -172,6 +172,7 @@ const InvoicePDF: React.FC<InvoiceProps> = (props) => {
                 <TableHead>
                   <TableRow>
                     <TableCell>Product Name</TableCell>
+                    <TableCell>Lot/Exp No</TableCell>
                     <TableCell>Units</TableCell>
                     <TableCell>Unit Price</TableCell>
                     <TableCell>Total</TableCell>
@@ -184,6 +185,7 @@ const InvoicePDF: React.FC<InvoiceProps> = (props) => {
                         <TableCell>
                           {product.name ? product.name.name : 'Not Found'}
                         </TableCell>
+                        <TableCell>{product.units}</TableCell>
                         <TableCell>{product.units}</TableCell>
                         <TableCell>
                           {props.buyerData.currency.symbol} {product.unitprice}

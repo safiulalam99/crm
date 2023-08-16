@@ -26,7 +26,7 @@ const FormikSelect = (props) => {
               <Select id={name} {...field} {...rest} fullWidth>
                 <MenuItem value="">None</MenuItem>
                 {options.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
+                  <MenuItem key={option.label} value={option.value}>
                     {option.label}
                   </MenuItem>
                 ))}

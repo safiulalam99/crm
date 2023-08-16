@@ -22,12 +22,6 @@ const useProducts = (): UseProductsResult => {
 
   useEffect(() => {
     // Check if products are already in cache
-    const cachedProducts = sessionStorage.getItem('products');
-    if (cachedProducts) {
-      setProducts(JSON.parse(cachedProducts));
-      setIsLoading(false);
-      return;
-    }
 
     const fetchProducts = async () => {
       try {

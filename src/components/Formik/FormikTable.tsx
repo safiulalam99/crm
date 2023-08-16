@@ -29,6 +29,7 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: 'Product', label: 'Product', minWidth: 170 },
+  { id: 'lot', label: 'lot', minWidth: 100, align: 'center' },
   { id: 'Quantity', label: 'Quantity', minWidth: 100, align: 'center' },
   {
     id: 'Unit Price',
@@ -172,6 +173,14 @@ const FormikTable = (props) => {
                             getOptionLabel={(option: any) => option?.name}
                             onChange={(e, product) => handleProductChange(index, product)}
                             />
+                        </TableCell>
+                        <TableCell>
+                          <FormikControl
+                            control="input"
+                            type="number"
+                            name={`${name}.${index}.productlot`}
+                            // onChange={(e) => handleUnitsChange(index, e.target.value)}
+                          />
                         </TableCell>
                         <TableCell>
                           <FormikControl

@@ -3,6 +3,11 @@ import React from 'react';
 import { Box, Grid } from '@mui/material';
 import FormikControl from '../Formik/FormikControl';
 import VatTypes from '../../Data/vatType.json';
+const statusData= [
+  { value: 'paid', label: 'Paid' },
+  { value: 'status', label: 'Status' },
+  { value: 'cancelled', label: 'Cancelled' }
+]
 const FormikRow = () => {
   const isoDateString = '2023-07-31T22:24:06.989Z';
   const date = new Date(isoDateString);
@@ -24,11 +29,7 @@ const FormikRow = () => {
           type="text"
           label="Status"
           name="paymentStatus"
-          options={[
-            { value: 'paid', label: 'Paid' },
-            { value: 'status', label: 'Status' },
-            { value: 'cancelled', label: 'Cancelled' }
-          ]}
+          options={statusData}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={3} lg={3}>
