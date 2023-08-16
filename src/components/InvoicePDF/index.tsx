@@ -82,9 +82,9 @@ interface InvoiceProps {
 }
 
 const commentStyle = {
-  wordWrap: 'break-word',  // This will break the word at the end of the line.
+  wordWrap: 'break-word', // This will break the word at the end of the line.
   overflowWrap: 'break-word', // It breaks the line as necessary to prevent overflow.
-  maxWidth: '100%', // Ensures the container doesn't exceed its parent's width.
+  maxWidth: '100%' // Ensures the container doesn't exceed its parent's width.
 };
 
 const InvoicePDF: React.FC<InvoiceProps> = (props) => {
@@ -181,7 +181,9 @@ const InvoicePDF: React.FC<InvoiceProps> = (props) => {
                   {props.products ? (
                     props.products.map((product, index) => (
                       <TableRow key={index}>
-                        <TableCell>{product.name.name}</TableCell>
+                        <TableCell>
+                          {product.name ? product.name.name : 'Not Found'}
+                        </TableCell>
                         <TableCell>{product.units}</TableCell>
                         <TableCell>
                           {props.buyerData.currency.symbol} {product.unitprice}
@@ -200,11 +202,10 @@ const InvoicePDF: React.FC<InvoiceProps> = (props) => {
               </Table>
             </Grid>
             <Grid item xs={6}>
-  <Typography style={commentStyle}>
-    Comments: {props.comments}
-  </Typography>
-</Grid>
-
+              <Typography style={commentStyle}>
+                Comments: {props.comments}
+              </Typography>
+            </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <div
                 style={{

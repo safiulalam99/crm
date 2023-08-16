@@ -36,6 +36,9 @@ const UserProfile = Loader(
 const UserSettings = Loader(
   lazy(() => import('src/content/applications/Users/settings'))
 );
+const Status500 = Loader(
+  lazy(() => import('src/content/pages/Status/Status500'))
+);
 
 // Components
 const CreateInvoice = Loader(lazy(() => import('src/content/pages/Invoice')));
@@ -76,7 +79,11 @@ const routes: RouteObject[] = [
           {
             path: '',
             element: <Navigate to="404" replace />
-          }
+          },
+          {
+            path: '500',
+            element: <Status500 />
+          },
         ]
       },
       {

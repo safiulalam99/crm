@@ -15,7 +15,7 @@ function ApplicationsTransactions() {
     error: invoiceDataError,
     isLoading: invoiceDataLoading
   } = useInvoices();
-
+console.log(invoiceData)
   return (
     <>
       <Helmet>

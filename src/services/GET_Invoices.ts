@@ -25,7 +25,6 @@ const useBuyers = (): any => {
               representative, 
               paymentterm, 
               deliveryterm, 
-              currency, 
               registrationnumber
           )
       `);
