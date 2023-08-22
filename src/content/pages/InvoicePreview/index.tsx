@@ -10,92 +10,6 @@ import InvoiceTemplate from 'src/components/InvoiceTemplate/index.js';
 import InvoicePDF from 'src/components/InvoicePDF';
 import { useParams } from 'react-router-dom';
 
-const data = {
-  invoiceNumber: '1234das',
-  buyerData: {
-    id: 2,
-    name: 'Tech Ltd',
-    address: '456 Tech Ave',
-    country: 'USA',
-    vatnumber: 'US 12345678',
-    contractnumber: 'US29082021',
-    representative: 'John Smith',
-    paymentterm: '30 days',
-    deliveryterm: 'FOB',
-    currency: 'USD',
-    registrationnumber: '98765432'
-  },
-  sellerData: {
-    id: 3,
-    name: 'Creative Minds',
-    address: '456 Creative Ave, Toronto, Canada',
-    vatnumber: 'CA87654321',
-    displayname: 'Creative Minds Inc.',
-    managingdirector: 'Lucy Green',
-    country: 'CANADA'
-  },
-  vatType: {},
-  date: '2023-08-11T21:00:00.000Z',
-  currency: {
-    name: 'Euro',
-    symbol: '€'
-  },
-  deliveryTerm: '',
-  deliveryDate: '2023-08-15T22:22:10.000Z',
-  paymentSplit: 'sdsdfsdfsdfsdfsdf',
-  products: [
-    {
-      name: {
-        id: 1,
-        name: 'Desktop Organizer',
-        description: 'Small desktop organizer with compartments',
-        category: 'office supplies',
-        price: 19.99
-      },
-      units: '03',
-      unitPrice: 19.99,
-      unitVat: 0,
-      unitTotal: 59.97
-    },
-    {
-      name: {
-        id: 1,
-        name: 'Desktop Organizer',
-        description: 'Small desktop organizer with compartments',
-        category: 'office supplies',
-        price: 19.99
-      },
-      units: '03',
-      unitPrice: 19.99,
-      unitVat: 0,
-      unitTotal: 59.97
-    },
-    {
-      id: 'll5q5nf4mvm75a2iaxs',
-      name: {
-        id: 1,
-        name: 'Desktop Organizer',
-        description: 'Small desktop organizer with compartments',
-        category: 'office supplies',
-        price: 19.99
-      },
-      units: '02',
-      unitPrice: 19.99,
-      unitVat: 0,
-      unitTotal: 39.98
-    }
-  ],
-  subTotal: 99.95,
-  total: 100.95,
-  taxRate: 3,
-  totalTax: 3,
-  totalDiscount: 2,
-  discountRate: 2,
-  numberInWords: '',
-  comments: 'sadfsdf',
-  paymentStatus: 'status'
-};
-
 function InvoicePreview() {
   const [invoiceData, setInvoiceData] = useState(null);
   const { id } = useParams();
@@ -105,7 +19,8 @@ function InvoicePreview() {
       // Call your API to fetch the data using the id
       const { data, error } = await supabase
         .from('invoices')
-        .select(`
+        .select(
+          `
         *,
         buyerData:buyers (
           *,
@@ -116,7 +31,8 @@ function InvoicePreview() {
           *,
           name:products (*)
         )
-      `)
+      `
+        )
         .eq('invoicenumber', id)
         .single();
 
@@ -142,7 +58,6 @@ function InvoicePreview() {
           {invoiceData ? <InvoicePDF {...invoiceData} /> : 'Loading...'}
         </Container>
         <pre>{JSON.stringify(invoiceData, null, 2)}</pre>
-
       </Container>
     </>
   );

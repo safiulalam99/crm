@@ -16,7 +16,7 @@ import productData from '../../Data/products.json';
 import { INITIAL_VALUES } from 'src/utils/utils';
 import { useFormikContext } from 'formik';
 import _ from 'lodash';
-import { convertNumberToWords } from 'src/services/services';
+import { numberToWords } from 'src/services/services';
 import useProducts from '../../services/GET_PRODUCTS'; 
 
 interface Column {
@@ -74,8 +74,7 @@ const FormikTable = (props) => {
     formik.setFieldValue(`${name}.${index}.unitPrice`, product.price);
   };
   
-  
-
+  console.log(numberToWords(6))
   const handleUnitPriceChange = (index, unitPrice) => {
     const units = Number(values[index].units);
     const unitTotal = parseFloat((units * unitPrice).toFixed(2));
@@ -90,7 +89,6 @@ const FormikTable = (props) => {
     formik.setFieldValue(`${name}.${index}.unitPrice`, unitPrice);
   };
   
-
   const formik = useFormikContext();
 
   const calculateTotal = (products) => {
@@ -131,6 +129,7 @@ const FormikTable = (props) => {
   
     const total = parseFloat((subtotal + tax - discount).toFixed(2));
     formik.setFieldValue('total', Number(total));
+    formik.setFieldValue('numberInWords', numberToWords(Number(total)));
   
     // debouncedSave(values);
   }, [values, formik.values.taxRate, formik.values.discountRate]);
@@ -138,7 +137,6 @@ const FormikTable = (props) => {
   
   if (productLoading) return <p>Loading...</p>;
   if (productError) return <p>Error: {productError.message}</p>;
-  convertNumberToWords(123)
   
   return (
     <FieldArray name={name}>

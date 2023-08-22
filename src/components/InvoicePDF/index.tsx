@@ -13,6 +13,9 @@ import {
 } from '@mui/material';
 import { Image } from '@mui/icons-material';
 import OrderConfirmationPrint from '../OrderConfirmationPrint';
+import { jsPDF } from 'jspdf';
+const pdfContentEl = document.getElementById('inv-grid');
+const doc = new jsPDF();
 
 interface Product {
   id?: number;
@@ -87,10 +90,21 @@ const commentStyle = {
   maxWidth: '100%' // Ensures the container doesn't exceed its parent's width.
 };
 
+const downloadPdfDocument = (rootElementId) => {
+  const input = document.getElementById(rootElementId);
+  html2canvas(input)
+    .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, 'JPEG', 0, 0);
+        pdf.save("download.pdf");
+    })
+}
 const InvoicePDF: React.FC<InvoiceProps> = (props) => {
   const handlePrint = () => {
     window.print();
   };
+
 
   const printStyles = `
   @media print {
@@ -118,6 +132,11 @@ const InvoicePDF: React.FC<InvoiceProps> = (props) => {
     }
   }
 `;
+const gridStyle = {
+  width: '200mm',
+  height: '287mm',
+
+};
 
   return (
     <>
