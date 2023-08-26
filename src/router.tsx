@@ -27,6 +27,9 @@ const Tasks = Loader(lazy(() => import('src/content/dashboards/Tasks')));
 const Messenger = Loader(
   lazy(() => import('src/content/applications/Messenger'))
 );
+const Docx = Loader(
+  lazy(() => import('src/content/applications/docs'))
+);
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
 );
@@ -35,6 +38,9 @@ const UserProfile = Loader(
 );
 const UserSettings = Loader(
   lazy(() => import('src/content/applications/Users/settings'))
+);
+const Carbone = Loader(
+  lazy(() => import('src/content/applications/Carbone'))
 );
 const Status500 = Loader(
   lazy(() => import('src/content/pages/Status/Status500'))
@@ -152,6 +158,14 @@ const routes: RouteObject[] = [
       {
         path: 'invoice',
         element: <InvoicePage />
+      },
+      {
+        path: 'carbone',
+        element: <Carbone />
+      },
+      {
+        path: 'doc',
+        element: <Docx />
       },
       {
         path: 'invoice/new',

@@ -20,12 +20,13 @@ import { numberToWords } from 'src/services/services';
 import useProducts from '../../services/GET_PRODUCTS'; 
 
 interface Column {
-  id: 'Product' | 'Quantity' | 'Unit Price' | 'Amount' | 'Action';
+  id: 'Product' | 'Quantity' | 'Unit Price' | 'Amount' | 'Action' | 'lot';
   label: string;
   minWidth?: number;
   align?: any;
   format?: (value: number) => string;
 }
+
 
 const columns: readonly Column[] = [
   { id: 'Product', label: 'Product', minWidth: 170 },
@@ -115,15 +116,16 @@ const FormikTable = (props) => {
     }, 100)
   ).current;
 
+  const formikValues = formik.values as any;
   useEffect(() => {
     const subtotal = parseFloat(calculateSubTotal(values).toFixed(2));
     formik.setFieldValue('subTotal', Number(subtotal));
-  
-    const taxRate = formik.values.taxRate;
+    
+    const taxRate = formikValues.taxRate;
     const tax = parseFloat(((taxRate / 100) * subtotal).toFixed(2));
     formik.setFieldValue('totalTax', Number(tax));
   
-    const discountRate = formik.values.discountRate;
+    const discountRate = formikValues.discountRate;
     const discount = parseFloat(((discountRate / 100) * subtotal).toFixed(2));
     formik.setFieldValue('totalDiscount', Number(discount));
   
@@ -132,7 +134,7 @@ const FormikTable = (props) => {
     formik.setFieldValue('numberInWords', numberToWords(Number(total)));
   
     // debouncedSave(values);
-  }, [values, formik.values.taxRate, formik.values.discountRate]);
+  }, [values, formikValues.taxRate, formikValues.discountRate]);
   
   
   if (productLoading) return <p>Loading...</p>;

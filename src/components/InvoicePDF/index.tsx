@@ -85,21 +85,12 @@ interface InvoiceProps {
 }
 
 const commentStyle = {
-  wordWrap: 'break-word', // This will break the word at the end of the line.
-  overflowWrap: 'break-word', // It breaks the line as necessary to prevent overflow.
-  maxWidth: '100%' // Ensures the container doesn't exceed its parent's width.
+  wordWrap: 'break-word' as 'break-word', // if needed, ensure it's 'break-word' or 'normal'
+  overflowWrap: 'break-word' as 'break-word', // ensure it's 'break-word' or 'normal'
+  maxWidth: 'someValue' // replace 'someValue' with the desired value
 };
 
-const downloadPdfDocument = (rootElementId) => {
-  const input = document.getElementById(rootElementId);
-  html2canvas(input)
-    .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF();
-        pdf.addImage(imgData, 'JPEG', 0, 0);
-        pdf.save("download.pdf");
-    })
-}
+
 const InvoicePDF: React.FC<InvoiceProps> = (props) => {
   const handlePrint = () => {
     window.print();

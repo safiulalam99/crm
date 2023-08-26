@@ -1,4 +1,4 @@
-// FormikRow.js
+// Header1.js
 import React from 'react';
 import { Box, Grid } from '@mui/material';
 import FormikControl from '../Formik/FormikControl';
@@ -8,7 +8,7 @@ const statusData= [
   { value: 'status', label: 'Status' },
   { value: 'cancelled', label: 'Cancelled' }
 ]
-const FormikRow = () => {
+const Header1 = () => {
   const isoDateString = '2023-07-31T22:24:06.989Z';
   const date = new Date(isoDateString);
   const formattedDate = date.toISOString().split('T')[0]; // "2023-07-31"
@@ -82,4 +82,4 @@ const FormikRow = () => {
   );
 };
 
-export default FormikRow;
+export default Header1;

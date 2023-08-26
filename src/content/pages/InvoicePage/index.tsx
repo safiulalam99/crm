@@ -8,6 +8,8 @@ import Tables from 'src/components/Tables';
 import useInvoices from '../../../services/GET_Invoices';
 import { Link } from 'react-router-dom';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import { getInvoiceData } from 'src/services/GET_invoice_preview';
+import { useEffect, useState } from 'react';
 
 function ApplicationsTransactions() {
   const {
@@ -15,9 +17,28 @@ function ApplicationsTransactions() {
     error: invoiceDataError,
     isLoading: invoiceDataLoading
   } = useInvoices();
-console.log(invoiceData)
+  // console.log(invoiceData);
+  const [fetchedData, setFetchedData] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getInvoiceData('543236574');
+        setFetchedData(data);
+        // console.log(data);
+      } catch (error) {
+        console.error('Failed to fetch invoice data:', error);
+      }
+    }
+
+    fetchData();
+  }, []); // The empty dependency array ensures this useEffect runs once when the component mounts.
+
+  console.log(fetchedData);
   return (
     <>
+      <pre>{JSON.stringify(fetchedData, null, 2)}</pre>
+
       <Helmet>
         <title>Transactions - Applications</title>
       </Helmet>
@@ -73,3 +94,6 @@ console.log(invoiceData)
 }
 
 export default ApplicationsTransactions;
+function setFetchedData(data: any[]) {
+  throw new Error('Function not implemented.');
+}

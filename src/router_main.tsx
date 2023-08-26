@@ -57,9 +57,9 @@ const Modals = Loader(
 const Accordions = Loader(
   lazy(() => import('src/content/pages/Components/Accordions'))
 );
-const InvoicePreview = Loader(
-  lazy(() => import('src/content/applications/InvoicePreview'))
-);
+// const InvoicePreview = Loader(
+//   lazy(() => import('src/content/applications/InvoicePreview'))
+// );
 const Tabs = Loader(lazy(() => import('src/content/pages/Components/Tabs')));
 const Badges = Loader(
   lazy(() => import('src/content/pages/Components/Badges'))
@@ -201,10 +201,10 @@ const routes: RouteObject[] = [
         path: 'invoicev2',
         element: <InvoiceV2 />
       },
-      {
-        path: 'pre',
-        element: <InvoicePreview />
-      },
+      // {
+      //   path: 'pre',
+      //   element: <InvoicePreview />
+      // },
       {
         path: 'test',
         element: <TestInvoice />

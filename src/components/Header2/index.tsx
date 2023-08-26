@@ -14,7 +14,7 @@ import useBuyers from '../../services/GET_buyers_data'; // Adjust the path to yo
 import useSellers from '../../services/GET_seller_data'; // Adjust the path to your hook
 import useProducts from '../../services/GET_PRODUCTS'; // Adjust the path to your hook
 
-const FormikRow = ({setFieldValue}) => {
+const Header2 = ({setFieldValue}) => {
   const { buyers, error: buyerError, isLoading: buyerLoading } = useBuyers();
   const { sellers, error: sellerError, isLoading: sellerLoading } = useSellers();
 
@@ -96,4 +96,4 @@ const FormikRow = ({setFieldValue}) => {
   );
 };
 
-export default FormikRow;
+export default Header2;

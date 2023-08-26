@@ -31,7 +31,7 @@ const navigate = useNavigate();
           <Form>
             <Grid container justifyContent={'center'} spacing={2}>
               {/* <Header1 /> */}
-              <Header1 setFieldValue={formik.setFieldValue} />
+              <Header1 />
               <Header2 setFieldValue={formik.setFieldValue} />
               <Paper sx={{ width: '100%', marginTop: 2 }}>
                 <FormikTable values={formik.values?.products} name="products" />
