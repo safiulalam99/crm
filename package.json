@@ -68,6 +68,7 @@
     ]
   },
   "devDependencies": {
+    "@david.kucsai/react-pdf-table": "^0.4.1",
     "@google-cloud/functions-framework": "^3.3.0",
     "@typescript-eslint/eslint-plugin": "5.27.0",
     "@typescript-eslint/parser": "5.27.0",

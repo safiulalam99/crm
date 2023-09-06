@@ -6,7 +6,7 @@ import MomentUtils from '@date-io/moment';
 import FormikInput from 'src/components/Formik/FormikInput';
 import FormikContainer from 'src/components/Formik/FormikContainer';
 import supabase from '../../../config/supabaseClient.js';
-import InvoiceTemplate from 'src/components/InvoiceTemplate/index.js';
+import InvoiceTemplate from 'src/components/InvoiceTemplate/Invoice.js';
 import InvoicePDF from 'src/components/InvoicePDF';
 import { useParams } from 'react-router-dom';
 
@@ -46,18 +46,18 @@ function InvoicePreview() {
     fetchInvoiceData();
   }, [id]);
 
-  console.log(invoiceData);
+  // console.log(invoiceData);
 
   return (
     <>
       <Container>
         <Box m={2}></Box>
-        <h1>Create</h1>
+        <h1>Preview <span style={{ color: '#5569ff' }}>#{invoiceData?.invoicenumber}</span></h1>
         &nbsp;
         <Container style={{ background: 'white' }} maxWidth="lg">
           {invoiceData ? <InvoicePDF {...invoiceData} /> : 'Loading...'}
         </Container>
-        <pre>{JSON.stringify(invoiceData, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(invoiceData, null, 2)}</pre> */}
       </Container>
     </>
   );

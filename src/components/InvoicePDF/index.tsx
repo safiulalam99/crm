@@ -85,17 +85,15 @@ interface InvoiceProps {
 }
 
 const commentStyle = {
-  wordWrap: 'break-word' as 'break-word', // if needed, ensure it's 'break-word' or 'normal'
-  overflowWrap: 'break-word' as 'break-word', // ensure it's 'break-word' or 'normal'
-  maxWidth: 'someValue' // replace 'someValue' with the desired value
+  wordWrap: 'break-word',
+  overflowWrap: 'break-word',
+  maxHeight: '100px', // Fixed height
+  overflow: 'auto' // Scrollable
 };
-
-
 const InvoicePDF: React.FC<InvoiceProps> = (props) => {
   const handlePrint = () => {
     window.print();
   };
-
 
   const printStyles = `
   @media print {
@@ -123,11 +121,10 @@ const InvoicePDF: React.FC<InvoiceProps> = (props) => {
     }
   }
 `;
-const gridStyle = {
-  width: '200mm',
-  height: '287mm',
-
-};
+  const gridStyle = {
+    width: '200mm',
+    height: '287mm'
+  };
 
   return (
     <>
@@ -139,6 +136,7 @@ const gridStyle = {
         elevation={3}
         style={{ padding: '30px', margin: '30px' }}
       >
+        
         <div style={{ pageBreakAfter: 'always' }}>
           <Grid id="inv-grid" container spacing={3}>
             <Grid item xs={6}>

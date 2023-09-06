@@ -27,9 +27,7 @@ const Tasks = Loader(lazy(() => import('src/content/dashboards/Tasks')));
 const Messenger = Loader(
   lazy(() => import('src/content/applications/Messenger'))
 );
-const Docx = Loader(
-  lazy(() => import('src/content/applications/docs'))
-);
+const Docx = Loader(lazy(() => import('src/content/applications/docs')));
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
 );
@@ -39,9 +37,7 @@ const UserProfile = Loader(
 const UserSettings = Loader(
   lazy(() => import('src/content/applications/Users/settings'))
 );
-const Carbone = Loader(
-  lazy(() => import('src/content/applications/Carbone'))
-);
+const Carbone = Loader(lazy(() => import('src/content/applications/Carbone')));
 const Status500 = Loader(
   lazy(() => import('src/content/pages/Status/Status500'))
 );
@@ -49,10 +45,16 @@ const Status500 = Loader(
 // Components
 const CreateInvoice = Loader(lazy(() => import('src/content/pages/Invoice')));
 const InvoicePage = Loader(lazy(() => import('src/content/pages/InvoicePage')));
-const CustomersPage = Loader(lazy(() => import('src/content/pages/CustomersPage')));
+const InvoiceHTML = Loader(lazy(() => import('src/content/applications/InvoiceHTML')));
+const CustomersPage = Loader(
+  lazy(() => import('src/content/pages/CustomersPage'))
+);
 
 const Modals = Loader(
   lazy(() => import('src/content/pages/Components/Modals'))
+);
+const MainInvoice = Loader(
+  lazy(() => import('src/components/InvoiceTemplate/MainInvoice'))
 );
 
 const InvoicePreview = Loader(
@@ -89,7 +91,7 @@ const routes: RouteObject[] = [
           {
             path: '500',
             element: <Status500 />
-          },
+          }
         ]
       },
       {
@@ -160,6 +162,10 @@ const routes: RouteObject[] = [
         element: <InvoicePage />
       },
       {
+        path: 'html',
+        element: <InvoiceHTML />
+      },
+      {
         path: 'carbone',
         element: <Carbone />
       },
@@ -182,6 +188,10 @@ const routes: RouteObject[] = [
       {
         path: 'modals',
         element: <Modals />
+      },
+      {
+        path: 'package',
+        element: <MainInvoice />
       },
       {
         path: 'tabs',
