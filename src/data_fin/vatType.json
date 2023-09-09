@@ -1,0 +1,17 @@
+{
+    "vatTypes": [
+      {
+        "label": "Finland (24% VAT)",
+        "value": "FI",
+        "vat": 24,
+        "text":"VAT is 24%"
+      },
+      {
+        "label": "International Business (0% VAT)",
+        "value": "INTL",
+        "vat": 0,
+        "text":"Free of VAT"
+      }
+    ]
+  }
+  

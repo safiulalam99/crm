@@ -1,0 +1,50 @@
+[
+    {
+        "id":"1",
+        "name": "YOURCARE SKOVSGAARD AGENCY APS",
+        "address": "KNUDSMINDE 5 B & C",
+        "city": "ODDER",
+        "postalCode":"8300",
+        "country": "DENMARK",
+        "CountryCode":"DK",
+        "vatNumber": "DK 33355424",
+        "contractNumber":"DK23082021",
+        "managingDirector": "DIITHE SKOVSGAARD STÜRUP"
+    },
+    {
+        "id":"2",
+        "name": "ANOTHER COMPANY",
+        "address": "123 MAIN ST",
+        "city": "SOMEWHERE",
+        "postalCode":"8300",
+        "country": "USA",
+        "CountryCode":"DK",
+        "vatNumber": "123456",
+        "contractNumber":"DK23082021",
+        "managingDirector": "JOHN SMITH"
+    },
+    {
+        "id":"3",
+        "name": "YET ANOTHER COMPANY",
+        "address": "456 PARK AVE",
+        "city": "ANYTOWN",
+        "postalCode":"8300",
+        "country": "CANADA",
+        "CountryCode":"DK",
+        "vatNumber": "789012",
+        "contractNumber":"DK23082021",
+        "managingDirector": "JANE DOE"
+    },
+    {
+        "id":"3",
+        "name": "YET ANOTHER COMPANY",
+        "address": "456 PARK AVE",
+        "city": "ANYTOWN",
+        "postalCode":"8300",
+        "country": "CANADA",
+        "CountryCode":"DK",
+        "vatNumber": "789012",
+        "contractNumber":"DK23082021",
+        "managingDirector": "JANE DOE"
+    }
+]

@@ -1,0 +1,73 @@
+[
+    {
+      "id": 1,
+      "name": "Paperclips (Box)",
+      "description": "Standard paperclips in a box",
+      "category": "office supplies",
+      "price": 1.15
+    },
+    {
+      "id": 2,
+      "name": "Paper (Case)",
+      "description": "Case of printer paper",
+      "category": "office supplies",
+      "price": 45.99
+    },
+    {
+      "id": 3,
+      "name": "Waste Basket",
+      "description": "Small waste basket for office or home",
+      "category": "office supplies",
+      "price": 17.99
+    },
+    {
+      "id": 4,
+      "name": "Stapler",
+      "description": "Standard office stapler",
+      "category": "office supplies",
+      "price": 6.99
+    },
+    {
+      "id": 5,
+      "name": "Notebook",
+      "description": "Hardcover notebook with lined pages",
+      "category": "office supplies",
+      "price": 12.99
+    },
+    {
+      "id": 6,
+      "name": "Mechanical Pencil",
+      "description": "Mechanical pencil with lead refills",
+      "category": "office supplies",
+      "price": 2.49
+    },
+    {
+      "id": 7,
+      "name": "Ballpoint Pens",
+      "description": "Set of 10 blue ballpoint pens",
+      "category": "office supplies",
+      "price": 4.99
+    },
+    {
+      "id": 8,
+      "name": "Highlighters",
+      "description": "Set of 6 assorted color highlighters",
+      "category": "office supplies",
+      "price": 6.99
+    },
+    {
+      "id": 9,
+      "name": "Mouse Pad",
+      "description": "Standard mouse pad",
+      "category": "office supplies",
+      "price": 4.49
+    },
+    {
+      "id": 10,
+      "name": "Desktop Organizer",
+      "description": "Small desktop organizer with compartments",
+      "category": "office supplies",
+      "price": 19.99
+    }
+  ]
+  

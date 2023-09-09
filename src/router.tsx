@@ -45,13 +45,18 @@ const Status500 = Loader(
 // Components
 const CreateInvoice = Loader(lazy(() => import('src/content/pages/Invoice')));
 const InvoicePage = Loader(lazy(() => import('src/content/pages/InvoicePage')));
-const InvoiceHTML = Loader(lazy(() => import('src/content/applications/InvoiceHTML')));
+const InvoiceHTML = Loader(
+  lazy(() => import('src/content/applications/InvoiceHTML'))
+);
 const CustomersPage = Loader(
   lazy(() => import('src/content/pages/CustomersPage'))
 );
 
 const Modals = Loader(
   lazy(() => import('src/content/pages/Components/Modals'))
+);
+const Invoice_final = Loader(
+  lazy(() => import('src/content/pages/Invoice_final/Invoice'))
 );
 const MainInvoice = Loader(
   lazy(() => import('src/components/InvoiceTemplate/MainInvoice'))
@@ -76,6 +81,10 @@ const routes: RouteObject[] = [
       {
         path: '/',
         element: <Overview />
+      },
+      {
+        path: 'final',
+        element: <Invoice_final />
       },
       {
         path: 'overview',
@@ -173,6 +182,7 @@ const routes: RouteObject[] = [
         path: 'doc',
         element: <Docx />
       },
+
       {
         path: 'invoice/new',
         element: <CreateInvoice />
