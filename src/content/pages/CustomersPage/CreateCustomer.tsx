@@ -59,83 +59,93 @@ const CreateCustomerForm = () => {
           {(formik) => (
             <Form>
               <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormikControl
                     control="input"
                     label="Name"
                     name="name"
                     placeholder="John Doe"
+                    labelLayout="left"
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormikControl
                     control="input"
                     label="Address"
                     name="address"
                     placeholder="123 Street, City"
+                    labelLayout="left"
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormikControl
                     control="dropdown"
                     type="text"
                     label="Country"
                     name="country"
                     options={countriesList}
+                    labelLayout="left"
                   />{' '}
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <Tooltip title="VAT Number for the customer's country">
                     <FormikControl
                       control="input"
                       label="VAT Number"
                       name="vatnumber"
                       placeholder="XX12345678"
+                      labelLayout="left"
                     />
                   </Tooltip>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormikControl
                     control="input"
                     label="Contract Number"
                     name="contractnumber"
+                    labelLayout="left"
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormikControl
                     control="input"
                     label="Representative"
                     name="representative"
+                    labelLayout="left"
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormikControl
                     control="input"
                     label="Payment Term"
                     name="paymentterm"
+                    labelLayout="left"
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormikControl
                     control="input"
                     label="Delivery Term"
                     name="deliveryterm"
+                    labelLayout="left"
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                <FormikControl
+                <Grid item xs={12}>
+                  <FormikControl
                     control="dropdown"
                     type="text"
                     label="Currency"
                     name="currency"
                     options={currencyList}
+                    labelLayout="left"
                   />{' '}
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormikControl
                     control="input"
                     label="Registration Number"
                     name="registrationnumber"
+                    labelLayout="left"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -144,16 +154,15 @@ const CreateCustomerForm = () => {
                     variant="contained"
                     color="primary"
                     disabled={!formik.isValid}
+                    style={{ float: 'right', marginTop: '20px' }}
                   >
                     Create Customer
                   </Button>
                 </Grid>
               </Grid>
-            <pre>{JSON.stringify(formik.values, null, 2)}</pre>
-
+              {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
             </Form>
           )}
-          
         </Formik>
       </Container>
     </Container>

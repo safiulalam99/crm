@@ -29,7 +29,7 @@ const validationSchema = Yup.object({
 });
 
 const CreateProductForm = () => {
-    const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar(); // <-- Use useSnackbar
+  const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar(); // <-- Use useSnackbar
 
   return (
     <Container>
@@ -45,8 +45,8 @@ const CreateProductForm = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) =>
-            onSubmitProduct(values, actions, openSnackbar) // <-- Update this to include openSnackbar
+          onSubmit={
+            (values, actions) => onSubmitProduct(values, actions, openSnackbar) // <-- Update this to include openSnackbar
           } // Update this to POST_products
         >
           {(formik) => (
@@ -110,12 +110,13 @@ const CreateProductForm = () => {
                   />
                 </Grid>
               </Grid>
-              <Grid >
+              <Grid>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
                   disabled={!formik.isValid}
+                  style={{ float: 'right', marginTop: '20px' }}
                 >
                   Create Product
                 </Button>
@@ -124,7 +125,6 @@ const CreateProductForm = () => {
             </Form>
           )}
         </Formik>
-
       </Container>
     </Container>
   );
