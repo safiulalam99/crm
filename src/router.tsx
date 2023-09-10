@@ -6,6 +6,7 @@ import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import CreateProduct from './content/pages/ProductsPage/CreateProduct';
 
 const Loader = (Component) => (props) =>
   (
@@ -37,19 +38,18 @@ const UserProfile = Loader(
 const UserSettings = Loader(
   lazy(() => import('src/content/applications/Users/settings'))
 );
-const Carbone = Loader(lazy(() => import('src/content/applications/Carbone')));
 const Status500 = Loader(
   lazy(() => import('src/content/pages/Status/Status500'))
 );
 
 // Components
-const CreateInvoice = Loader(lazy(() => import('src/content/pages/Invoice')));
+const CreateInvoice = Loader(lazy(() => import('src/content/pages/CreateInvoice')));
 const InvoicePage = Loader(lazy(() => import('src/content/pages/InvoicePage')));
 const InvoiceHTML = Loader(
   lazy(() => import('src/content/applications/InvoiceHTML'))
 );
-const CustomersPage = Loader(
-  lazy(() => import('src/content/pages/CustomersPage'))
+const CreateCustomer = Loader(
+  lazy(() => import('src/content/pages/CustomersPage/CreateCustomer'))
 );
 
 const Modals = Loader(
@@ -175,10 +175,6 @@ const routes: RouteObject[] = [
         element: <InvoiceHTML />
       },
       {
-        path: 'carbone',
-        element: <Carbone />
-      },
-      {
         path: 'doc',
         element: <Docx />
       },
@@ -189,7 +185,15 @@ const routes: RouteObject[] = [
       },
       {
         path: 'customers',
-        element: <CustomersPage />
+        element: <CreateCustomer />
+      },
+      {
+        path: 'products',
+        element: <CreateCustomer />
+      },
+      {
+        path: 'products/new',
+        element: <CreateProduct />
       },
       {
         path: 'invoice/preview/:id',

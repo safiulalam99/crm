@@ -33,7 +33,7 @@ export default function DataTable(props) {
   return (
     <div style={{ height: 400, width: '70%',justifyContent: "center" }}>
       <DataGrid
-      autoHeight={rows.length}
+      autoHeight={true}
         rows={rows}
         columns={columns}
         initialState={{

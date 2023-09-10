@@ -12,19 +12,19 @@ import supabase from '../../config/supabaseClient.js';
 import { useNavigate } from 'react-router-dom';
 
 import { onSubmitInvoice } from '../../services/POST_InvoiceData';
-
-
+import { useSnackbar } from 'src/contexts/SnackbarContext';
 
 const FormikContainer = () => {
-const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
   return (
     <Container maxWidth="lg">
       <Formik
         initialValues={INITIAL_VALUES}
         validationSchema={validationSchema}
-        onSubmit={(values, actions) =>
-          onSubmitInvoice(values, actions, navigate)
+        onSubmit={
+          (values, actions) =>
+            onSubmitInvoice(values, actions, navigate, openSnackbar) // Step 3
         }
       >
         {(formik) => (

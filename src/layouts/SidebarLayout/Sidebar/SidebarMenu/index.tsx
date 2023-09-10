@@ -31,6 +31,8 @@ import ChromeReaderModeTwoToneIcon from '@mui/icons-material/ChromeReaderModeTwo
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
 import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import PeopleIcon from '@mui/icons-material/People';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -213,7 +215,18 @@ function SidebarMenu() {
                   to="/components/customers"
                   startIcon={<TableChartTwoToneIcon />}
                 >
-                  Customers
+                  Client
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/components/products"
+                  startIcon={<InventoryIcon />}
+                >
+                  Products
                 </Button>
               </ListItem>
             </List>

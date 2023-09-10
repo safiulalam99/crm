@@ -1,6 +1,6 @@
 import supabase from '../config/supabaseClient.js';
 
-export const onSubmitInvoice = async (values, actions, navigate) => {
+export const onSubmitInvoice = async (values, actions, navigate, openSnackbar) => {
   
   try {
     // Insert into the invoices table
@@ -49,13 +49,11 @@ export const onSubmitInvoice = async (values, actions, navigate) => {
       if (productError) throw productError;
     }
 
-    // Handle successful insertion
-    alert('Invoice data successfully inserted!');
+    openSnackbar('Invoice data successfully inserted!', 'success');
+    
     actions.resetForm();
     navigate(`/components/invoice/preview/${values.invoiceNumber}`);
-    console.log("comps", values.invoiceNumber)
   } catch (error) {
-    console.error('Error inserting invoice data:', error);
-    alert('There was an error inserting the invoice data.');
+    openSnackbar('There was an error inserting the invoice data.', 'error');
   }
 };

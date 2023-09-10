@@ -34,10 +34,10 @@ function ApplicationsTransactions() {
     fetchData();
   }, []); // The empty dependency array ensures this useEffect runs once when the component mounts.
 
-  console.log(fetchedData);
+  // console.log(fetchedData);
   return (
     <>
-      <pre>{JSON.stringify(fetchedData, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(fetchedData, null, 2)}</pre> */}
 
       <Helmet>
         <title>Transactions - Applications</title>

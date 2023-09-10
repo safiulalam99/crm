@@ -75,7 +75,7 @@ const FormikTable = (props) => {
     formik.setFieldValue(`${name}.${index}.unitPrice`, product.price);
   };
   
-  console.log(numberToWords(6))
+  // console.log(numberToWords(6))
   const handleUnitPriceChange = (index, unitPrice) => {
     const units = Number(values[index].units);
     const unitTotal = parseFloat((units * unitPrice).toFixed(2));
@@ -163,7 +163,7 @@ const FormikTable = (props) => {
                   </TableHead>
                   <TableBody>
                     {values.map((product, index) => (
-                      <TableRow key={product.id}>
+                      <TableRow key={index}>
                         <TableCell>
                           <FormikControl
                             control="autocomplete"
@@ -216,7 +216,9 @@ const FormikTable = (props) => {
                       </TableRow>
                     ))}
                   </TableBody>
-                  <Button
+
+                </Table>
+                <Button
                     onClick={() =>
                       push({
                         id: generateId(),
@@ -230,7 +232,6 @@ const FormikTable = (props) => {
                   >
                     Add Row
                   </Button>
-                </Table>
               </TableContainer>
             }
           </>

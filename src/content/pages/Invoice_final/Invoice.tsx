@@ -29,7 +29,7 @@ const [headerDetails, setHeaderDetails ] = useState("")
 // console.log(buyer)
   return (
     <React.Fragment>
-      {/* <CssBaseline /> */}
+      <CssBaseline />
       <Container className="invoice-component" maxWidth="md" sx={{ paddingTop: "64px" }}>
         <Header buyerData={buyerName} sellerData={sellerData} headerDetails={headerDetails} />
         <br />
