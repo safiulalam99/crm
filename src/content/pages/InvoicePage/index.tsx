@@ -5,6 +5,7 @@ import Tables from 'src/components/DataTable';
 import useInvoices from '../../../services/GET_Invoices';
 import { Link } from 'react-router-dom';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import Status500 from '../Status/Status500';
 
 function formatDate(isoString) {
   const date = new Date(isoString);
@@ -22,6 +23,7 @@ function InvoicePage() {
         id: item.invoicenumber,
         time_stamp: item.time_stamp,
         invoicenumber: item.invoicenumber,
+        // @ts-ignore 
         name: item.buyers.name,
         deliverydate: item.deliverydate,
         total: item.total
@@ -76,7 +78,7 @@ function InvoicePage() {
           ) : invoiceData ? (
             <Tables rows={rows} columns={columns} />
           ) : (
-            <div>Error loading data</div>
+            <Status500/>
           )}
         </Grid>
       </Grid>

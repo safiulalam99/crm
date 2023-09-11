@@ -67,7 +67,7 @@ const Header2 = ({setFieldValue}) => {
             <FormikControl
               control="autocomplete"
               type="text"
-              label="To: "
+              label="From: "
               name="sellerData"
               options={sellers}
               getOptionLabel={(option: any) => option?.name}

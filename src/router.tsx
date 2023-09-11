@@ -8,6 +8,7 @@ import BaseLayout from 'src/layouts/BaseLayout';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import CreateProduct from './content/pages/ProductsPage/CreateProduct';
 import ProductsTable from './content/pages/ProductsPage/ProductsTable';
+import CustomersTable from './content/pages/CustomersPage/CustomersTable';
 
 const Loader = (Component) => (props) =>
   (
@@ -186,6 +187,10 @@ const routes: RouteObject[] = [
       },
       {
         path: 'customers',
+        element: <CustomersTable />
+      },
+      {
+        path: 'customers/new',
         element: <CreateCustomer />
       },
       {

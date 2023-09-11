@@ -12,6 +12,8 @@ import FormikControl from '../../../components/Formik/FormikControl'; // Assumin
 import { onSubmitCustomer } from '../../../services/POST_customers';
 import countriesList from '../../../Data/countries.json';
 import currencyList from '../../../Data/currency.json';
+import { useNavigate } from 'react-router';
+import { useSnackbar } from 'src/contexts/SnackbarContext';
 
 const initialValues = {
   name: '',
@@ -22,7 +24,7 @@ const initialValues = {
   representative: '',
   paymentterm: '',
   deliveryterm: '',
-  currency: '',
+  currency: 1,
   registrationnumber: ''
 };
 
@@ -39,7 +41,11 @@ const validationSchema = Yup.object({
   registrationnumber: Yup.string()
 });
 
+
 const CreateCustomerForm = () => {
+  const navigate = useNavigate();
+const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
+
   return (
     <Container>
       <Box mt={4} mb={2}>
@@ -54,7 +60,7 @@ const CreateCustomerForm = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) => onSubmitCustomer(values, actions)}
+          onSubmit={(values, actions) => onSubmitCustomer(values, actions, navigate, openSnackbar )}
         >
           {(formik) => (
             <Form>

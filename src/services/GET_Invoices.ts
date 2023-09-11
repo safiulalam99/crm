@@ -1,46 +1,40 @@
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query'
 import supabase from '../config/supabaseClient'; // Adjust the path to your Supabase configuration
 
-const useBuyers = (): any => {
-  const [invoiceData, setBuyers] = useState<any[] | null>(null);
-  const [error, setError] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchInvoices = async () => {
-      try {
-        let { data, error } = await supabase.from('invoices').select(`
-          invoicenumber, 
-          deliverydate, 
-          total, 
-          time_stamp, 
-          buyer_id,
-          buyers (
-              id, 
-              name, 
-              address, 
-              country, 
-              vatnumber, 
-              contractnumber, 
-              representative, 
-              paymentterm, 
-              deliveryterm, 
-              registrationnumber
-          )
-      `);
-        if (error) throw error;
-        setBuyers(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchInvoices();
-  }, []);
-
-  return { invoiceData, error, isLoading };
+const fetchInvoices = async () => {
+  let { data, error } = await supabase.from('invoices').select(`
+    invoicenumber, 
+    deliverydate, 
+    total, 
+    time_stamp, 
+    buyer_id,
+    buyers (
+        id, 
+        name, 
+        address, 
+        country, 
+        vatnumber, 
+        contractnumber, 
+        representative, 
+        paymentterm, 
+        deliveryterm, 
+        registrationnumber
+    )
+  `);
+  if (error) throw error;
+  return data;
 };
 
+const useBuyers = () => {
+  const { data: invoiceData, error, isLoading } = useQuery(
+    ["invoices"],
+    fetchInvoices,
+    {
+      staleTime: 10000, // data considered "fresh" for 10 seconds
+    }
+  );
+
+  console.log(invoiceData)
+  return { invoiceData, error, isLoading };
+};
 export default useBuyers;

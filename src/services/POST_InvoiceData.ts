@@ -1,7 +1,11 @@
 import supabase from '../config/supabaseClient.js';
 
-export const onSubmitInvoice = async (values, actions, navigate, openSnackbar) => {
-  
+export const onSubmitInvoice = async (
+  values,
+  actions,
+  navigate,
+  openSnackbar
+) => {
   try {
     // Insert into the invoices table
     const { data: invoiceData, error: invoiceError } = await supabase
@@ -50,7 +54,7 @@ export const onSubmitInvoice = async (values, actions, navigate, openSnackbar) =
     }
 
     openSnackbar('Invoice data successfully inserted!', 'success');
-    
+
     actions.resetForm();
     navigate(`/components/invoice/preview/${values.invoiceNumber}`);
   } catch (error) {

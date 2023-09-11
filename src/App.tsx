@@ -10,18 +10,20 @@ import ThemeProvider from './theme/ThemeProvider';
 import { SnackbarProvider } from './contexts/SnackbarContext';
 import GlobalSnackbar from './components/Snackbar';
 
+// Create a client
 function App() {
   const content = useRoutes(router);
   const content_main = useRoutes(router_main);
 
   return (
     <ThemeProvider>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <CssBaseline />
-        <SnackbarProvider>
-          {content} <GlobalSnackbar />
-        </SnackbarProvider>
-      </LocalizationProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <CssBaseline />
+
+          <SnackbarProvider>
+            {content} <GlobalSnackbar />
+          </SnackbarProvider>
+        </LocalizationProvider>
     </ThemeProvider>
   );
 }
