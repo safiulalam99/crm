@@ -58,9 +58,9 @@ function ProductTablePage() {
       renderCell: (params) => {
         const status = params.value;
         let color;
-        if (status === 'active') color = 'primary';
+        if (status === 'active') color = 'primary' ;
         else if (status === 'deleted') color = 'error';
-        else if (status === 'archived') color = 'default';
+        else if (status === 'archived') color = 'warning';
         return <Chip label={status} color={color} />;
       }
     },
@@ -76,7 +76,7 @@ function ProductTablePage() {
       valueFormatter: (params) => formatDate(params.value)
     },
     { field: 'defaultquantity', headerName: 'Default Quantity', width: 160 },
-    { field: 'maxquantity', headerName: 'Max Quantity', width: 130 },
+    { field: 'maxquantity', headerName: 'Max Quantity', width: 130 }
   ];
 
   const rows = products ? products : [];
@@ -97,11 +97,11 @@ function ProductTablePage() {
             </Typography>
           </Grid>
           <Grid item>
-            <Link to={'/components/product/new'}>
-              <Button sx={{ mt: { xs: 2, md: 0 } }} variant="contained">
+  
+              <Button href='products/new' sx={{ mt: { xs: 2, md: 0 } }} variant="contained">
                 Create Product
               </Button>
-            </Link>
+
           </Grid>
         </Grid>
       </PageTitleWrapper>

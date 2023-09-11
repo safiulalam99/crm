@@ -6,11 +6,12 @@ export default function DataTable({ rows, columns }) {
     <div style={{ height: 400, width: '100%', justifyContent: "center" }}>
       <DataGrid
         autoHeight={true}
+        filterMode='client'
         rows={rows}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 }
+            paginationModel: { page: 0, pageSize: 10 }
           }
         }}
         checkboxSelection
