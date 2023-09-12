@@ -13,11 +13,13 @@ const useGetCustomers = () => {
     error,
     isLoading
   } = useQuery(['buyers'], fetchCustomers, {
-    staleTime: 10000 // data considered "fresh" for 10 seconds
+    staleTime: 10000,
+    retry: 4
   });
 
-  console.log(customerData);
   return { customerData, error, isLoading };
 };
+
+
 
 export default useGetCustomers;

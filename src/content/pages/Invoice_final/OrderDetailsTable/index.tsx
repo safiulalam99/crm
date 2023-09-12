@@ -1,92 +1,145 @@
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Box, Grid, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-const TAX_RATE = 0.07;
+// Function to calculate subtotal
+const calculateSubtotal = (products) => {
+  return products.reduce((acc, curr) => acc + curr.unitTotal, 0);
+};
 
-function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
-}
+// Function to calculate VAT (assuming VAT is 7%)
+const calculateVAT = (subtotal) => {
+  return 0.07 * subtotal;
+};
 
-function priceRow(qty, unit) {
-  return qty * unit;
-}
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(2),
+  maxWidth: 400,
+  color: theme.palette.text.primary
+}));
 
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, qty, unit, price };
-}
+export default function ProductTable({ products }) {
+  const subtotal = calculateSubtotal(products);
+  const vat = calculateVAT(subtotal);
+  const total = subtotal + vat;
 
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-const rows = [
-  createRow("Paperclips (Box) ", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-
-export default function SpanningTable() {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} size="small" aria-label="spanning table">
-        <TableHead sx={{ bgcolor: "#e1eaf7" }}>
+    <TableContainer>
+      <Table sx={{ minWidth: 700 }} size="small" aria-label="spanning table">
+        <TableHead>
           <TableRow>
-            <TableCell sx={{ borderRight: "1px solid #ccc" }}>Desc</TableCell>
-            <TableCell align="right" sx={{ borderRight: "1px solid #ccc" }}>
-              Qty.
+            <TableCell
+              align="center"
+              style={{ width: '10%', borderRight: '1px solid #ccc' }}
+            >
+              Units
             </TableCell>
-            <TableCell align="right" sx={{ borderRight: "1px solid #ccc" }}>
-              Unit
+            <TableCell style={{ width: '50%', borderRight: '1px solid #ccc' }}>
+              Name
             </TableCell>
-            <TableCell align="right">Sum</TableCell>
+            <TableCell
+              align="center"
+              style={{ width: '10%', borderRight: '1px solid #ccc' }}
+            >
+              Unit Price
+            </TableCell>
+            <TableCell
+              align="center"
+              style={{ width: '10%', borderRight: '1px solid #ccc' }}
+            >
+              Total
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.desc}>
-              <TableCell sx={{ borderRight: "1px solid #ccc" }}>
-                {row.desc}
+          {products.map((product, index) => (
+            <TableRow
+              key={index}
+              style={{ backgroundColor: index % 2 === 0 ? '#f3f3f3' : 'white' }}
+            >
+              <TableCell
+                align="center"
+                style={{ borderRight: '1px solid #ccc' }}
+              >
+                {product.units}
               </TableCell>
-              <TableCell align="right" sx={{ borderRight: "1px solid #ccc" }}>
-                {row.qty}
+              <TableCell
+                style={{ borderRight: '1px solid #ccc', color: '#0086b3' }}
+              >
+                {product.name.name}
               </TableCell>
-              <TableCell align="right" sx={{ borderRight: "1px solid #ccc" }}>
-                {row.unit}
+              <TableCell
+                align="center"
+                style={{ borderRight: '1px solid #ccc' }}
+              >
+                {product.unitPrice}
               </TableCell>
-              <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+              <TableCell align="right">{product.unitTotal}</TableCell>
             </TableRow>
           ))}
-
-          <TableRow>
-            <TableCell rowSpan={3} />
-            <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Tax</TableCell>
-            <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-              0
-            )} %`}</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-          </TableRow>
         </TableBody>
       </Table>
+      <Grid
+        container
+        justifyContent={'space-between'}
+        sx={{ background: 'blue' }}
+      >
+        <Grid
+          sx={{
+            background: 'green',
+            flex: '1 0 auto',
+            maxWidth: 'calc(60% - 96px)'
+          }}
+        >
+          <Box sx={{ overflow: 'hidden', px: 1, wordWrap: 'break-word' }}>
+            <Grid container wrap="nowrap" spacing={2}>
+              {/* <Grid item></Grid> */}
+              <Grid item xs>
+                asdasdasdasdsddasdasdfcasdfasdasasdasddafsdefsdfsdfsdgsdgsdgsdsadasdaSDASDASDSDASDASDASASFASFASFASFAFASFASFASFASFASFAASFASFASFASFASF
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Box>
+          <Box sx={{ px: 1, py: 1, bgcolor: 'yellow' }}>
+            <Grid container spacing={1}>
+              <Grid item xs={8}>
+                <Typography variant="body2">Subtotal</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="body2" align="right">
+                  {subtotal.toFixed(2)}
+                </Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography variant="body2">VAT (7%)</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="body2" align="right">
+                  {vat.toFixed(2)}
+                </Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography variant="body2">Total</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="body2" align="right">
+                  {total.toFixed(2)}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Grid>
     </TableContainer>
   );
 }

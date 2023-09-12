@@ -78,12 +78,31 @@ const Status404 = Loader(
 const routes: RouteObject[] = [
   {
     path: '',
-    element: <BaseLayout />,
+    element: <SidebarLayout />,
     children: [
+      // {
+      //   path: '/',
+      //   element: <Overview />
+      // },
       {
         path: '/',
-        element: <Overview />
+        element: <Tasks />
       },
+      {
+        path: 'overview',
+        element: <Navigate to="/" replace />
+      },
+
+    ]
+  },
+  {
+    path: '',
+    element: <BaseLayout />,
+    children: [
+      // {
+      //   path: '/',
+      //   element: <Overview />
+      // },
       {
         path: 'final',
         element: <Invoice_final />
