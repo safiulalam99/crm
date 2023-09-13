@@ -98,7 +98,7 @@ const Invoice = () => {
               align="left"
               color="grey"
             >
-              {invoiceData?.sellers.name}
+              {invoiceData?.sellers.displayname}
             </Typography>
           </ItemRight>
         </Grid>
