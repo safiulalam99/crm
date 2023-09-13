@@ -104,7 +104,11 @@ const routes: RouteObject[] = [
       //   element: <Overview />
       // },
       {
-        path: 'final',
+        path: 'final/:id',
+        element: <Invoice_final />
+      },
+      {
+        path: 'final/',
         element: <Invoice_final />
       },
       {

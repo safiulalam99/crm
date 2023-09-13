@@ -10,43 +10,42 @@ const ItemLeft = styled(Grid)(({ theme }) => ({
 }));
 
 const ItemRight = styled(Grid)(({ theme }) => ({
-  textAlign: "right",
+  textAlign: "left",
 }));
 
-const CompanyDetails = ({ buyerData, sellerData }) => {
+const CompanyDetails = ({ invoiceData }) => {
   return (
     <>
       {/* company details */}
       <Grid item xs={4}>
         <Typography variant="h6" gutterBottom>
-          BUYER
+          To
         </Typography>
         <ItemLeft>
           <Typography variant="body2" gutterBottom>
-            {buyerData?.name}
+            <b>Company: </b>{invoiceData?.buyers.name}
           </Typography>
         </ItemLeft>
         <ItemLeft>
           <Typography variant="body2" gutterBottom>
-            {buyerData?.address}
+           <b>Address:</b> {invoiceData?.buyers.address}
           </Typography>
         </ItemLeft>
         <ItemLeft>
           <Typography variant="body2" gutterBottom>
-            {buyerData?.CountryCode}
-            {buyerData?.postalCode}, {buyerData?.country}
+            <b>Country: </b>{invoiceData?.buyers.country}
           </Typography>
         </ItemLeft>
         <ItemLeft>
           <Typography variant="body2" gutterBottom>
-            VAT NO:
-            {buyerData?.vatNumber}
+            <b>VAT Number: </b>
+            {invoiceData?.buyers.vatnumber}
           </Typography>
         </ItemLeft>
         <ItemLeft>
           <Typography variant="body2" gutterBottom>
-            MANAGING DIRECTOR:
-            {buyerData?.managingDirector}
+          <b>Representative: </b>
+            {invoiceData?.buyers.representative}
           </Typography>
         </ItemLeft>
       </Grid>
@@ -58,22 +57,22 @@ const CompanyDetails = ({ buyerData, sellerData }) => {
         </Typography>
         <ItemRight>
           <Typography variant="body2" gutterBottom>
-            {sellerData.name}
+            {invoiceData?.sellers.name}
           </Typography>
         </ItemRight>
         <ItemRight>
           <Typography variant="body2" gutterBottom>
-            {sellerData.address}
+            {invoiceData?.sellers.address}
           </Typography>
         </ItemRight>
         <ItemRight>
           <Typography variant="body2" gutterBottom>
-            VAT No: {sellerData.vatNumber}
+            VAT No: {invoiceData?.sellers.vatnumber}
           </Typography>
         </ItemRight>
         <ItemRight>
           <Typography variant="body2" gutterBottom>
-            Managing Director: {sellerData.managingDirector}
+            Managing Director: {invoiceData?.sellers.managingdirector}
           </Typography>
         </ItemRight>
       </Grid>

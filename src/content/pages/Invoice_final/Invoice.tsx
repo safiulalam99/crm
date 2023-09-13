@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import OrderDetailsTable from './OrderDetailsTable';
 import BankDetails from './BankDetails';
@@ -12,119 +12,121 @@ import Container from '@mui/material/Container';
 
 import sellerData from '../../../data_fin/seller.json';
 import buyers from '../../../data_fin/buyer.json';
+import { Grid, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import supabase from '../../../config/supabaseClient.js';
+import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
-// export const invoiceDataAtom = atom({});
-const products = [
-  {
-    name: {
-      id: 6,
-      name: 'BF1005 |BIOFROST® RELIEF™ 3ml sachets|\r\n2400 per deliver box LOT/EXP DATE:2026\r\nSACHET WITH LANGUAGE VERSION: EN-DK-NO-ES-PT\r\n',
-      description: '',
-      category: '',
-      price: 0,
-      time_stamp: '2023-09-10T19:26:04.674175+00:00',
-      defaultquantity: 0,
-      maxquantity: 0,
-      imageurl: '',
-      status: 'active'
-    },
-    units: '02',
-    productlot: 2,
-    unitPrice: '023',
-    unitVat: 0,
-    unitTotal: 46
-  },
-  {
-    id: 'lmfgn4e0clmebwd7yeh',
-    name: {
-      id: 2,
-      name: 'Mouse Pad',
-      description: 'Standard mouse pad',
-      category: 'office supplies',
-      price: 4.49,
-      time_stamp: '2023-08-15T17:26:53.826163+00:00',
-      defaultquantity: 0,
-      maxquantity: 0,
-      imageurl: null,
-      status: 'deleted'
-    },
-    units: '02',
-    unitPrice: 4.49,
-    unitVat: 0,
-    unitTotal: 8.98,
-    productlot: 1
-  },
-  {
-    id: 'lmfgn7qvnir3hvjck2s',
-    name: {
-      id: 6,
-      name: 'BF1005 |BIOFROST® RELIEF™ 3ml sachets|\r\n2400 per deliver box LOT/EXP DATE:2026\r\nSACHET WITH LANGUAGE VERSION: EN-DK-NO-ES-PT\r\n',
-      description: '',
-      category: '',
-      price: 0,
-      time_stamp: '2023-09-10T19:26:04.674175+00:00',
-      defaultquantity: 0,
-      maxquantity: 0,
-      imageurl: '',
-      status: 'active'
-    },
-    units: '02',
-    unitPrice: '1',
-    unitVat: 0,
-    unitTotal: 2,
-    productlot: 2
-  },
-  {
-    id: 'lmfgnd9fk0td4hrlgt',
-    name: {
-      id: 3,
-      name: 'Laptop Stand',
-      description: 'Adjustable laptop stand',
-      category: 'office supplies',
-      price: 24.99,
-      time_stamp: '2023-08-15T17:26:53.826163+00:00',
-      defaultquantity: 0,
-      maxquantity: 0,
-      imageurl: null,
-      status: 'archived'
-    },
-    units: '10',
-    unitPrice: 24.99,
-    unitVat: 0,
-    unitTotal: 249.9,
-    productlot: 2
-  }
-];
-
+const ItemRight = styled(Grid)(({ theme }) => ({
+  textAlign: "right",
+}));
+const logoStyle = {
+  maxWidth: "200px",
+  maxHeight: "100px",
+  width: "auto",
+  height: "auto",
+};
 const Invoice = () => {
-  //   const buyerName = useAtomValue(invoiceDataAtom)?.buyerData;
-  //   const headerDetails = useAtomValue(invoiceDataAtom);
   const [buyerName, setBuyerName] = useState('');
   const [headerDetails, setHeaderDetails] = useState('');
-  //   console.log(`invoice data`,headerDetails)
 
-  const buyer = buyers.filter((company) => company.id === '1')[0];
-  // console.log(buyer)
+  const template_type = 'Order confirmation';
+
+  const [invoiceData, setInvoiceData] = useState(null);
+  const { id } = useParams();
+  const customTheme = createTheme({
+    typography: {
+      fontSize: 11
+    }
+  } as ThemeOptions); // Type assertion here
+  // console.log(id);
+  useEffect(() => {
+    const fetchInvoiceData = async () => {
+      // Call your API to fetch the data using the id
+      const { data, error } = await supabase
+        .from('invoices')
+        .select(
+          `
+        *,
+        buyers:buyers (
+          *,
+          currency:currencies(name, symbol)
+        ),
+        sellers:sellers (*),
+        products:invoice_products (
+          *,
+          name:products (*)
+        )
+      `
+        )
+        .eq('invoicenumber', id)
+        .single();
+
+      if (data) {
+        setInvoiceData(data);
+      } else {
+        console.error('Error fetching invoice data:', error);
+      }
+    };
+
+    fetchInvoiceData();
+  }, [id]);
+  // console.log(invoiceData.products);
   return (
     <React.Fragment>
       {/* <CssBaseline /> */}
-      <Container
-        className="invoice-component"
-        maxWidth="md"
-        sx={{ paddingTop: '64px' }}
-      >
-        <Header
-          buyerData={buyerName}
-          sellerData={sellerData}
-          headerDetails={headerDetails}
-        />
-        <br />
-        <OrderDetailsTable products={products} />
-        <br />
-        <BankDetails data={sellerData} />
-        <br />
-        <PaymentTerms />
-      </Container>
+      {/* <pre>{JSON.stringify(invoiceData, null, 2)}</pre> */}
+      <ThemeProvider theme={customTheme}>
+        <Container
+          className="component"
+          maxWidth="md"
+          // sx={{ paddingTop: '40px' }}
+        >
+          <Container
+            className="invoice-component"
+            maxWidth="md"
+            sx={{ paddingTop: '40px' }}
+          >
+            <Grid container >
+            <Grid item xs={6} container>
+          <ItemRight>
+            <img src="../../../public/bio2.png" alt="My Image" style={logoStyle} />
+            <Typography
+              variant="h6"
+              style={{ fontWeight: "bold" }}
+              align="left"
+              color="grey"
+            >
+              {invoiceData?.sellers.name}
+            </Typography>
+          </ItemRight>
+        </Grid>
+            <Grid item xs={6} >
+              
+                <ItemRight>
+              <Typography variant="h4">{template_type}</Typography>
+                <Typography variant="h6">
+                  Invoice Number:{' '}
+                  <span style={{ color: '#5569ff' }}>
+                    #{invoiceData?.invoicenumber}
+                  </span>
+                </Typography>
+              <Typography variant="h6">Date: {invoiceData?.date}</Typography>
+                </ItemRight>
+            </Grid>
+            </Grid>
+
+            <Header invoiceData={invoiceData} />
+            <br />
+            <OrderDetailsTable invoiceData={invoiceData} />
+            <br />
+            <BankDetails data={sellerData} />
+            <br />
+            <PaymentTerms />
+          </Container>
+        </Container>
+      </ThemeProvider>
     </React.Fragment>
   );
 };
