@@ -99,11 +99,7 @@ const InvoicePreviewSingle = ({ invoiceData }) => {
           {/* <BankDetails data={sellerData} /> */}
           <br />
           {/* <PaymentTerms /> */}
-          {/* @ts-ignore */}
-          <div id="footer" style={footerStyle}>
-            OUR VISION AT BIOFROST IS TO BE THE MOST RESPECTED COLD THERAPY
-            BRAND IN THE WORLD
-          </div>
+
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h6">Buyers Representative</Typography>
@@ -115,6 +111,11 @@ const InvoicePreviewSingle = ({ invoiceData }) => {
               <Typography variant="body1">Place and Date of issue: ___________________________</Typography>
             </Grid>
           </Grid>
+          {/* @ts-ignore */}
+          <div id="footer" style={footerStyle}>
+            OUR VISION AT BIOFROST IS TO BE THE MOST RESPECTED COLD THERAPY
+            BRAND IN THE WORLD
+          </div>
         </Container>
       </Container>
     </React.Fragment>
