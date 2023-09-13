@@ -36,19 +36,19 @@ export default function Header({ invoiceData }) {
         <Grid item xs={6}>
           <ItemRight>
             <Typography variant="body2" gutterBottom>
-              CONTRACT NO: {invoiceData?.buyers.contractnumber}
+              Contract No: {invoiceData?.buyers.contractnumber}
             </Typography>
             <Typography variant="body2" gutterBottom>
-              CURRENCY: EURO (€)
+              Currency: {invoiceData?.buyers.currency.name} ({invoiceData?.buyers.currency.symbol})
             </Typography>
-            <Typography variant="body2" gutterBottom>
+            {/* <Typography variant="body2" gutterBottom>
               PRICES: 0% VAT (VAT EXCLUDED)
+            </Typography> */}
+            <Typography variant="body2" gutterBottom>
+              Delivery Term: {invoiceData?.buyers.deliveryterm}
             </Typography>
             <Typography variant="body2" gutterBottom>
-              DELIVERY TERM: EXW-FI33470
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-              DELIVERY DATE: 28.02.2023
+              Delivery Date: {invoiceData?.deliverydate}
             </Typography>
           </ItemRight>
         </Grid>

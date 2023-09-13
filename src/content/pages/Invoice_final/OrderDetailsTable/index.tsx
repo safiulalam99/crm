@@ -71,7 +71,7 @@ export default function ProductTable({ invoiceData }) {
                 {product.units}
               </TableCell>
               <TableCell
-                style={{ borderRight: '1px solid #ccc', color: '#0086b3' }}
+                style={{ borderRight: '1px solid #ccc', color: '#00AED9' }}
               >
                 {product.name.name}
               </TableCell>

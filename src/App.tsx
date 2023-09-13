@@ -9,7 +9,7 @@ import { CssBaseline } from '@mui/material';
 import ThemeProvider from './theme/ThemeProvider';
 import { SnackbarProvider } from './contexts/SnackbarContext';
 import GlobalSnackbar from './components/Snackbar';
-
+import './App.css'
 // Create a client
 function App() {
   const content = useRoutes(router);
