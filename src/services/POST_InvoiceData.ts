@@ -46,6 +46,7 @@ export const onSubmitInvoice = async (
             unitprice: product.unitPrice,
             units: product.units,
             productlot: product.productlot,
+            languageversion: product.languageversion,
             unittotal: product.unitTotal,
             unitvat: product.unitVat
           }

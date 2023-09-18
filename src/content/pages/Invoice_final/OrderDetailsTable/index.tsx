@@ -28,6 +28,13 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ProductTable({ invoiceData }) {
+  const hasLanguageVersion = invoiceData?.products.some(
+    (product) => product.languageversion
+  );
+  const hasProductLot = invoiceData?.products.some(
+    (product) => product.productlot
+  );
+
   return (
     <TableContainer>
       <Table sx={{ minWidth: 700 }} size="small" aria-label="spanning table">
@@ -42,6 +49,22 @@ export default function ProductTable({ invoiceData }) {
             <TableCell style={{ width: '50%', borderRight: '1px solid #ccc' }}>
               Name
             </TableCell>
+            {hasLanguageVersion && (
+              <TableCell
+                align="center"
+                style={{ width: '7%', borderRight: '1px solid #ccc' }}
+              >
+                Language Version
+              </TableCell>
+            )}
+            {hasProductLot && (
+              <TableCell
+                align="center"
+                style={{ width: '10%', borderRight: '1px solid #ccc' }}
+              >
+                Lot No.
+              </TableCell>
+            )}
             <TableCell
               align="center"
               style={{ width: '10%', borderRight: '1px solid #ccc' }}
@@ -73,6 +96,22 @@ export default function ProductTable({ invoiceData }) {
               >
                 {product.name.name}
               </TableCell>
+              {hasLanguageVersion && (
+                <TableCell
+                  align="center"
+                  style={{ borderRight: '1px solid #ccc' }}
+                >
+                  {product.languageversion}
+                </TableCell>
+              )}
+              {hasProductLot && (
+                <TableCell
+                  align="center"
+                  style={{ borderRight: '1px solid #ccc' }}
+                >
+                  {product.productlot}
+                </TableCell>
+              )}
               <TableCell
                 align="center"
                 style={{ borderRight: '1px solid #ccc' }}

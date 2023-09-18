@@ -20,7 +20,7 @@ import { numberToWords } from 'src/services/services';
 import useProducts from '../../services/GET_PRODUCTS'; 
 
 interface Column {
-  id: 'Product' | 'Quantity' | 'Unit Price' | 'Amount' | 'Action' | 'lot';
+  id: 'Product' | 'Quantity' | 'Unit Price' | 'Amount' | 'Action' | 'lot' | 'Languageversion';
   label: string;
   minWidth?: number;
   align?: any;
@@ -30,6 +30,7 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: 'Product', label: 'Product', minWidth: 170 },
+  { id: 'Languageversion', label: 'Language Version', minWidth: 100, align: 'center' },
   { id: 'lot', label: 'lot', minWidth: 100, align: 'center' },
   { id: 'Quantity', label: 'Quantity', minWidth: 100, align: 'center' },
   {
@@ -138,6 +139,7 @@ const FormikTable = (props) => {
   
   
   if (productLoading) return <p>Loading...</p>;
+  // @ts-ignore
   if (productError) return <p>Error: {productError.message}</p>;
   
   return (
@@ -177,7 +179,15 @@ const FormikTable = (props) => {
                         <TableCell>
                           <FormikControl
                             control="input"
-                            type="number"
+                            type="text"
+                            name={`${name}.${index}.languageversion`}
+                            // onChange={(e) => handleUnitsChange(index, e.target.value)}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <FormikControl
+                            control="input"
+                            type="text"
                             name={`${name}.${index}.productlot`}
                             // onChange={(e) => handleUnitsChange(index, e.target.value)}
                           />
