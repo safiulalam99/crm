@@ -15,7 +15,8 @@ const fetchInvoices = async () => {
         country, 
         vatnumber, 
         contractnumber, 
-        representative, 
+        contactperson, 
+        contactpersonrole, 
         paymentterm, 
         deliveryterm, 
         registrationnumber

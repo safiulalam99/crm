@@ -52,13 +52,17 @@ const Invoice = () => {
 
       if (data) {
         setInvoiceData(data);
+        window.print();
+
       } else {
         console.error('Error fetching invoice data:', error);
       }
     };
 
     fetchInvoiceData();
+
   }, [id]);
+  
   return (
     <React.Fragment>
       <CssBaseline />

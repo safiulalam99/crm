@@ -21,7 +21,8 @@ const initialValues = {
   country: '',
   vatnumber: '',
   contractnumber: '',
-  representative: '',
+  contactperson: '',
+  contactpersonrole: '',
   paymentterm: '',
   deliveryterm: '',
   currency: 1,
@@ -34,7 +35,8 @@ const validationSchema = Yup.object({
   country: Yup.string().required('Required'),
   vatnumber: Yup.string(),
   contractnumber: Yup.string(),
-  representative: Yup.string(),
+  contactperson: Yup.string(),
+  contactpersonrole: Yup.string(),
   paymentterm: Yup.string(),
   deliveryterm: Yup.string(),
   currency: Yup.string().required('Required'),
@@ -115,8 +117,16 @@ const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
                 <Grid item xs={12}>
                   <FormikControl
                     control="input"
-                    label="Representative"
-                    name="representative"
+                    label="Contact Person"
+                    name="contactperson"
+                    labelLayout="left"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormikControl
+                    control="input"
+                    label="Contact Person Role"
+                    name="contactpersonrole"
                     labelLayout="left"
                   />
                 </Grid>
