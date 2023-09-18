@@ -1,0 +1,4 @@
+add discount option
+give user option to add lot no: column, languae version
+give user option to select bank account to show in the invoice
+chage repreasentaive to contact person in add client - add the contact persins role

@@ -19,7 +19,6 @@ const calculateVAT = (subtotal) => {
   return 0.07 * subtotal;
 };
 
-
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -29,7 +28,6 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ProductTable({ invoiceData }) {
-
   return (
     <TableContainer>
       <Table sx={{ minWidth: 700 }} size="small" aria-label="spanning table">
@@ -86,29 +84,37 @@ export default function ProductTable({ invoiceData }) {
           ))}
         </TableBody>
       </Table>
-      <Grid
-        container
-        justifyContent={'space-between'}
-      >
+      <Grid container justifyContent={'space-between'}>
         <Grid
           sx={{
-            
             flex: '1 0 auto',
             maxWidth: 'calc(60% - 96px)'
           }}
         >
-          <Box sx={{ overflow: 'hidden', paddingTop:'9px', wordWrap: 'break-word' }}>
-            <Grid container wrap="nowrap" >
+          <Box
+            sx={{
+              overflow: 'hidden',
+              paddingTop: '9px',
+              wordWrap: 'break-word'
+            }}
+          >
+            <Grid container wrap="nowrap">
               {/* <Grid item></Grid> */}
               <Grid item xs>
-              <Typography variant="body2">{invoiceData?.comments}</Typography>              </Grid>
+                <Typography variant="body2">{invoiceData?.comments}</Typography>{' '}
+              </Grid>
             </Grid>
             <Grid paddingTop={'13px'}>
-              <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>Invoice Term</Typography>
+              <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                Invoice Term
+              </Typography>
             </Grid>
-            <Grid container wrap="nowrap"  >
+            <Grid container wrap="nowrap">
               <Grid item xs>
-              <Typography variant="body2">{invoiceData?.paymentsplit}</Typography>              </Grid>
+                <Typography variant="body2">
+                  {invoiceData?.paymentsplit}
+                </Typography>{' '}
+              </Grid>
             </Grid>
           </Box>
         </Grid>
@@ -120,17 +126,33 @@ export default function ProductTable({ invoiceData }) {
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="body2" align="right">
-                  {invoiceData?.subtotal.toFixed(2)} 
+                  {invoiceData?.subtotal.toFixed(2)}
                 </Typography>
               </Grid>
               <Grid item xs={8}>
-                <Typography variant="body2">VAT ({invoiceData?.taxrate}%)</Typography>
+                <Typography variant="body2">
+                  VAT ({invoiceData?.taxrate}%)
+                </Typography>
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="body2" align="right">
-                  {invoiceData?.totaltax.toFixed(2)} 
+                  {invoiceData?.totaltax.toFixed(2)}
                 </Typography>
               </Grid>
+
+              {invoiceData?.totaldiscount !== 0 && (
+                <>
+                  <Grid item xs={8}>
+                    <Typography variant="body2">Discount</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="body2" align="right">
+                      {invoiceData?.totaldiscount.toFixed(2)}
+                    </Typography>
+                  </Grid>
+                </>
+              )}
+
               <Grid item xs={8}>
                 <Typography variant="body2">Total</Typography>
               </Grid>

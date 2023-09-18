@@ -47,9 +47,7 @@ const Status500 = Loader(
 // Components
 const CreateInvoice = Loader(lazy(() => import('src/content/pages/CreateInvoice')));
 const InvoicePage = Loader(lazy(() => import('src/content/pages/InvoicePage')));
-const InvoiceHTML = Loader(
-  lazy(() => import('src/content/applications/InvoiceHTML'))
-);
+
 const CreateCustomer = Loader(
   lazy(() => import('src/content/pages/CustomersPage/CreateCustomer'))
 );
@@ -194,10 +192,6 @@ const routes: RouteObject[] = [
       {
         path: 'invoice',
         element: <InvoicePage />
-      },
-      {
-        path: 'html',
-        element: <InvoiceHTML />
       },
       {
         path: 'doc',
