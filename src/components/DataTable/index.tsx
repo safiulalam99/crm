@@ -10,7 +10,7 @@ export default function DataTable({ rows, columns }) {
       <DataGrid
       sx={{
         '.MuiDataGrid-columnHeaders': {
-          background: '#cdcfcc',
+          backgroundColor: "rgba(235, 235, 235, .7)" ,
           color: 'black',
           fontWeight:"200",
 

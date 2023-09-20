@@ -88,7 +88,7 @@ function Header() {
         </Box>
       </Stack>
       <Box display="flex" alignItems="center">
-        <HeaderButtons />
+        {/* <HeaderButtons /> */}
         <HeaderUserbox />
 
       </Box>

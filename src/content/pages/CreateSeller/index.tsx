@@ -16,56 +16,58 @@ import { useNavigate } from 'react-router';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { useEffect, useState } from 'react';
 import { getLoggedInUserDetails } from 'src/contexts/AuthContext';
-
-const initialValues = {
-  name: '',
-  address: '',
-  country: '',
-  vatnumber: '',
-  contractnumber: '',
-  contactperson: '',
-  contactpersonrole: '',
-  paymentterm: '',
-  deliveryterm: '',
-  currency: 1,
-  registrationnumber: ''
-};
+import useSellers from 'src/services/GET_seller_data';
+import clsx from 'clsx';
+import { onUpdateSeller } from 'src/services/UPDATE';
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('Required'),
-  address: Yup.string().required('Required'),
-  country: Yup.string().required('Required'),
+  name: Yup.string(),
+  address: Yup.string(),
+  country: Yup.string(),
   vatnumber: Yup.string(),
   contractnumber: Yup.string(),
-  contactperson: Yup.string(),
-  contactpersonrole: Yup.string(),
-  paymentterm: Yup.string(),
-  deliveryterm: Yup.string(),
-  currency: Yup.string().required('Required'),
-  registrationnumber: Yup.string()
+  managingdirector: Yup.string(),
+  currency: Yup.string()
 });
-
 
 const CreateCustomerForm = () => {
   const navigate = useNavigate();
-const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
-const [user, setUser] = useState('');
-useEffect(() => {
-  const fetchUserDetails = async () => {
-    const userDetails = await getLoggedInUserDetails();
-    if (userDetails) {
-      setUser(userDetails?.id);
-    }
-  };
+  const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
+  const [user, setUser] = useState('');
 
-  fetchUserDetails();
-}, []);
+  const {
+    sellers,
+    error: sellerError,
+    isLoading: sellerLoading
+  } = useSellers();
+
+  const initialValues = {
+    id:  sellers?.[0].id || "",
+    name:  sellers?.[0].name || "",
+    address:  sellers?.[0].address || "",
+    country:  sellers?.[0].country || "",
+    vatnumber:  sellers?.[0].vatnumber || "",
+    managingdirector:  sellers?.[0].managingdirector || ""
+  };
+console.log(initialValues);
+//   console.log(sellers?.[0]);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const userDetails = await getLoggedInUserDetails();
+      if (userDetails) {
+        setUser(userDetails?.id);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   return (
     <Container>
       <Box mt={4} mb={2}>
         <Typography variant="h4" gutterBottom>
-          Create Customer
+          Edit Company Details
         </Typography>
       </Box>
       <Container
@@ -75,7 +77,11 @@ useEffect(() => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) => onSubmitCustomer(values, actions, navigate, openSnackbar, user )}
+          enableReinitialize
+          onSubmit={
+            (values, actions) =>
+              onUpdateSeller(values, actions, openSnackbar, user) // Changed to onUpdateSeller
+          }
         >
           {(formik) => (
             <Form>
@@ -119,61 +125,21 @@ useEffect(() => {
                     />
                   </Tooltip>
                 </Grid>
+
                 <Grid item xs={12}>
                   <FormikControl
                     control="input"
-                    label="Contract Number"
-                    name="contractnumber"
+                    label="Managing Director"
+                    name="managingdirector"
                     labelLayout="left"
                   />
                 </Grid>
+
                 <Grid item xs={12}>
                   <FormikControl
                     control="input"
-                    label="Contact Person"
-                    name="contactperson"
-                    labelLayout="left"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormikControl
-                    control="input"
-                    label="Contact Person Role"
-                    name="contactpersonrole"
-                    labelLayout="left"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormikControl
-                    control="input"
-                    label="Payment Term"
-                    name="paymentterm"
-                    labelLayout="left"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormikControl
-                    control="input"
-                    label="Delivery Term"
-                    name="deliveryterm"
-                    labelLayout="left"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormikControl
-                    control="dropdown"
-                    type="text"
-                    label="Currency"
-                    name="currency"
-                    options={currencyList}
-                    labelLayout="left"
-                  />{' '}
-                </Grid>
-                <Grid item xs={12}>
-                  <FormikControl
-                    control="input"
-                    label="Registration Number"
-                    name="registrationnumber"
+                    label="Display Name"
+                    name="displayname"
                     labelLayout="left"
                   />
                 </Grid>
@@ -182,10 +148,10 @@ useEffect(() => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    disabled={!formik.isValid}
+                    // disabled={!formik.isValid}
                     style={{ float: 'right', marginTop: '20px' }}
                   >
-                    Create Customer
+                    Update
                   </Button>
                 </Grid>
               </Grid>

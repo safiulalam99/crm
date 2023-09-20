@@ -1,1 +1,10 @@
 give user option to select bank account to show in the invoice
+
+bank_details
+buyers
+currencies
+invoice_design
+invoice_products
+invoices
+products
+sellers

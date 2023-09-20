@@ -11,7 +11,6 @@ function CustomerTablePage() {
     error: customerDataError,
     isLoading: customerDataLoading
   } = useGetCustomers(); // Use your hook here
-  console.log(customers);
   // Define columns for customer data
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },

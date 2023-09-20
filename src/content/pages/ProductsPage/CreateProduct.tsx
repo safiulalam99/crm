@@ -4,10 +4,13 @@ import { Grid, Container, Button, Box, Typography } from '@mui/material';
 import FormikControl from '../../../components/Formik/FormikControl';
 import { onSubmitProduct } from '../../../services/POST_products'; // Update this to POST_products
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import React from 'react';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
+import supabase from 'src/config/supabaseClient';
+import { getLoggedInUserDetails, getUserInfo } from 'src/contexts/AuthContext';
+
 const initialValues = {
   name: '',
   description: '',
@@ -17,6 +20,7 @@ const initialValues = {
   maxquantity: 0,
   imageurl: ''
 };
+
 const URL = /^(http|https|www):\/\/[^ "]+$/;
 const validationSchema = Yup.object({
   name: Yup.string().required('Required'),
@@ -30,6 +34,17 @@ const validationSchema = Yup.object({
 
 const CreateProductForm = () => {
   const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar(); // <-- Use useSnackbar
+  const [user, setUser] = useState('');
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const userDetails = await getLoggedInUserDetails();
+      if (userDetails) {
+        setUser(userDetails?.id);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   return (
     <Container>
@@ -46,7 +61,8 @@ const CreateProductForm = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={
-            (values, actions) => onSubmitProduct(values, actions, openSnackbar) // <-- Update this to include openSnackbar
+            (values, actions) =>
+              onSubmitProduct(values, actions, openSnackbar, user) // <-- Update this to include openSnackbar
           } // Update this to POST_products
         >
           {(formik) => (
@@ -121,7 +137,7 @@ const CreateProductForm = () => {
                   Create Product
                 </Button>
               </Grid>
-              {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
+              <pre>{JSON.stringify(formik.values, null, 2)}</pre>
             </Form>
           )}
         </Formik>

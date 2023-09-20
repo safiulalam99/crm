@@ -4,7 +4,8 @@ export const onSubmitInvoice = async (
   values,
   actions,
   navigate,
-  openSnackbar
+  openSnackbar,
+  user
 ) => {
   try {
     // Insert into the invoices table
@@ -29,7 +30,7 @@ export const onSubmitInvoice = async (
           total: values.total,
           totaldiscount: values.totalDiscount,
           totaltax: values.totalTax,
-          vattype: values.vatType
+          user_id: user,
         }
       ]);
 
@@ -48,7 +49,8 @@ export const onSubmitInvoice = async (
             productlot: product.productlot,
             languageversion: product.languageversion,
             unittotal: product.unitTotal,
-            unitvat: product.unitVat
+            unitvat: product.unitVat,
+            user_id: user,
           }
         ]);
       if (productError) throw productError;

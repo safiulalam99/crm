@@ -35,7 +35,6 @@ const useBuyers = () => {
     }
   );
 
-  console.log(invoiceData)
   return { invoiceData, error, isLoading };
 };
 export default useBuyers;

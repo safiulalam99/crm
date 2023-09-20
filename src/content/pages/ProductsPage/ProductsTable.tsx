@@ -12,6 +12,7 @@ import DataTable from 'src/components/DataTable'; // Renamed from Tables
 import { Link } from 'react-router-dom';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import useProducts from 'src/services/GET_PRODUCTS';
+import { getUser } from 'src/contexts/AuthContext';
 
 function formatDate(isoString) {
   const date = new Date(isoString);

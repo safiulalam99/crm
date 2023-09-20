@@ -13,10 +13,24 @@ import { useNavigate } from 'react-router-dom';
 
 import { onSubmitInvoice } from '../../services/POST_InvoiceData';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
+import { getLoggedInUserDetails } from 'src/contexts/AuthContext';
 
 const FormikContainer = () => {
   const navigate = useNavigate();
   const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
+
+  const [user, setUser] = useState('');
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const userDetails = await getLoggedInUserDetails();
+      if (userDetails) {
+        setUser(userDetails?.id);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
+
   return (
     <Container maxWidth="lg">
       <Formik
@@ -24,7 +38,7 @@ const FormikContainer = () => {
         validationSchema={validationSchema}
         onSubmit={
           (values, actions) =>
-            onSubmitInvoice(values, actions, navigate, openSnackbar) // Step 3
+            onSubmitInvoice(values, actions, navigate, openSnackbar, user) // Step 3
         }
       >
         {(formik) => (
@@ -95,7 +109,7 @@ const FormikContainer = () => {
               <Button type="submit">Submit</Button>
             </Grid>
 
-            <pre>{JSON.stringify(formik.values, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
           </Form>
         )}
       </Formik>

@@ -9,6 +9,8 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import CreateProduct from './content/pages/ProductsPage/CreateProduct';
 import ProductsTable from './content/pages/ProductsPage/ProductsTable';
 import CustomersTable from './content/pages/CustomersPage/CustomersTable';
+import { AuthWrapper } from './contexts/AuthContext';
+import CreateSeller from './content/pages/CreateSeller';
 
 const Loader = (Component) => (props) =>
   (
@@ -27,9 +29,6 @@ const Tasks = Loader(lazy(() => import('src/content/dashboards/Tasks')));
 
 // Applications
 
-const Messenger = Loader(
-  lazy(() => import('src/content/applications/Messenger'))
-);
 const Docx = Loader(lazy(() => import('src/content/applications/docs')));
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
@@ -45,16 +44,15 @@ const Status500 = Loader(
 );
 
 // Components
-const CreateInvoice = Loader(lazy(() => import('src/content/pages/CreateInvoice')));
+const CreateInvoice = Loader(
+  lazy(() => import('src/content/pages/CreateInvoice'))
+);
 const InvoicePage = Loader(lazy(() => import('src/content/pages/InvoicePage')));
 
 const CreateCustomer = Loader(
   lazy(() => import('src/content/pages/CustomersPage/CreateCustomer'))
 );
 
-const Modals = Loader(
-  lazy(() => import('src/content/pages/Components/Modals'))
-);
 const Invoice_final = Loader(
   lazy(() => import('src/content/pages/Invoice_final/Invoice'))
 );
@@ -65,7 +63,6 @@ const MainInvoice = Loader(
 const InvoicePreview = Loader(
   lazy(() => import('src/content/pages/InvoicePreview'))
 );
-const Tabs = Loader(lazy(() => import('src/content/pages/Components/Tabs')));
 
 // Status
 
@@ -76,7 +73,11 @@ const Status404 = Loader(
 const routes: RouteObject[] = [
   {
     path: '',
-    element: <SidebarLayout />,
+    element: (
+      <AuthWrapper>
+        <SidebarLayout />
+      </AuthWrapper>
+    ),
     children: [
       // {
       //   path: '/',
@@ -86,11 +87,14 @@ const routes: RouteObject[] = [
         path: '/',
         element: <Tasks />
       },
+      // {
+      //   path: '/login',
+      //   element: <Login />
+      // },
       {
         path: 'overview',
         element: <Navigate to="/" replace />
-      },
-
+      }
     ]
   },
   {
@@ -103,12 +107,12 @@ const routes: RouteObject[] = [
       // },
       {
         path: 'final/:id',
-        element: <Invoice_final />
+        element: <AuthWrapper><Invoice_final /></AuthWrapper>
       },
-      {
-        path: 'final/',
-        element: <Invoice_final />
-      },
+      // {
+      //   path: 'final/',
+      //   element: <AuthWrapper><Invoice_final /></AuthWrapper>
+      // },
       {
         path: 'overview',
         element: <Navigate to="/" replace />
@@ -132,27 +136,14 @@ const routes: RouteObject[] = [
       }
     ]
   },
-  {
-    path: 'dashboards',
-    element: <SidebarLayout />,
-    children: [
-      {
-        path: '',
-        element: <Navigate to="tasks" replace />
-      },
-      {
-        path: 'tasks',
-        element: <Tasks />
-      },
-      {
-        path: 'messenger',
-        element: <Messenger />
-      }
-    ]
-  },
+
   {
     path: 'management',
-    element: <SidebarLayout />,
+    element: (
+      <AuthWrapper>
+        <SidebarLayout />
+      </AuthWrapper>
+    ),
     children: [
       {
         path: '',
@@ -183,7 +174,11 @@ const routes: RouteObject[] = [
   },
   {
     path: '/components',
-    element: <SidebarLayout />,
+    element: (
+      <AuthWrapper>
+        <SidebarLayout />
+      </AuthWrapper>
+    ),
     children: [
       {
         path: '',
@@ -193,10 +188,10 @@ const routes: RouteObject[] = [
         path: 'invoice',
         element: <InvoicePage />
       },
-      {
-        path: 'doc',
-        element: <Docx />
-      },
+      // {
+      //   path: 'doc',
+      //   element: <Docx />
+      // },
 
       {
         path: 'invoice/new',
@@ -211,6 +206,10 @@ const routes: RouteObject[] = [
         element: <CreateCustomer />
       },
       {
+        path: 'my/new',
+        element: <CreateSeller />
+      },
+      {
         path: 'products',
         element: <ProductsTable />
       },
@@ -218,22 +217,14 @@ const routes: RouteObject[] = [
         path: 'products/new',
         element: <CreateProduct />
       },
-      {
-        path: 'invoice/preview/:id',
-        element: <InvoicePreview />
-      },
-      {
-        path: 'modals',
-        element: <Modals />
-      },
-      {
-        path: 'package',
-        element: <MainInvoice />
-      },
-      {
-        path: 'tabs',
-        element: <Tabs />
-      }
+      // {
+      //   path: 'invoice/preview/:id',
+      //   element: <InvoicePreview />
+      // }
+      // {
+      //   path: 'package',
+      //   element: <MainInvoice />
+      // },
     ]
   }
 ];
