@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Paper, TableContainer } from '@mui/material';
+import { DataGrid, GridEventListener, GridColDef } from '@mui/x-data-grid';
 
-export default function DataTable({ rows, columns }) {
+
+export default function DataTable({ rows, columns, ...props }) {
+
+  
   return (
     <div style={{ height: 400, width: '100%', justifyContent: "center" }}>
           <TableContainer component={Paper}>
@@ -41,8 +44,9 @@ export default function DataTable({ rows, columns }) {
             paginationModel: { page: 0, pageSize: 10 }
           }
         }}
-        checkboxSelection
+        // checkboxSelection
         pageSizeOptions={[5, 10, 30, 50, 100]}
+        {...props}
       />
       </TableContainer>
     </div>

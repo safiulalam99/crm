@@ -1,10 +1,18 @@
-give user option to select bank account to show in the invoice
+form--------
+change to buyer, seller to manufacturer
+add logo 
+change the product ta
+payment term might be different in print. 
 
-bank_details
-buyers
-currencies
-invoice_design
-invoice_products
-invoices
-products
-sellers
+invoice page------
+Delivery term - remove hardcode
+fix date
+chnage currency
+remove hashtag invoice number
+move payment term to right header
+add in header - country of origin: finland
+
+change to order confirmation 
+
+
+

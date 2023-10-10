@@ -3,6 +3,7 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import { Grid, Container, Typography, Button } from '@mui/material';
 import DataTable from 'src/components/DataTable';
 import useGetCustomers from 'src/services/GET_CUSTOMERS';
+import { Link } from 'react-router-dom';
 // import { useSubmitCustomer } from 'src/services/your-customer-hook-file'; // import your hook
 //
 function CustomerTablePage() {
@@ -14,7 +15,16 @@ function CustomerTablePage() {
   // Define columns for customer data
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'name', headerName: 'Name', width: 150 },
+    {
+      field: 'name',
+      headerName: 'Product Name',
+      width: 150,
+      renderCell: (params) => (
+        <Link to={`/components/customers/edit/${params.id}`}>
+          {params.value}
+        </Link>
+      )
+    },
     { field: 'address', headerName: 'Address', width: 200 },
     { field: 'country', headerName: 'Country', width: 130 }
     // Add more fields as per your customer data
@@ -33,8 +43,7 @@ function CustomerTablePage() {
             <Typography variant="h3" component="h3" gutterBottom>
               Customers
             </Typography>
-            <Typography variant="subtitle2">
-              </Typography>
+            <Typography variant="subtitle2"></Typography>
           </Grid>
           <Grid item>
             <Button href="customers/new" variant="contained">

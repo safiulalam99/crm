@@ -10,16 +10,8 @@ import React from 'react';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
 import supabase from 'src/config/supabaseClient';
 import { getLoggedInUserDetails, getUserInfo } from 'src/contexts/AuthContext';
-
-const initialValues = {
-  name: '',
-  description: '',
-  category: '',
-  price: 0,
-  defaultquantity: 0,
-  maxquantity: 0,
-  imageurl: ''
-};
+import { useParams } from 'react-router-dom';
+import { getproduct } from 'src/services/GET';
 
 const URL = /^(http|https|www):\/\/[^ "]+$/;
 const validationSchema = Yup.object({
@@ -35,6 +27,27 @@ const validationSchema = Yup.object({
 const CreateProductForm = () => {
   const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar(); // <-- Use useSnackbar
   const [user, setUser] = useState('');
+  const [product, setProduct] = useState(null);
+  const { id } = useParams();
+
+  const initialValues = {
+    name: product?.name || '',
+    description: product?.description || '',
+    category: product?.category || '',
+    price: product?.price || 0,
+    defaultquantity: product?.defaultquantity || 0,
+    maxquantity: product?.maxquantity || 0,
+    imageurl: product?.imageurl || ''
+  };
+
+  async function fetchData(id) {
+    try {
+      const data = await getproduct(id);
+      setProduct(data[0]);
+    } catch (error) {
+      console.error('Failed to fetch invoice data:', error);
+    }
+  }
   useEffect(() => {
     const fetchUserDetails = async () => {
       const userDetails = await getLoggedInUserDetails();
@@ -44,7 +57,9 @@ const CreateProductForm = () => {
     };
 
     fetchUserDetails();
+    fetchData(id);
   }, []);
+  // console.log(product[0]);
 
   return (
     <Container>
@@ -60,10 +75,10 @@ const CreateProductForm = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={
-            (values, actions) =>
-              onSubmitProduct(values, actions, openSnackbar, user) // <-- Update this to include openSnackbar
-          } // Update this to POST_products
+          enableReinitialize
+          onSubmit={(values, actions) =>
+            onSubmitProduct(values, actions, openSnackbar, user)
+          }
         >
           {(formik) => (
             <Form>
@@ -134,7 +149,7 @@ const CreateProductForm = () => {
                   disabled={!formik.isValid}
                   style={{ float: 'right', marginTop: '20px' }}
                 >
-                  Create Product
+                  Edit Product
                 </Button>
               </Grid>
               {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}

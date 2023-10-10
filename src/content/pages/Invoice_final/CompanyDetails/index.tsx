@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-
+import {numberToWords} from '../../../../utils/towords'
 const ItemLeft = styled(Grid)(({ theme }) => ({
   textAlign: "left",
 }));
@@ -13,13 +13,14 @@ const ItemRight = styled(Grid)(({ theme }) => ({
   textAlign: "left",
 }));
 
+
 const CompanyDetails = ({ invoiceData }) => {
-  return (
+return (
     <>
       {/* company details */}
       <Grid item xs={4}>
         <Typography variant="h6" gutterBottom>
-          To
+          Buyer
         </Typography>
         <ItemLeft>
           <Typography variant="body2" gutterBottom>
@@ -44,7 +45,7 @@ const CompanyDetails = ({ invoiceData }) => {
         </ItemLeft>
         <ItemLeft>
           <Typography variant="body2" gutterBottom>
-          <b>Representative: </b>
+          <b>Manager: </b>
             {invoiceData?.buyers.representative}
           </Typography>
         </ItemLeft>
@@ -53,7 +54,7 @@ const CompanyDetails = ({ invoiceData }) => {
 
       <Grid item xs={4}>
         <Typography variant="h6" gutterBottom>
-          SELLER
+          Manufacturer
         </Typography>
         <ItemRight>
           <Typography variant="body2" gutterBottom>

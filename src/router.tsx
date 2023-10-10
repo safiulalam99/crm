@@ -11,6 +11,8 @@ import ProductsTable from './content/pages/ProductsPage/ProductsTable';
 import CustomersTable from './content/pages/CustomersPage/CustomersTable';
 import { AuthWrapper } from './contexts/AuthContext';
 import CreateSeller from './content/pages/CreateSeller';
+import EditProduct from './content/pages/ProductsPage/EditProduct';
+import EditCustomer from './content/pages/CustomersPage/EditCustomer';
 
 const Loader = (Component) => (props) =>
   (
@@ -206,6 +208,10 @@ const routes: RouteObject[] = [
         element: <CreateCustomer />
       },
       {
+        path: 'customers/edit/:id',
+        element: <EditCustomer />
+      },
+      {
         path: 'my/new',
         element: <CreateSeller />
       },
@@ -216,6 +222,10 @@ const routes: RouteObject[] = [
       {
         path: 'products/new',
         element: <CreateProduct />
+      },
+      {
+        path: 'products/edit/:id',
+        element: <EditProduct />
       },
       // {
       //   path: 'invoice/preview/:id',

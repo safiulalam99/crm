@@ -6,18 +6,30 @@ import {
   Typography,
   Button,
   Badge,
-  Chip
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent
 } from '@mui/material';
 import DataTable from 'src/components/DataTable'; // Renamed from Tables
 import { Link } from 'react-router-dom';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import useProducts from 'src/services/GET_PRODUCTS';
-import { getUser } from 'src/contexts/AuthContext';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import EditIcon from '@mui/icons-material/Edit';
+import { useState } from 'react';
 
 function formatDate(isoString) {
   const date = new Date(isoString);
   return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 }
+
+
 
 const StatusBadge = ({ status }) => {
   let badgeColor;
@@ -43,30 +55,54 @@ const StatusBadge = ({ status }) => {
   );
 };
 
-function ProductTablePage() {
-  const {
-    products,
-    error: productDataError,
-    isLoading: productDataLoading
-  } = useProducts(); // Replaced useInvoices with useProducts
 
-  // Define new columns based on the product fields
+function ProductTablePage() {
+  const handleDeleteClick = (id) => () => {
+    setRows(rows.filter((row) => row.id !== id));
+    console.log("id",id)
+  };
+
+  const renderConfirmDialog = () => {
+    if (!promiseArguments) {
+      return null;
+    }
+
+    const { newRow, oldRow } = promiseArguments;
+    const mutation = computeMutation(newRow, oldRow);
+
+    return (
+      <Dialog
+        maxWidth="xs"
+        TransitionProps={{ onEntered: handleEntered }}
+        open={!!promiseArguments}
+      >
+        <DialogTitle>Are you sure?</DialogTitle>
+        <DialogContent dividers>
+          {`Pressing 'Yes' will change ${mutation}.`}
+        </DialogContent>
+        <DialogActions>
+          <Button ref={noButtonRef} onClick={handleNo}>
+            No
+          </Button>
+          <Button onClick={handleYes}>Yes</Button>
+        </DialogActions>
+      </Dialog>
+    );
+  };
+
   const columns = [
-    {
-      field: 'status',
-      headerName: 'Status',
-      width: 130,
-      renderCell: (params) => {
-        const status = params.value;
-        let color;
-        if (status === 'active') color = 'primary' ;
-        else if (status === 'deleted') color = 'error';
-        else if (status === 'archived') color = 'warning';
-        return <Chip label={status} color={color} />;
-      }
-    },
+    ,
     { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'name', headerName: 'Product Name', width: 150 },
+    {
+      field: 'name',
+      headerName: 'Product Name',
+      width: 150,
+      renderCell: (params) => (
+        <Link to={`/components/products/edit/${params.id}`}>
+          {params.value.toString()}
+        </Link>
+      )
+    },
     { field: 'description', headerName: 'Description', width: 200 },
     { field: 'category', headerName: 'Category', width: 130 },
     { field: 'price', headerName: 'Price', width: 110 },
@@ -77,10 +113,47 @@ function ProductTablePage() {
       valueFormatter: (params) => formatDate(params.value)
     },
     { field: 'defaultquantity', headerName: 'Default Quantity', width: 160 },
-    { field: 'maxquantity', headerName: 'Max Quantity', width: 130 }
+    { field: 'maxquantity', headerName: 'Max Quantity', width: 130 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 130,
+      renderCell: (params) => {
+        const status = params.value;
+        let color;
+        if (status === 'active') color = 'primary';
+        else if (status === 'deleted') color = 'error';
+        else if (status === 'archived') color = 'warning';
+        return <Chip label={status} color={color} />;
+      }
+    },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        return [
+          
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />
+        ];
+      }
+    }
   ];
+  const {
+    products,
+    error: productDataError,
+    isLoading: productDataLoading
+  } = useProducts();
 
-  const rows = products ? products : [];
+  const initalRows = products ? products : [];
+  const [rows, setRows] = useState(initalRows);
 
   return (
     <>
@@ -98,11 +171,13 @@ function ProductTablePage() {
             </Typography>
           </Grid>
           <Grid item>
-  
-              <Button href='products/new' sx={{ mt: { xs: 2, md: 0 } }} variant="contained">
-                Create Product
-              </Button>
-
+            <Button
+              href="products/new"
+              sx={{ mt: { xs: 2, md: 0 } }}
+              variant="contained"
+            >
+              Create Product
+            </Button>
           </Grid>
         </Grid>
       </PageTitleWrapper>
@@ -127,7 +202,7 @@ function ProductTablePage() {
                 <SuspenseLoader />
               </div>
             ) : products ? (
-              <DataTable rows={rows} columns={columns} />
+              <DataTable rows={initalRows} columns={columns} />
             ) : (
               <div>Error loading data</div>
             )}
@@ -139,3 +214,6 @@ function ProductTablePage() {
 }
 
 export default ProductTablePage;
+
+
+

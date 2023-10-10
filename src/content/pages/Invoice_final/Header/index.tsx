@@ -8,6 +8,7 @@ import CompanyDetails from '../CompanyDetails';
 
 import seller from '../../../../Data/seller.json';
 import buyer from '../../../../Data/buyer.json';
+import { formatDate } from 'src/utils/formatDate';
 
 const ItemRight = styled(Grid)(({ theme }) => ({
   textAlign: 'right'
@@ -27,33 +28,47 @@ const logoStyle = {
 };
 
 export default function Header({ invoiceData }) {
+  console.log(invoiceData)
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={6} container>
-
+          {/* ... */}
         </Grid>
         <Grid item xs={6}>
           <ItemRight>
-            <Typography variant="body2" gutterBottom>
-              Contract No: {invoiceData?.buyers.contractnumber}
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-              Currency: {invoiceData?.buyers.currency.name} ({invoiceData?.buyers.currency.symbol})
-            </Typography>
-            {/* <Typography variant="body2" gutterBottom>
-              PRICES: 0% VAT (VAT EXCLUDED)
-            </Typography> */}
-            <Typography variant="body2" gutterBottom>
-              Delivery Term: {invoiceData?.buyers.deliveryterm}
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-              Delivery Date: {invoiceData?.deliverydate}
-            </Typography>
+            {invoiceData?.buyers?.contractnumber && (
+              <Typography variant="body2" gutterBottom>
+                Contract No: {invoiceData.buyers.contractnumber}
+              </Typography>
+            )}
+            {invoiceData?.buyers?.currency?.name && invoiceData?.buyers?.currency?.symbol && (
+              <Typography variant="body2" gutterBottom>
+                Currency: {invoiceData.buyers?.currency?.name} ({invoiceData.buyers.currency.symbol})
+              </Typography>
+            )}
+            {invoiceData?.buyers?.deliveryterm && (
+              <Typography variant="body2" gutterBottom>
+                Delivery Term: {invoiceData.buyers.deliveryterm}
+              </Typography>
+            )}
+            {invoiceData?.deliverydate && (
+              <Typography variant="body2" gutterBottom>
+                Delivery Date:  {formatDate(invoiceData.deliverydate)}
+              </Typography>
+            )}
+            {invoiceData?.deliverydate && (
+              <Typography variant="body2" gutterBottom>
+                Country of Origin:  {invoiceData?.sellers?.country}
+              </Typography>
+            )}
           </ItemRight>
         </Grid>
+        
         <CompanyDetails invoiceData={invoiceData} />
       </Grid>
     </Box>
+    
   );
 }
+

@@ -12,43 +12,56 @@ import FormikControl from '../../../components/Formik/FormikControl'; // Assumin
 import { onSubmitCustomer } from '../../../services/POST_customers';
 import countriesList from '../../../Data/countries.json';
 import currencyList from '../../../Data/currency.json';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { useEffect, useState } from 'react';
 import { getLoggedInUserDetails } from 'src/contexts/AuthContext';
-import useSellers from 'src/services/GET_seller_data';
-import clsx from 'clsx';
-import { onUpdateSeller } from 'src/services/UPDATE';
+import { getcustomer } from 'src/services/GET';
 
 const validationSchema = Yup.object({
-  name: Yup.string(),
-  address: Yup.string(),
-  country: Yup.string(),
+  name: Yup.string().required('Required'),
+  address: Yup.string().required('Required'),
+  country: Yup.string().required('Required'),
   vatnumber: Yup.string(),
   contractnumber: Yup.string(),
-  managingdirector: Yup.string(),
-  currency: Yup.string()
+  contactperson: Yup.string(),
+  contactpersonrole: Yup.string(),
+  paymentterm: Yup.string(),
+  deliveryterm: Yup.string(),
+  currency: Yup.string().required('Required'),
+  registrationnumber: Yup.string()
 });
 
 const CreateCustomerForm = () => {
   const navigate = useNavigate();
+  const [customer, setCustomer] = useState(null);
   const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
   const [user, setUser] = useState('');
 
-  const {
-    sellers,
-    error: sellerError,
-    isLoading: sellerLoading
-  } = useSellers();
+  const { id } = useParams();
 
   const initialValues = {
-    id:  sellers?.[0].id || "",
-    name:  sellers?.[0].name || "",
-    address:  sellers?.[0].address || "",
-    country:  sellers?.[0].country || "",
-    vatnumber:  sellers?.[0].vatnumber || "",
-    managingdirector:  sellers?.[0].managingdirector || ""
+    name: customer?.name || '',
+    address: customer?.address || '',
+    country: customer?.country || '',
+    vatnumber: customer?.vatnumber || '',
+    contractnumber: customer?.contractnumber || '',
+    contactperson: customer?.contactperson || '',
+    contactpersonrole: customer?.contactpersonrole || '',
+    paymentterm: customer?.paymentterm || '',
+    deliveryterm: customer?.deliveryterm || '',
+    currency: customer?.currency || 1,
+    registrationnumber: customer?.registrationnumber || ''
   };
+
+  async function fetchData(id) {
+    try {
+      const data = await getcustomer(id);
+      setCustomer(data[0]);
+    } catch (error) {
+      console.error('Failed to fetch invoice data:', error);
+    }
+  }
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -59,13 +72,15 @@ const CreateCustomerForm = () => {
     };
 
     fetchUserDetails();
+    fetchData(id);
   }, []);
+
 
   return (
     <Container>
       <Box mt={4} mb={2}>
         <Typography variant="h4" gutterBottom>
-          Edit Company Details
+          Create Customer
         </Typography>
       </Box>
       <Container
@@ -76,9 +91,8 @@ const CreateCustomerForm = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           enableReinitialize
-          onSubmit={
-            (values, actions) =>
-              onUpdateSeller(values, actions, openSnackbar, user) // Changed to onUpdateSeller
+          onSubmit={(values, actions) =>
+            onSubmitCustomer(values, actions, navigate, openSnackbar, user)
           }
         >
           {(formik) => (
@@ -123,21 +137,61 @@ const CreateCustomerForm = () => {
                     />
                   </Tooltip>
                 </Grid>
-
                 <Grid item xs={12}>
                   <FormikControl
                     control="input"
-                    label="Managing Director"
-                    name="managingdirector"
+                    label="Contract Number"
+                    name="contractnumber"
                     labelLayout="left"
                   />
                 </Grid>
-
                 <Grid item xs={12}>
                   <FormikControl
                     control="input"
-                    label="Display Name"
-                    name="displayname"
+                    label="Contact Person"
+                    name="contactperson"
+                    labelLayout="left"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormikControl
+                    control="input"
+                    label="Contact Person Role"
+                    name="contactpersonrole"
+                    labelLayout="left"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormikControl
+                    control="input"
+                    label="Payment Term"
+                    name="paymentterm"
+                    labelLayout="left"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormikControl
+                    control="input"
+                    label="Delivery Term"
+                    name="deliveryterm"
+                    labelLayout="left"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormikControl
+                    control="dropdown"
+                    type="text"
+                    label="Currency"
+                    name="currency"
+                    options={currencyList}
+                    labelLayout="left"
+                  />{' '}
+                </Grid>
+                <Grid item xs={12}>
+                  <FormikControl
+                    control="input"
+                    label="Registration Number"
+                    name="registrationnumber"
                     labelLayout="left"
                   />
                 </Grid>
@@ -146,14 +200,14 @@ const CreateCustomerForm = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    // disabled={!formik.isValid}
+                    disabled={!formik.isValid}
                     style={{ float: 'right', marginTop: '20px' }}
                   >
-                    Update
+                    Edit Customer
                   </Button>
                 </Grid>
               </Grid>
-              <pre>{JSON.stringify(formik.values, null, 2)}</pre>
+              {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
             </Form>
           )}
         </Formik>

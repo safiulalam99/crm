@@ -204,7 +204,7 @@ function SidebarMenu() {
                   to="/components/invoice"
                   startIcon={<TableChartTwoToneIcon />}
                 >
-                  Invoice
+                  Order Confirmation
                 </Button>
               </ListItem>
               <ListItem component="div">

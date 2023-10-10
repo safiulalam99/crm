@@ -41,7 +41,7 @@ const FormikDatePicker = (props) => {
                     value={value}
                     onChange={(date) => setFieldValue(name, date)}
                     onError={form.errors[name] && form.touched[name]}
-                    inputFormat='yyyy-MM-dd'
+                    inputFormat='dd-MM-yyyy'
                     renderInput={(params) => (
                       <TextField
                         fullWidth
@@ -66,7 +66,7 @@ const FormikDatePicker = (props) => {
                   value={value}
                   onChange={(date) => setFieldValue(name, date)}
                   onError={form.errors[name] && form.touched[name]}
-                  inputFormat='yyyy-MM-dd'
+                  inputFormat='dd-MM-yyyy'
                   renderInput={(params) => (
                     <TextField
                       fullWidth

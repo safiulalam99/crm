@@ -44,7 +44,7 @@ const FormikContainer = () => {
         {(formik) => (
           <Form>
             <Grid container justifyContent={'center'} spacing={2}>
-              {/* <Header1 /> */}
+              {/* <HeadeliveryDater1 /> */}
               <Header1 />
               <Header2 setFieldValue={formik.setFieldValue} />
               <Paper sx={{ width: '100%', marginTop: 2 }}>
@@ -109,7 +109,7 @@ const FormikContainer = () => {
               <Button type="submit">Submit</Button>
             </Grid>
 
-            {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
+            <pre>{JSON.stringify(formik.values, null, 2)}</pre>
           </Form>
         )}
       </Formik>

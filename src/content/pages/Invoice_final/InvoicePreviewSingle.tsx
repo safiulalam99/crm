@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import supabase from '../../../config/supabaseClient.js';
 import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
+import { formatDate } from 'src/utils/formatDate';
 
 const ItemRight = styled(Grid)(({ theme }) => ({
   textAlign: 'right'
@@ -64,7 +65,7 @@ const InvoicePreviewSingle = ({ invoiceData }) => {
             <Grid item xs={6} container>
               <ItemRight>
                 <img
-                  src="../../../public/bio2.png"
+                  src="/bio2.png"
                   alt="My Image"
                   style={logoStyle}
                 />
@@ -84,10 +85,10 @@ const InvoicePreviewSingle = ({ invoiceData }) => {
                 <Typography variant="h6">
                   Invoice Number:{' '}
                   <span style={{ color: '#00AED9' }}>
-                    #{invoiceData?.invoicenumber}
+                    {invoiceData?.invoicenumber}
                   </span>
                 </Typography>
-                <Typography variant="h6">Date: {invoiceData?.date}</Typography>
+                <Typography variant="h6">Date: {formatDate(invoiceData?.date)}</Typography>
               </ItemRight>
             </Grid>
           </Grid>

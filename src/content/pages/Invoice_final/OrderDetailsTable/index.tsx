@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import {numberToWords} from '../../../../utils/towords'
 
 // Function to calculate subtotal
 const calculateSubtotal = (products) => {
@@ -34,7 +35,9 @@ export default function ProductTable({ invoiceData }) {
   const hasProductLot = invoiceData?.products.some(
     (product) => product.productlot
   );
+  const loading = !invoiceData;
 
+  console.log(invoiceData?.total.toFixed(1))
   return (
     <TableContainer>
       <Table sx={{ minWidth: 700 }} size="small" aria-label="spanning table">
@@ -89,19 +92,19 @@ export default function ProductTable({ invoiceData }) {
                 align="center"
                 style={{ borderRight: '1px solid #ccc' }}
               >
-                {product.units}
+                {product?.units}
               </TableCell>
               <TableCell
                 style={{ borderRight: '1px solid #ccc', color: '#00AED9' }}
               >
-                {product.name.name}
+                {product.name?.name}
               </TableCell>
               {hasLanguageVersion && (
                 <TableCell
                   align="center"
                   style={{ borderRight: '1px solid #ccc' }}
                 >
-                  {product.languageversion}
+                  {product?.languageversion}
                 </TableCell>
               )}
               {hasProductLot && (
@@ -143,20 +146,30 @@ export default function ProductTable({ invoiceData }) {
                 <Typography variant="body2">{invoiceData?.comments}</Typography>{' '}
               </Grid>
             </Grid>
-            <Grid paddingTop={'13px'}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-                Invoice Term
-              </Typography>
-            </Grid>
-            <Grid container wrap="nowrap">
-              <Grid item xs>
-                <Typography variant="body2">
-                  {invoiceData?.paymentsplit}
-                </Typography>{' '}
-              </Grid>
-            </Grid>
+            {invoiceData?.paymentsplit && (
+              <>
+                <Grid paddingTop={'13px'}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                    Payment Term
+                  </Typography>
+                </Grid>
+                <Grid container wrap="nowrap">
+                  <Grid item xs>
+                    <Typography variant="body2">
+                      {invoiceData?.paymentsplit}
+                    </Typography>{' '}
+                  </Grid>
+                </Grid>
+              </>
+            )}
           </Box>
-        </Grid>
+          {loading ? (
+      <Typography variant="body1">Loading...</Typography>
+    ) : invoiceData.total != null ? (
+      <Typography variant="body1">{numberToWords(invoiceData.total.toFixed(2))}</Typography>
+    ) : (
+      <Typography variant="body1">Total not available</Typography>
+    )}        </Grid>
         <Box>
           <Box sx={{ px: 1, py: 1 }}>
             <Grid container spacing={0}>
