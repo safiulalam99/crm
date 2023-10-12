@@ -1,0 +1,26 @@
+body {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .pdf-viewer {
+    width: 70%;
+  }
+  
+  .viewer {
+    width: 100%;
+    height: 700px;
+  }
+  
+  .download-button {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

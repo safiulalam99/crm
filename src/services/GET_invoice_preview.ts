@@ -7,11 +7,17 @@ export const getInvoiceData = async (invoiceNumber) => {
       .from('invoices')
       .select(
         `
-          *,
-          buyers (id, name, address, country, vatnumber, contractnumber, representative, paymentterm, deliveryterm, registrationnumber, currency_id),
-          sellers (id, name, address, vatnumber, displayname, managingdirector, country),
-          invoice_products (product_id (id, name, description, category, price, time_stamp), unitprice, units, productlot, unittotal, unitvat)
-        `
+      *,
+      buyers:buyers (
+        *,
+        currency:currencies(name, symbol)
+      ),
+      sellers:sellers (*),
+      products:invoice_products (
+        *,
+        name:products (*)
+      )
+    `
       )
       .eq('invoicenumber', invoiceNumber);
 
@@ -26,4 +32,3 @@ export const getInvoiceData = async (invoiceNumber) => {
     return null;
   }
 };
-

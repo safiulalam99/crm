@@ -73,6 +73,8 @@ const Invoice = () => {
         <div className="page-break">
           <GeneralTermsAndConditions/>
         </div>
+        <pre>{JSON.stringify(invoiceData, null, 2)}</pre>
+
       </ThemeProvider>
     </React.Fragment>
   );

@@ -1,3 +1,4 @@
+import { numberToWords } from 'src/utils/towords.js';
 import supabase from '../config/supabaseClient.js';
 
 export const onSubmitInvoice = async (
@@ -22,7 +23,7 @@ export const onSubmitInvoice = async (
           // deliveryterm: values.deliveryTerm,
           discountrate: values.discountRate,
           invoicenumber: values.invoiceNumber,
-          // numberinwords: values.numberInWords,
+          numberinwords: numberToWords(values.total),
           paymentsplit: values.paymentSplit,
           paymentstatus: values.paymentStatus,
           subtotal: values.subTotal,
@@ -59,7 +60,7 @@ export const onSubmitInvoice = async (
     openSnackbar('Invoice data successfully inserted!', 'success');
 
     actions.resetForm();
-    window.open(`/final/${values.invoiceNumber}`, '_blank');
+    window.open(`/pdf/${values.invoiceNumber}`, '_blank');
   } catch (error) {
     openSnackbar('There was an error inserting the invoice data.', 'error');
   }

@@ -17,20 +17,31 @@ import { INITIAL_VALUES } from 'src/utils/utils';
 import { useFormikContext } from 'formik';
 import _ from 'lodash';
 import { numberToWords } from 'src/services/services';
-import useProducts from '../../services/GET_PRODUCTS'; 
+import useProducts from '../../services/GET_PRODUCTS';
 
 interface Column {
-  id: 'Product' | 'Quantity' | 'Unit Price' | 'Amount' | 'Action' | 'lot' | 'Languageversion';
+  id:
+    | 'Product'
+    | 'Quantity'
+    | 'Unit Price'
+    | 'Amount'
+    | 'Action'
+    | 'lot'
+    | 'Languageversion';
   label: string;
   minWidth?: number;
   align?: any;
   format?: (value: number) => string;
 }
 
-
 const columns: readonly Column[] = [
   { id: 'Product', label: 'Product', minWidth: 170 },
-  { id: 'Languageversion', label: 'Language Version', minWidth: 100, align: 'center' },
+  {
+    id: 'Languageversion',
+    label: 'Language Version',
+    minWidth: 100,
+    align: 'center'
+  },
   { id: 'lot', label: 'lot', minWidth: 100, align: 'center' },
   { id: 'Quantity', label: 'Quantity', minWidth: 100, align: 'center' },
   {
@@ -62,7 +73,11 @@ const generateId = () => {
 
 const FormikTable = (props) => {
   const { label, name, values, ...rest } = props;
-  const { products, error: productError, isLoading: productLoading } = useProducts();
+  const {
+    products,
+    error: productError,
+    isLoading: productLoading
+  } = useProducts();
 
   const handleUnitsChange = (index, units) => {
     const unitPrice = Number(values[index].unitPrice);
@@ -75,7 +90,7 @@ const FormikTable = (props) => {
     formik.setFieldValue(`${name}.${index}.name`, product);
     formik.setFieldValue(`${name}.${index}.unitPrice`, product.price);
   };
-  
+
   // console.log(numberToWords(6))
   const handleUnitPriceChange = (index, unitPrice) => {
     const units = Number(values[index].units);
@@ -86,11 +101,12 @@ const FormikTable = (props) => {
 
   const handleUnitTotalChange = (index, unitTotal) => {
     const units = Number(values[index].units);
-    const unitPrice = units !== 0 ? parseFloat((unitTotal / units).toFixed(2)) : 0;
+    const unitPrice =
+      units !== 0 ? parseFloat((unitTotal / units).toFixed(2)) : 0;
     formik.setFieldValue(`${name}.${index}.unitTotal`, unitTotal);
     formik.setFieldValue(`${name}.${index}.unitPrice`, unitPrice);
   };
-  
+
   const formik = useFormikContext();
 
   const calculateTotal = (products) => {
@@ -121,27 +137,26 @@ const FormikTable = (props) => {
   useEffect(() => {
     const subtotal = parseFloat(calculateSubTotal(values).toFixed(2));
     formik.setFieldValue('subTotal', Number(subtotal));
-    
+
     const taxRate = formikValues.taxRate;
     const tax = parseFloat(((taxRate / 100) * subtotal).toFixed(2));
     formik.setFieldValue('totalTax', Number(tax));
-  
+
     const discountRate = formikValues.discountRate;
     const discount = parseFloat(((discountRate / 100) * subtotal).toFixed(2));
     formik.setFieldValue('totalDiscount', Number(discount));
-  
+
     const total = parseFloat((subtotal + tax - discount).toFixed(2));
     formik.setFieldValue('total', Number(total));
     formik.setFieldValue('numberInWords', numberToWords(Number(total)));
-  
+
     // debouncedSave(values);
   }, [values, formikValues.taxRate, formikValues.discountRate]);
-  
-  
+
   if (productLoading) return <p>Loading...</p>;
   // @ts-ignore
   if (productError) return <p>Error: {productError.message}</p>;
-  
+
   return (
     <FieldArray name={name}>
       {({ insert, remove, push, setFieldValue }) => {
@@ -173,8 +188,10 @@ const FormikTable = (props) => {
                             name={`${name}.${index}.name`}
                             options={products}
                             getOptionLabel={(option: any) => option?.name}
-                            onChange={(e, product) => handleProductChange(index, product)}
-                            />
+                            onChange={(e, product) =>
+                              handleProductChange(index, product)
+                            }
+                          />
                         </TableCell>
                         <TableCell>
                           <FormikControl
@@ -182,6 +199,8 @@ const FormikTable = (props) => {
                             type="text"
                             name={`${name}.${index}.languageversion`}
                             // onChange={(e) => handleUnitsChange(index, e.target.value)}
+                            style={{ width: '100px', height: '60px' }}
+
                           />
                         </TableCell>
                         <TableCell>
@@ -190,58 +209,67 @@ const FormikTable = (props) => {
                             type="text"
                             name={`${name}.${index}.productlot`}
                             // onChange={(e) => handleUnitsChange(index, e.target.value)}
+                            style={{ width: '100px', height: '60px' }}
+
                           />
                         </TableCell>
                         <TableCell>
                           <FormikControl
                             control="input"
-                            type="number"
+                            type="text"
                             name={`${name}.${index}.units`}
-                            onChange={(e) => handleUnitsChange(index, e.target.value)}
+                            onChange={(e) =>
+                              handleUnitsChange(index, e.target.value)
+                            }
+                            style={{ width: '100px', height: '60px' }}
+
                           />
                         </TableCell>
                         <TableCell>
                           <FormikControl
                             control="input"
-                            type="number" 
+                            type="text"
                             name={`${name}.${index}.unitPrice`}
                             defaultValue={values[index].name?.price}
-                            onChange={(e) => handleUnitPriceChange(index, e.target.value)}
+                            onChange={(e) =>
+                              handleUnitPriceChange(index, e.target.value)
+                            }
                           />
                         </TableCell>
                         <TableCell>
                           <FormikControl
                             control="input"
-                            type="number"
+                            type="text"
                             name={`${name}.${index}.unitTotal`}
-                            onChange={(e) => handleUnitTotalChange(index, e.target.value)}
+                            onChange={(e) =>
+                              handleUnitTotalChange(index, e.target.value)
+                            }
+                            style={{ width: '100px', height: '60px' }}
                           />
                         </TableCell>
                         <TableCell>
                           <Button onClick={() => remove(index)}>
-                            {/* <DeleteIcon /> */}
-                            X
+                            {/* <DeleteIcon /> */}X
                           </Button>
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
-
                 </Table>
                 <Button
-                    onClick={() =>
-                      push({
-                        id: generateId(),
-                        name: {},
-                        units: 0,
-                        unitPrice: 0,
-                        unitVat: 0,
-                        unitTotal: 0
-                      })
-                    }
-                  >
-                    Add Row
-                  </Button>
+                  onClick={() =>
+                    push({
+                      id: generateId(),
+                      name: {},
+                      units: 0,
+                      unitPrice: 0,
+                      unitVat: 0,
+                      unitTotal: 0
+                    })
+                  }
+                >
+                  Add Row
+                </Button>
               </TableContainer>
             }
           </>

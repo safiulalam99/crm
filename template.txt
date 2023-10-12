@@ -15,4 +15,18 @@ add in header - country of origin: finland
 change to order confirmation 
 
 
+the product details in invoice are not big enough input boxes
+
+
+- invoice pdf layout
+buyer (in the empty space above buyer)
+manufactuer 
+
+
+note has to be where manufacture is
+ payment term will be in the header next to country orinin
+
+ Thirty One Thousand Eight Hundred Five point
+Four Zero -> euros and 40 cents 
+
 

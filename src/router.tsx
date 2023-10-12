@@ -35,6 +35,9 @@ const Docx = Loader(lazy(() => import('src/content/applications/docs')));
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
 );
+const PDF = Loader(
+  lazy(() => import('src/components/PDF/main'))
+);
 const UserProfile = Loader(
   lazy(() => import('src/content/applications/Users/profile'))
 );
@@ -110,6 +113,14 @@ const routes: RouteObject[] = [
       {
         path: 'final/:id',
         element: <AuthWrapper><Invoice_final /></AuthWrapper>
+      },
+      {
+        path: 'pdf',
+        element: <AuthWrapper><PDF /></AuthWrapper>
+      },
+      {
+        path: 'pdf/:id',
+        element: <AuthWrapper><PDF /></AuthWrapper>
       },
       // {
       //   path: 'final/',
@@ -223,6 +234,7 @@ const routes: RouteObject[] = [
         path: 'products/new',
         element: <CreateProduct />
       },
+
       {
         path: 'products/edit/:id',
         element: <EditProduct />

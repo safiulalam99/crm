@@ -62,33 +62,7 @@ function ProductTablePage() {
     console.log("id",id)
   };
 
-  const renderConfirmDialog = () => {
-    if (!promiseArguments) {
-      return null;
-    }
-
-    const { newRow, oldRow } = promiseArguments;
-    const mutation = computeMutation(newRow, oldRow);
-
-    return (
-      <Dialog
-        maxWidth="xs"
-        TransitionProps={{ onEntered: handleEntered }}
-        open={!!promiseArguments}
-      >
-        <DialogTitle>Are you sure?</DialogTitle>
-        <DialogContent dividers>
-          {`Pressing 'Yes' will change ${mutation}.`}
-        </DialogContent>
-        <DialogActions>
-          <Button ref={noButtonRef} onClick={handleNo}>
-            No
-          </Button>
-          <Button onClick={handleYes}>Yes</Button>
-        </DialogActions>
-      </Dialog>
-    );
-  };
+ 
 
   const columns = [
     ,

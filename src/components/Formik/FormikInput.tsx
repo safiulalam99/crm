@@ -70,6 +70,7 @@ const FormikInput = (props) => {
                   value={field.value}
                   error={form.errors[name] && form.touched[name]}
                   helperText={<ErrorMessage name={name} />}
+                  
                 />
               </>
             )}

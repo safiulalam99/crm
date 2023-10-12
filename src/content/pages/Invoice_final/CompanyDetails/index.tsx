@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import {numberToWords} from '../../../../utils/towords'
 const ItemLeft = styled(Grid)(({ theme }) => ({
   textAlign: "left",
 }));

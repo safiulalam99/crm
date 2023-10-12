@@ -33,6 +33,15 @@ function processDecimal(decimal) {
     return decimal.split('').map(digit => units[parseInt(digit, 10)]).join(' ');
 }
 
+function processCents(decimal) {
+    // Ensure the decimal has two digits by padding with a zero if necessary
+    decimal = decimal.padEnd(2, '0');
+    const tensDigit = decimal.charAt(0);
+    const unitsDigit = decimal.charAt(1);
+
+    return `${tens[tensDigit]} ${units[unitsDigit]}`;
+}
+
 function processIntegralPart(integral) {
     let words = '';
     let segmentValue = Math.floor(integral / 1000000000);
@@ -63,7 +72,7 @@ function processIntegralPart(integral) {
 
 export function numberToWords(num) {
     if (typeof num === 'number') {
-        num = num.toString();
+        num = num.toFixed(2).toString();  // Ensure two decimal places
     }
 
     const [integral, decimal] = num.split('.');
@@ -74,7 +83,8 @@ export function numberToWords(num) {
     }
 
     if (decimal) {
-        words += ` point ${processDecimal(decimal)}`;
+        const centsWords = processCents(decimal);
+        words += ` euros and ${centsWords} cents`;
     }
 
     return words.trim();
