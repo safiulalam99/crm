@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, CardActions, Typography, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, CardActions, Typography, Button, Drawer } from '@mui/material';
 import FormikControl from '../Formik/FormikControl';
 import {
   Container,
@@ -12,21 +12,35 @@ import {
 import { Formik, useField } from 'formik';
 import useBuyers from '../../services/GET_buyers_data'; // Adjust the path to your hook
 import useSellers from '../../services/GET_seller_data'; // Adjust the path to your hook
-import useProducts from '../../services/GET_PRODUCTS'; // Adjust the path to your hook
+import CreateCustomer from 'src/content/pages/CustomersPage/CreateCustomer';
 
-const Header2 = ({setFieldValue}) => {
-  const { buyers, error: buyerError, isLoading: buyerLoading } = useBuyers();
-  const { sellers, error: sellerError, isLoading: sellerLoading } = useSellers();
+const Header2 = ({ setFieldValue }) => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { buyers, error, isLoading, refreshBuyers } = useBuyers(); // Notice the new refreshBuyers function here
+  const {
+    sellers,
+    error: sellerError,
+    isLoading: sellerLoading
+  } = useSellers();
 
   const [buyerField, buyerMeta, buyerHelpers] = useField('buyerData');
   const selectedBuyer = buyerField.value;
   const [sellerField, sellerMeta, sellerHelpers] = useField('sellerData');
   const selectedSeller = sellerField.value;
 
-  if (buyerLoading || sellerLoading) return <p>Loading...</p>;
-  if (buyerError) return <p>Error: {buyerError.message}</p>;
+  // if (buyerLoading || sellerLoading) return <p>Loading...</p>;
+  // if (buyerError) return <p>Error: {buyerError.message}</p>;
   if (sellerError) return <p>Error: {sellerError.message}</p>;
 
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
 
   return (
     <Grid container spacing={2}>
@@ -34,15 +48,31 @@ const Header2 = ({setFieldValue}) => {
         <Box m={2}> {/* Add margin around the text */}</Box>
         <Card>
           <CardContent>
+            <Grid container justifyContent="flex-end">
+              <Drawer
+                anchor="right"
+                open={drawerOpen}
+                onClose={toggleDrawer(false)}
+                PaperProps={{
+                  style: {
+                    width: '70%'
+                  }
+                }}
+              >
+                <Button onClick={toggleDrawer(false)}>Close</Button>
+                <CreateCustomer refreshBuyers={refreshBuyers} />
+              </Drawer>
+
+              <Button onClick={toggleDrawer(true)}>Create New Buyer</Button>
+            </Grid>
             <FormikControl
               control="autocomplete"
               type="text"
-              label="To: "
+              label="Buyer: "
               name="buyerData"
               options={buyers}
               getOptionLabel={(option: any) => option?.name}
-              onChange={(event, value) => setFieldValue("buyerData", value)}
-
+              onChange={(event, value) => setFieldValue('buyerData', value)}
             />
           </CardContent>
           <CardContent>
@@ -71,8 +101,7 @@ const Header2 = ({setFieldValue}) => {
               name="sellerData"
               options={sellers}
               getOptionLabel={(option: any) => option?.name}
-              onChange={(event, value) => setFieldValue("sellerData", value)}
-
+              onChange={(event, value) => setFieldValue('sellerData', value)}
             />
           </CardContent>
           <CardContent>

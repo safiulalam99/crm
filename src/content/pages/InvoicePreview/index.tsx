@@ -56,7 +56,7 @@ function InvoicePreview() {
         <Container style={{ background: 'white' }} maxWidth="lg">
           {invoiceData ? <InvoicePDF {...invoiceData} /> : 'Loading...'}
         </Container>
-        <pre>{JSON.stringify(invoiceData, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(invoiceData, null, 2)}</pre> */}
       </Container>
     </>
   );

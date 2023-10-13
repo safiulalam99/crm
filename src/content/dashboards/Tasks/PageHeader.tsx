@@ -9,6 +9,8 @@ import {
 } from '@mui/material';
 import DocumentScannerTwoToneIcon from '@mui/icons-material/DocumentScannerTwoTone';
 import AddAlertTwoToneIcon from '@mui/icons-material/AddAlertTwoTone';
+import { useEffect, useState } from 'react';
+import { getUserInfo } from 'src/contexts/AuthContext';
 
 const AvatarPageTitle = styled(Avatar)(
   ({ theme }) => `
@@ -35,10 +37,23 @@ const AvatarPageTitle = styled(Avatar)(
 );
 
 function PageHeader() {
-  const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg'
-  };
+  const [user, setUser] = useState({
+    name: '',
+    avatar: '',
+    jobtitle: ''
+  });
+
+
+  useEffect(() => {
+    getUserInfo().then((userInfo) => {
+      if (userInfo) {
+        setUser((prevUser) => ({
+          ...prevUser,
+          name: userInfo.user.email
+        }));
+      }
+    });
+  }, []);
 
   return (
     <Box
@@ -56,14 +71,13 @@ function PageHeader() {
             Welcome, {user.name}!
           </Typography>
           <Typography variant="subtitle2">
-            Manage your day to day tasks with style! Enjoy a well built UI
-            system.
+            
           </Typography>
         </Box>
       </Box>
       <Box mt={{ xs: 3, md: 0 }}>
-        <Button variant="contained" startIcon={<DocumentScannerTwoToneIcon />}>
-          Export
+        <Button href='/components/my/new' variant="contained" startIcon={<DocumentScannerTwoToneIcon />}>
+          Edit your company information 
         </Button>
       </Box>
     </Box>
@@ -71,3 +85,4 @@ function PageHeader() {
 }
 
 export default PageHeader;
+

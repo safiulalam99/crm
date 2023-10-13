@@ -10,6 +10,7 @@ import { getInvoiceData } from 'src/services/GET_invoice_preview';
 import { useParams } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Content from './Content';
+import { numberToWords } from 'src/utils/towords';
 
 const Invoice = () => {
   const [sample_data, setSample_data] = useState(null);
@@ -27,7 +28,6 @@ const Invoice = () => {
 
     fetchData();
   }, []);
-console.log(sample_data)
   return (
     <div className="container">
       <div className="pdf-viewer">
@@ -38,19 +38,19 @@ console.log(sample_data)
           </Document>
         </PDFViewer>
       </div>
-      <div className="download-button">
+      {/* <div className="download-button">
         <PDFDownloadLink document={<PDF sample_data={sample_data} />} fileName="order-confirmation.pdf">
           {({ loading }) =>
             loading ? (
               "Loading document..."
             ) : (
-              <Button variant="contained" color="primary">
-                Download
-              </Button>
+              // <Button variant="contained" color="primary">
+              //   Download
+              // </Button>
             )
           }
         </PDFDownloadLink>
-      </div>
+      </div> */}
     </div>
   );
 };

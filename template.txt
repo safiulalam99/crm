@@ -30,3 +30,8 @@ note has to be where manufacture is
 Four Zero -> euros and 40 cents 
 
 
+
+----------------
+
+when payment term is long it doesnt post in client creation 
+

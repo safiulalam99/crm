@@ -34,8 +34,9 @@ export const onSubmitCustomer = async (
     openSnackbar('Invoice data successfully inserted!', 'success');
 
     actions.resetForm();
-    // navigate(`/components/invoice/preview/${values.invoiceNumber}`);
+    return { success: true };  // <-- Return success flag
   } catch (error) {
     openSnackbar('There was an error inserting the invoice data.', 'error');
+    return { success: false }; // <-- Return failure flag
   }
 };

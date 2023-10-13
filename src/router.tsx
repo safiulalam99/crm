@@ -36,7 +36,7 @@ const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
 );
 const PDF = Loader(
-  lazy(() => import('src/components/PDF/main'))
+  lazy(() => import('src/components/PDF/PDFPreview'))
 );
 const UserProfile = Loader(
   lazy(() => import('src/content/applications/Users/profile'))
@@ -114,14 +114,14 @@ const routes: RouteObject[] = [
         path: 'final/:id',
         element: <AuthWrapper><Invoice_final /></AuthWrapper>
       },
-      {
-        path: 'pdf',
-        element: <AuthWrapper><PDF /></AuthWrapper>
-      },
-      {
-        path: 'pdf/:id',
-        element: <AuthWrapper><PDF /></AuthWrapper>
-      },
+      // {
+      //   path: 'pdf',
+      //   element: <AuthWrapper><PDF /></AuthWrapper>
+      // },
+      // {
+      //   path: 'pdf/:id',
+      //   element: <AuthWrapper><PDF /></AuthWrapper>
+      // },
       // {
       //   path: 'final/',
       //   element: <AuthWrapper><Invoice_final /></AuthWrapper>
@@ -223,6 +223,14 @@ const routes: RouteObject[] = [
         element: <EditCustomer />
       },
       {
+        path: 'pdf',
+        element: <AuthWrapper><PDF /></AuthWrapper>
+      },
+      {
+        path: 'pdf/:id',
+        element: <AuthWrapper><PDF /></AuthWrapper>
+      },
+      {
         path: 'my/new',
         element: <CreateSeller />
       },
@@ -232,7 +240,7 @@ const routes: RouteObject[] = [
       },
       {
         path: 'products/new',
-        element: <CreateProduct />
+        element: <CreateProduct afterCreate={null}/>
       },
 
       {

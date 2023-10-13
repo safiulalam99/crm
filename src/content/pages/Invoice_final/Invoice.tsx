@@ -52,7 +52,7 @@ const Invoice = () => {
 
       if (data) {
         setInvoiceData(data);
-        window.print();
+        // window.print();
 
       } else {
         console.error('Error fetching invoice data:', error);
@@ -67,13 +67,14 @@ const Invoice = () => {
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={customTheme}>
-        <div className="page-break">
+        <pre>{JSON.stringify(invoiceData, null, 2)}</pre>
+
+        {/* <div className="page-break">
           <InvoicePreviewSingle invoiceData={invoiceData} />
         </div>
         <div className="page-break">
           <GeneralTermsAndConditions/>
-        </div>
-        <pre>{JSON.stringify(invoiceData, null, 2)}</pre>
+        </div> */}
 
       </ThemeProvider>
     </React.Fragment>

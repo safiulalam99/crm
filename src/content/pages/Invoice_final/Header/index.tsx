@@ -28,7 +28,6 @@ const logoStyle = {
 };
 
 export default function Header({ invoiceData }) {
-  console.log(invoiceData)
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>

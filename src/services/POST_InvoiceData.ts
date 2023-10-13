@@ -60,7 +60,7 @@ export const onSubmitInvoice = async (
     openSnackbar('Invoice data successfully inserted!', 'success');
 
     actions.resetForm();
-    window.open(`/pdf/${values.invoiceNumber}`, '_blank');
+    window.open(`/components/pdf/${values.invoiceNumber}`, '_blank');
   } catch (error) {
     openSnackbar('There was an error inserting the invoice data.', 'error');
   }

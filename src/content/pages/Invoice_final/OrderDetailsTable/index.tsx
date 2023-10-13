@@ -37,7 +37,6 @@ export default function ProductTable({ invoiceData }) {
   );
   const loading = !invoiceData;
 
-  console.log(invoiceData?.total.toFixed(1))
   return (
     <TableContainer>
       <Table sx={{ minWidth: 700 }} size="small" aria-label="spanning table">

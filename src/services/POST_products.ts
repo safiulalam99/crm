@@ -12,6 +12,7 @@ export const onSubmitProduct = async (values, actions, openSnackbar, user) => {
         description: values.description,
         category: values.category,
         price: values.price,
+        color: values.color,
         defaultquantity: values.defaultquantity,
         maxquantity: values.maxquantity,
         imageurl: values.imageurl,
@@ -21,10 +22,11 @@ export const onSubmitProduct = async (values, actions, openSnackbar, user) => {
     if (customerError) throw customerError;
 
     openSnackbar('Product data successfully inserted!', 'success');
-
     actions.resetForm();
-    // navigate(`/components/Product/preview/${values.ProductNumber}`);
+
+    return true; // <-- Add this line to indicate success
   } catch (error) {
     openSnackbar('There was an error inserting the product data.', 'error');
+    return false; // <-- Add this line to indicate failure
   }
 };

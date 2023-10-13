@@ -52,14 +52,14 @@ const Header1 = () => {
           name="contractNumber"
         />
       </Grid> */}
-      <Grid item xs={12} sm={12} md={12} lg={12}>
+      {/* <Grid item xs={12} sm={12} md={12} lg={12}>
         <FormikControl
           control="input"
           type="text"
           label="Payment Term"
           name="paymentSplit"
         />{' '}
-      </Grid>
+      </Grid> */}
       {/* <Grid item xs={12} sm={6} md={3} lg={3}>
         <FormikControl
           control="input"

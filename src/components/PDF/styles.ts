@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
-    marginTop: 10
+    marginTop: 2
   },
   comments: {
     fontSize: 9,

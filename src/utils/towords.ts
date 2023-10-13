@@ -34,13 +34,27 @@ function processDecimal(decimal) {
 }
 
 function processCents(decimal) {
-    // Ensure the decimal has two digits by padding with a zero if necessary
-    decimal = decimal.padEnd(2, '0');
     const tensDigit = decimal.charAt(0);
     const unitsDigit = decimal.charAt(1);
 
-    return `${tens[tensDigit]} ${units[unitsDigit]}`;
+    if (tensDigit === '1' && unitsDigit === '0') {
+        return 'Ten';
+    }
+
+    let tensWord = tens[tensDigit];
+    let unitsWord = units[unitsDigit];
+
+    if (tensDigit === '1' && unitsDigit !== '0') {
+        // Handle teens
+        return teens[unitsDigit];
+    }
+
+    // Handle tens and units separately, but don't add a space if unitsWord is 'Zero'
+    return `${tensWord} ${unitsWord !== 'Zero' ? unitsWord : ''}`.trim();
 }
+
+
+
 
 function processIntegralPart(integral) {
     let words = '';
@@ -82,9 +96,11 @@ export function numberToWords(num) {
         words += processIntegralPart(parseInt(integral, 10));
     }
 
-    if (decimal) {
+    if (decimal && decimal !== '00') {
         const centsWords = processCents(decimal);
         words += ` euros and ${centsWords} cents`;
+    } else {
+        words += ` euros`;
     }
 
     return words.trim();

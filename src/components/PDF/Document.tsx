@@ -1,16 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Document,
-  Page,
-  Text,
-  StyleSheet,
-  View,
-  Image
-} from '@react-pdf/renderer';
+import { Page, Text, StyleSheet, View, Image } from '@react-pdf/renderer';
 import { styles } from './styles';
 import { numberToWords } from 'src/utils/towords';
+import { formatDate } from 'src/utils/formatDate';
+
+// utils/checkColumns.js
+export const checkColumns = (products) => {
+  if (!products) return { hasLanguageVersion: false, hasProductLot: false };
+  const hasLanguageVersion = products.some(
+    (product) => product?.languageversion
+  );
+  const hasProductLot = products.some((product) => product?.productlot);
+  return { hasLanguageVersion, hasProductLot };
+};
 
 const Invoice = ({ sample_data }) => {
+  if (!sample_data || !sample_data.products) {
+    return null; // or return a loading indicator
+  }
+
+  const { hasLanguageVersion, hasProductLot } = checkColumns(
+    sample_data?.products
+  );
+  const colorCode = '#42aed9';
+  const tableColWidth = hasLanguageVersion && hasProductLot ? '10%' : '17%';
+  console.log(sample_data);
   return (
     <>
       <Page size="A4" style={styles.body}>
@@ -23,10 +36,10 @@ const Invoice = ({ sample_data }) => {
             </View>
             <View style={{ width: 250, alignItems: 'flex-start' }}>
               <Text style={styles.companytitle}>
-                {sample_data?.sellers.name}
+                {sample_data?.sellers?.name}
               </Text>
               <Text style={styles.companydisplayname}>
-                {sample_data?.sellers.displayname}
+                {sample_data?.sellers?.displayname}
               </Text>
             </View>
           </View>
@@ -41,19 +54,36 @@ const Invoice = ({ sample_data }) => {
                 {sample_data?.invoicenumber}{' '}
               </Text>
             </Text>
-            <Text style={styles.invoiceNo}>Date: {sample_data?.date}</Text>
+            <Text style={styles.invoiceNo}>
+              Date:{' '}
+              <Text style={{ color: '#6b6b6b' }}>
+                {formatDate(sample_data?.date)}
+              </Text>
+            </Text>
             <Text style={styles.headerSpace}>
-              Currency: {sample_data?.buyers?.currency?.name} (
-              {sample_data?.buyers?.currency?.symbol})
+              Currency:{' '}
+              <Text style={{ color: '#6b6b6b' }}>
+                {sample_data?.buyers?.currency?.name} (
+                {sample_data?.buyers?.currency?.symbol})
+              </Text>
             </Text>
             <Text style={{ marginBottom: 2 }}>
-              Delivery Date: {sample_data?.deliverydate}
+              Delivery Date:{' '}
+              <Text style={{ color: '#6b6b6b' }}>
+                {formatDate(sample_data?.deliverydate)}
+              </Text>
             </Text>
             <Text style={{ marginBottom: 2 }}>
-              Country of Origin: {sample_data?.sellers?.country}
+              Country of Origin:{' '}
+              <Text style={{ color: '#6b6b6b' }}>
+                {sample_data?.sellers?.country}
+              </Text>
             </Text>
             <Text style={{ marginBottom: 2 }}>
-              Payment Term: {sample_data?.paymentsplit}
+              Payment Term:{' '}
+              <Text style={{ color: '#6b6b6b' }}>
+                {sample_data?.buyers?.paymentterm}
+              </Text>
             </Text>
           </View>
         </View>
@@ -99,6 +129,12 @@ const Invoice = ({ sample_data }) => {
             <View>
               <Text style={styles.manufacturertitle}>Manufacturer</Text>
               <Text style={{ marginBottom: 2 }}>
+                Company:{' '}
+                <Text style={{ color: '#6b6b6b' }}>
+                  {sample_data?.sellers?.name}
+                </Text>
+              </Text>
+              <Text style={{ marginBottom: 2 }}>
                 Address:{' '}
                 <Text style={{ color: '#6b6b6b' }}>
                   {sample_data?.sellers?.address},{' '}
@@ -112,7 +148,10 @@ const Invoice = ({ sample_data }) => {
                 </Text>
               </Text>
               <Text style={{ marginBottom: 2 }}>
-                Managing director:  <Text style={{color:"#6b6b6b"}}>{sample_data?.sellers?.managingdirector}</Text>
+                Managing director:{' '}
+                <Text style={{ color: '#6b6b6b' }}>
+                  {sample_data?.sellers?.managingdirector}
+                </Text>
               </Text>
             </View>
           </View>
@@ -125,26 +164,53 @@ const Invoice = ({ sample_data }) => {
         </View>
 
         {/* Products Table */}
+        {/* Products Table */}
         <View style={styles.productsTable}>
           <View style={styles.tableHeader}>
             <Text style={styles.tableColUnits}>Units</Text>
             <Text style={styles.tableColName}>Name</Text>
-            <Text style={styles.tableColc}>Language Version</Text>
-            <Text style={styles.tableColc}>Lot No.</Text>
-            <Text style={styles.tableColc}>Unit Price</Text>
-            <Text style={styles.tableColc}>Total</Text>
+            {hasLanguageVersion && (
+              <Text style={[styles.tableColc, { width: tableColWidth }]}>
+                Language Version
+              </Text>
+            )}
+            {hasProductLot && (
+              <Text style={[styles.tableColc, { width: tableColWidth }]}>
+                Lot No
+              </Text>
+            )}
+            <Text style={[styles.tableColc, { width: tableColWidth }]}>
+              Unit Price
+            </Text>
+            <Text style={[styles.tableColc, { width: tableColWidth }]}>
+              Total
+            </Text>
           </View>
           {sample_data?.products.map((product, index) => (
             <View
               style={index % 2 === 0 ? styles.tableRow : styles.tableRowShaded}
               key={index}
             >
-              <Text style={styles.tableColUnits}>{product.units}</Text>
-              <Text style={styles.tableColNameColor}>{product.name.name}</Text>
-              <Text style={styles.tableColc}>{product.languageversion}</Text>
-              <Text style={styles.tableColc}>{product.productlot}</Text>
-              <Text style={styles.tableColc}>{product.unitprice}</Text>
-              <Text style={styles.tableColc}>{product.unittotal}</Text>
+              <Text style={styles.tableColUnits}>{product?.units}</Text>
+              <Text style={[styles.tableColName, { color: product?.name?.color }]}>
+                {product?.name?.name}
+              </Text>
+              {hasLanguageVersion && (
+                <Text style={[styles.tableColc, { width: tableColWidth }]}>
+                  {product?.languageversion}
+                </Text>
+              )}
+              {hasProductLot && (
+                <Text style={[styles.tableColc, { width: tableColWidth }]}>
+                  {product?.productlot}
+                </Text>
+              )}
+              <Text style={[styles.tableColc, { width: tableColWidth }]}>
+                {product?.unitprice}
+              </Text>
+              <Text style={[styles.tableColc, { width: tableColWidth }]}>
+                {product?.unittotal}
+              </Text>
             </View>
           ))}
         </View>
@@ -181,12 +247,15 @@ const Invoice = ({ sample_data }) => {
               </Text>
               <Text style={styles.summaryValue}>{sample_data?.totaltax}</Text>
             </View>
-            <View style={styles.summaryRow}>
-              <Text style={styles.summaryTitle}>Discount</Text>
-              <Text style={styles.summaryValue}>
-                {sample_data?.totaldiscount}
-              </Text>
-            </View>
+            {sample_data?.totaldiscount && sample_data?.totaldiscount !== 0 ? (
+              <View style={styles.summaryRow}>
+                <Text style={styles.summaryTitle}>Discount</Text>
+                <Text style={styles.summaryValue}>
+                  {sample_data?.totaldiscount}
+                </Text>
+              </View>
+            ) : null}
+
             <View style={styles.summaryRow}>
               <Text style={styles.summaryTitle}>
                 Total ({sample_data?.buyers?.currency?.symbol})
@@ -201,15 +270,10 @@ const Invoice = ({ sample_data }) => {
         <View style={styles.signatureSection}>
           {' '}
           {/* Apply the new style here */}
-          <Text style={styles.someTitle}>BUYER'S REPRESENTATIVE</Text>
+          <Text style={styles.someTitle}>Buyer's Representative</Text>
           <View style={styles.summarySection}>
             <View style={styles.commentsSection}>
-              <Text>Name and Signature: _____________________</Text>
-            </View>
-            <View style={styles.summaryTable}>
-              <View style={styles.summaryRow}>
-                <Text>Place and Date of issue: _____________________</Text>
-              </View>
+              <Text>Name, Date and Signature: ___________________________</Text>
             </View>
           </View>
         </View>

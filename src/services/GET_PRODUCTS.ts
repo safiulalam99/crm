@@ -18,9 +18,9 @@ const fetchProducts = async (): Promise<Product[]> => {
 };
 
 const useProducts = () => {
-  const { data: products, error, isLoading } = useQuery(["products"], fetchProducts);
+  const { data: products, error, isLoading, refetch } = useQuery(["products"], fetchProducts);
 
-  return { products, error, isLoading };
+  return { products, error, isLoading, refetch };
 };
 
 export default useProducts;

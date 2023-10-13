@@ -12,7 +12,8 @@ import {
   Box,
   useTheme,
   Avatar,
-  styled
+  styled,
+  Typography
 } from '@mui/material';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 
@@ -23,6 +24,9 @@ import Projects from './Projects';
 import Checklist from './Checklist';
 import Profile from './Profile';
 import TaskSearch from './TaskSearch';
+import supabase from 'src/config/supabaseClient';
+import useTopproducts from 'src/services/GET_product_metrics';
+import TopProductsSection from './TopProductSection';
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -108,117 +112,26 @@ const TabsContainerWrapper = styled(Box)(
 
 function DashboardTasks() {
   const theme = useTheme();
-
   const [currentTab, setCurrentTab] = useState<string>('analytics');
-
-  const tabs = [
-    { value: 'analytics', label: 'Analytics Overview' },
-    { value: 'taskSearch', label: 'Task Search' }
-  ];
-
-  const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
-    setCurrentTab(value);
-  };
-
+  const { topproducts, error } = useTopproducts();
+  if (error) {
+    console.error('Error fetching top products:', error);
+  }
+  
   return (
     <>
       <Helmet>
-        <title>Tasks Dashboard</title>
+        <title>Dashboard</title>
       </Helmet>
       <PageTitleWrapper>
         <PageHeader />
       </PageTitleWrapper>
       <Container maxWidth="lg">
-        <TabsContainerWrapper>
-          <Tabs
-            onChange={handleTabsChange}
-            value={currentTab}
-            variant="scrollable"
-            scrollButtons="auto"
-            textColor="primary"
-            indicatorColor="primary"
-          >
-            {tabs.map((tab) => (
-              <Tab key={tab.value} label={tab.label} value={tab.value} />
-            ))}
-          </Tabs>
-        </TabsContainerWrapper>
-        <Card variant="outlined">
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="stretch"
-            spacing={0}
-          >
-            {currentTab === 'analytics' && (
-              <>
-                <Grid item xs={12}>
-                  <Box p={4}>
-                    <TeamOverview />
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                  <Box
-                    p={4}
-                    sx={{
-                      background: `${theme.colors.alpha.black[5]}`
-                    }}
-                  >
-                    <Grid container spacing={4}>
-                      <Grid item xs={12} sm={6} md={8}>
-                        <TasksAnalytics />
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <Performance />
-                      </Grid>
-                    </Grid>
-                  </Box>
-                  <Divider />
-                </Grid>
-                <Grid item xs={12}>
-                  <Box p={4}>
-                    <Projects />
-                  </Box>
-                  <Divider />
-                </Grid>
-                <Grid item xs={12}>
-                  <Box
-                    sx={{
-                      background: `${theme.colors.alpha.black[5]}`
-                    }}
-                  >
-                    <Grid container spacing={0}>
-                      <Grid item xs={12} md={6}>
-                        <Box
-                          p={4}
-                          sx={{
-                            background: `${theme.colors.alpha.white[70]}`
-                          }}
-                        >
-                          <Checklist />
-                        </Box>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <Box p={4}>
-                          <Profile />
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-              </>
-            )}
-            {currentTab === 'taskSearch' && (
-              <Grid item xs={12}>
-                <Box p={4}>
-                  <TaskSearch />
-                </Box>
-              </Grid>
-            )}
-          </Grid>
-        </Card>
+        {topproducts && topproducts.length > 0 ? (
+          <TopProductsSection topproducts={topproducts} />
+        ) : (
+          <Typography variant="h6">No top products data available.</Typography>
+        )}
       </Container>
     </>
   );

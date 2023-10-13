@@ -46,10 +46,18 @@ const validationSchema = Yup.object({
 });
 
 
-const CreateCustomerForm = () => {
+const CreateCustomerForm = ({ refreshBuyers }) => {
   const navigate = useNavigate();
 const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
 const [user, setUser] = useState('');
+
+const handleSubmit = async (values, actions) => {
+  const result = await onSubmitCustomer(values, actions, navigate, openSnackbar, user);
+  if (result.success) {
+    refreshBuyers();  // <-- Call the refreshBuyers function
+  }
+};
+
 useEffect(() => {
   const fetchUserDetails = async () => {
     const userDetails = await getLoggedInUserDetails();
@@ -75,8 +83,8 @@ useEffect(() => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) => onSubmitCustomer(values, actions, navigate, openSnackbar, user )}
-        >
+          onSubmit={handleSubmit}  // <-- Update here
+          >
           {(formik) => (
             <Form>
               <Grid container spacing={3}>
@@ -189,7 +197,7 @@ useEffect(() => {
                   </Button>
                 </Grid>
               </Grid>
-              <pre>{JSON.stringify(formik.values, null, 2)}</pre>
+              {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
             </Form>
           )}
         </Formik>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import FormikControl from './FormikControl';
 import { Field, ErrorMessage, FieldArray } from 'formik';
 // import DeleteIcon from '@material-ui/icons/Delete';
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Drawer, Grid } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import productData from '../../Data/products.json';
 import { INITIAL_VALUES } from 'src/utils/utils';
@@ -18,6 +18,7 @@ import { useFormikContext } from 'formik';
 import _ from 'lodash';
 import { numberToWords } from 'src/services/services';
 import useProducts from '../../services/GET_PRODUCTS';
+import CreateProductForm from 'src/content/pages/ProductsPage/CreateProduct';
 
 interface Column {
   id:
@@ -73,10 +74,12 @@ const generateId = () => {
 
 const FormikTable = (props) => {
   const { label, name, values, ...rest } = props;
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const {
     products,
     error: productError,
-    isLoading: productLoading
+    isLoading: productLoading,
+    refetch
   } = useProducts();
 
   const handleUnitsChange = (index, units) => {
@@ -157,6 +160,20 @@ const FormikTable = (props) => {
   // @ts-ignore
   if (productError) return <p>Error: {productError.message}</p>;
 
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
+
+  // Add a function to refresh products
+  const refreshProducts = async () => {
+    await refetch();
+  };
   return (
     <FieldArray name={name}>
       {({ insert, remove, push, setFieldValue }) => {
@@ -164,6 +181,22 @@ const FormikTable = (props) => {
           <>
             {
               <TableContainer sx={{ maxHeight: 440 }}>
+            <Grid container justifyContent="flex-end">
+              <Drawer
+                anchor="right"
+                open={drawerOpen}
+                onClose={toggleDrawer(false)}
+                PaperProps={{
+                  style: {
+                    width: '70%',
+                  },
+                }}
+              >
+                <Button onClick={toggleDrawer(false)}>Close</Button>
+                <CreateProductForm afterCreate={refreshProducts} /> {/* <-- Pass refreshProducts here */}
+              </Drawer>
+              <Button onClick={toggleDrawer(true)}>Create New Product</Button>
+            </Grid>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>
@@ -200,7 +233,6 @@ const FormikTable = (props) => {
                             name={`${name}.${index}.languageversion`}
                             // onChange={(e) => handleUnitsChange(index, e.target.value)}
                             style={{ width: '100px', height: '60px' }}
-
                           />
                         </TableCell>
                         <TableCell>
@@ -210,7 +242,6 @@ const FormikTable = (props) => {
                             name={`${name}.${index}.productlot`}
                             // onChange={(e) => handleUnitsChange(index, e.target.value)}
                             style={{ width: '100px', height: '60px' }}
-
                           />
                         </TableCell>
                         <TableCell>
@@ -222,7 +253,6 @@ const FormikTable = (props) => {
                               handleUnitsChange(index, e.target.value)
                             }
                             style={{ width: '100px', height: '60px' }}
-
                           />
                         </TableCell>
                         <TableCell>
