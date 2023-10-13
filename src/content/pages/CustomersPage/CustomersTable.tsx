@@ -4,15 +4,42 @@ import { Grid, Container, Typography, Button } from '@mui/material';
 import DataTable from 'src/components/DataTable';
 import useGetCustomers from 'src/services/GET_CUSTOMERS';
 import { Link } from 'react-router-dom';
-// import { useSubmitCustomer } from 'src/services/your-customer-hook-file'; // import your hook
-//
+import { useSnackbar } from 'src/contexts/SnackbarContext';
+import { useState } from 'react';
+import { onDeleteCustomer, onDeleteInvoice } from 'src/services/DELETE';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import ConfirmationDialog from 'src/components/ConfirmationDialog';
+
 function CustomerTablePage() {
-  const {
-    customerData: customers, // Changed this line
-    error: customerDataError,
-    isLoading: customerDataLoading
-  } = useGetCustomers(); // Use your hook here
-  // Define columns for customer data
+
+  const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
+  
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [customerToDelete, setCustomerToDelete] = useState(null);
+  
+  const handleDeleteClick = (id) => () => {
+    setCustomerToDelete(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await onDeleteCustomer(customerToDelete, openSnackbar);
+      setRows(rows.filter((row) => row.id !== customerToDelete));
+    } catch (error) {
+      console.log('Delete failed', error);
+      openSnackbar(error.details, 'error');  // Optionally display the error using your snackbar
+    }
+    setDeleteDialogOpen(false);  // Close the dialog whether deletion was successful or not
+  };
+
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
+    setCustomerToDelete(null);
+  };
+  
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
@@ -26,11 +53,33 @@ function CustomerTablePage() {
       )
     },
     { field: 'address', headerName: 'Address', width: 200 },
-    { field: 'country', headerName: 'Country', width: 130 }
-    // Add more fields as per your customer data
+    { field: 'country', headerName: 'Country', width: 130 },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        return [
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />
+        ];
+      }
+    }
   ];
+  const {
+    customerData: customers, // Changed this line
+    error: customerDataError,
+    isLoading: customerDataLoading
+  } = useGetCustomers(); // Use your hook here
 
-  const rows = customers ? customers : [];
+  const initalRows = customers ? customers : [];
+  const [rows, setRows] = useState(initalRows);
 
   return (
     <>
@@ -79,6 +128,13 @@ function CustomerTablePage() {
           </Grid>
         </Grid>
       </Container>
+      <ConfirmationDialog
+        open={deleteDialogOpen}
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        title="Confirm Delete"
+        message="Are you sure you want to delete this customer?"
+      />
     </>
   );
 }

@@ -23,7 +23,6 @@ const Invoice = ({ sample_data }) => {
   );
   const colorCode = '#42aed9';
   const tableColWidth = hasLanguageVersion && hasProductLot ? '10%' : '17%';
-  console.log(sample_data);
   return (
     <>
       <Page size="A4" style={styles.body}>

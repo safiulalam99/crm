@@ -6,29 +6,66 @@ import useInvoices from '../../../services/GET_Invoices';
 import { Link } from 'react-router-dom';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import Status500 from '../Status/Status500';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import { onDeleteInvoice } from 'src/services/DELETE';
+import { useSnackbar } from 'src/contexts/SnackbarContext';
+import { useEffect, useState } from 'react';
+import ConfirmationDialog from 'src/components/ConfirmationDialog';
 
 function formatDate(isoString) {
   const date = new Date(isoString);
   return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 }
 function InvoicePage() {
+  const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
   const {
     invoiceData,
     error: invoiceDataError,
     isLoading: invoiceDataLoading
   } = useInvoices();
 
-  const rows = invoiceData
-    ? invoiceData.map((item, index) => ({
-        id: item.invoicenumber,
-        time_stamp: item.time_stamp,
-        invoicenumber: item.invoicenumber,
-        // @ts-ignore
-        name: item.buyers.name,
-        deliverydate: item.deliverydate,
-        total: item.total
-      }))
-    : [];
+  const [rows, setRows] = useState([]); // Initialize rows state
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [invoiceToDelete, setInvoiceToDelete] = useState(null);
+
+  useEffect(() => {
+    // Update rows state when invoiceData changes
+    if (invoiceData) {
+      setRows(
+        invoiceData.map((item, index) => ({
+          id: item.invoicenumber,
+          time_stamp: item.time_stamp,
+          invoicenumber: item.invoicenumber,
+          // @ts-ignore
+          name: item.buyers.name,
+          deliverydate: item.deliverydate,
+          total: item.total
+        }))
+      );
+    }
+  }, [invoiceData]);
+
+  const handleDeleteClick = (id) => () => {
+    setInvoiceToDelete(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await onDeleteInvoice(invoiceToDelete, openSnackbar); // Wait for the promise to resolve
+      setRows(rows.filter((row) => row.id !== invoiceToDelete)); // Update rows only if the delete was successful
+      setDeleteDialogOpen(false); // Close the dialog
+    } catch (error) {
+      // Handle the error if the delete was unsuccessful
+      console.log('Delete failed', error);
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false); // Close the dialog
+    setInvoiceToDelete(null); // Reset the invoiceToDelete
+  };
 
   const columns = [
     {
@@ -49,6 +86,23 @@ function InvoicePage() {
       headerName: 'Created at',
       width: 200,
       valueFormatter: (params) => formatDate(params.value)
+    },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        return [
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />
+        ];
+      }
     }
   ];
 
@@ -105,6 +159,14 @@ function InvoicePage() {
           </Grid>
         </Grid>
       </Container>
+
+      <ConfirmationDialog
+        open={deleteDialogOpen}
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        title="Confirm Delete"
+        message="Are you sure you want to delete this invoice?"
+      />
     </>
   );
 }

@@ -8,7 +8,7 @@ import PDF from './Document';
 import './index.css';
 import { getInvoiceData } from 'src/services/GET_invoice_preview';
 import { useParams } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import Content from './Content';
 import { numberToWords } from 'src/utils/towords';
 

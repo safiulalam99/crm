@@ -23,13 +23,14 @@ import CancelIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
+import { onDeleteProduct } from 'src/services/DELETE';
+import { useSnackbar } from 'src/contexts/SnackbarContext';
+import ConfirmationDialog from 'src/components/ConfirmationDialog';
 
 function formatDate(isoString) {
   const date = new Date(isoString);
   return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 }
-
-
 
 const StatusBadge = ({ status }) => {
   let badgeColor;
@@ -55,15 +56,27 @@ const StatusBadge = ({ status }) => {
   );
 };
 
-
 function ProductTablePage() {
+  const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [toBeDeletedId, setToBeDeletedId] = useState(null);
+  
   const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-    console.log("id",id)
+    setToBeDeletedId(id);
+    setDialogOpen(true);
   };
-
- 
-
+  
+  const handleDeleteConfirm = async () => {
+    try {
+      await onDeleteProduct(toBeDeletedId, openSnackbar);
+      setRows(rows.filter((row) => row.id !== toBeDeletedId));
+      setDialogOpen(false);  // Close the dialog
+    } catch (error) {
+      console.log('Delete failed', error);
+      setDialogOpen(false);  // Close the dialog
+    }
+  };
+  
   const columns = [
     ,
     { field: 'id', headerName: 'ID', width: 90 },
@@ -78,7 +91,6 @@ function ProductTablePage() {
       )
     },
     { field: 'description', headerName: 'Description', width: 200 },
-    { field: 'category', headerName: 'Category', width: 130 },
     { field: 'price', headerName: 'Price', width: 110 },
     {
       field: 'time_stamp',
@@ -109,7 +121,6 @@ function ProductTablePage() {
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
-          
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
@@ -183,11 +194,15 @@ function ProductTablePage() {
           </Grid>
         </Grid>
       </Container>
+      <ConfirmationDialog
+      open={dialogOpen}
+      onConfirm={handleDeleteConfirm}
+      onCancel={() => setDialogOpen(false)}
+      title="Delete Product"
+      message="Are you sure you want to delete this product? This action cannot be undone."
+    />
     </>
   );
 }
 
 export default ProductTablePage;
-
-
-
