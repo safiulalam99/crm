@@ -215,7 +215,7 @@ function SidebarMenu() {
                   to="/components/customers"
                   startIcon={<TableChartTwoToneIcon />}
                 >
-                  Client
+                  Customers
                 </Button>
               </ListItem>
               <ListItem component="div">

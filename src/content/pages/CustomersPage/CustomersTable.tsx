@@ -5,19 +5,31 @@ import DataTable from 'src/components/DataTable';
 import useGetCustomers from 'src/services/GET_CUSTOMERS';
 import { Link } from 'react-router-dom';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
-import { useState } from 'react';
-import { onDeleteCustomer, onDeleteInvoice } from 'src/services/DELETE';
+import { useEffect, useState } from 'react';
+import { onDeleteCustomer } from 'src/services/DELETE';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ConfirmationDialog from 'src/components/ConfirmationDialog';
 
 function CustomerTablePage() {
-
-  const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
+  const {
+    customers, 
+    error: customerDataError,
+    isLoading: customerDataLoading
+  } = useGetCustomers(); 
+  const initalRows = customers ? customers : [];
+  const [rows, setRows] = useState(initalRows);
+  useEffect(() => {
+    if (customers) {
+      setRows(customers);
+    }
+  }, [customers]);
   
+  const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
+
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [customerToDelete, setCustomerToDelete] = useState(null);
-  
+
   const handleDeleteClick = (id) => () => {
     setCustomerToDelete(id);
     setDeleteDialogOpen(true);
@@ -29,17 +41,16 @@ function CustomerTablePage() {
       setRows(rows.filter((row) => row.id !== customerToDelete));
     } catch (error) {
       console.log('Delete failed', error);
-      openSnackbar(error.details, 'error');  // Optionally display the error using your snackbar
+      openSnackbar(error.details, 'error');
     }
-    setDeleteDialogOpen(false);  // Close the dialog whether deletion was successful or not
+    setDeleteDialogOpen(false); 
   };
-
 
   const handleDeleteCancel = () => {
     setDeleteDialogOpen(false);
     setCustomerToDelete(null);
   };
-  
+
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
@@ -72,14 +83,8 @@ function CustomerTablePage() {
       }
     }
   ];
-  const {
-    customerData: customers, // Changed this line
-    error: customerDataError,
-    isLoading: customerDataLoading
-  } = useGetCustomers(); // Use your hook here
 
-  const initalRows = customers ? customers : [];
-  const [rows, setRows] = useState(initalRows);
+
 
   return (
     <>

@@ -163,7 +163,7 @@ const CreateProductForm = ({ afterCreate }) => {
                   Create Product
                 </Button>
               </Grid>
-              <pre>{JSON.stringify(formik.values, null, 2)}</pre>
+              {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
             </Form>
           )}
         </Formik>
