@@ -35,7 +35,7 @@ const Docx = Loader(lazy(() => import('src/content/applications/docs')));
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
 );
-const PDF = Loader(lazy(() => import('src/content/pages/PDF/PDFPreview')));
+const PDF = Loader(lazy(() => import('src/content/pages/OrderConfirmationPDF/PDFPreview')));
 const UserProfile = Loader(
   lazy(() => import('src/content/applications/Users/profile'))
 );
