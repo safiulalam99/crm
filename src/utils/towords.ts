@@ -6,6 +6,11 @@ const bigUnits = ['', 'Thousand', 'Million', 'Billion'];
 function processSegment(segment) {
     let words = '';
 
+    // Handle the specific case for 10 (ten thousand)
+    if (segment === 10) {
+        return 'Ten';
+    }
+
     const hundreds = Math.floor(segment / 100);
     const remainder = segment % 100;
     const tensValue = Math.floor(remainder / 10);

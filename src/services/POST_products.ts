@@ -24,9 +24,9 @@ export const onSubmitProduct = async (values, actions, openSnackbar, user) => {
     openSnackbar('Product data successfully inserted!', 'success');
     actions.resetForm();
 
-    return true; // <-- Add this line to indicate success
+    return true; 
   } catch (error) {
     openSnackbar('There was an error inserting the product data.', 'error');
-    return false; // <-- Add this line to indicate failure
+    return false;  
   }
 };

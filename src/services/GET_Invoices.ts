@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import supabase from '../config/supabaseClient'; // Adjust the path to your Supabase configuration
 
 const fetchInvoices = async () => {
-  let { data, error } = await supabase.from('invoices').select(`
+  let { data, error } = await supabase.from('order_confirmation').select(`
     invoicenumber, 
     deliverydate, 
     total, 
@@ -28,7 +28,7 @@ const fetchInvoices = async () => {
 
 const useBuyers = () => {
   const { data: invoiceData, error, isLoading } = useQuery(
-    ["invoices"],
+    ["order_confirmation"],
     fetchInvoices,
     {
       staleTime: 10000, // data considered "fresh" for 10 seconds

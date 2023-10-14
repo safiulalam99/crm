@@ -9,7 +9,7 @@ const useCustomers = () => {
   const fetchCustomers = useCallback(async () => {
     setIsLoading(true);
     try {
-      let { data, error } = await supabase.from('sellers').select('*');
+      let { data, error } = await supabase.from('buyers').select('*');
       if (error) throw error;
       setCustomers(data);
     } catch (err) {

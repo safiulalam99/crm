@@ -27,23 +27,23 @@ export const useSellers = () => {
 export const getproduct = async (id:string) => {
   try {
     // Fetch from the invoices table
-    const { data: invoiceData, error: invoiceError } = await supabase
+    const { data: productData, error: productError } = await supabase
       .from('products')
       .select('*')
       .eq('id', id);
 
-    if (invoiceError) throw invoiceError;
+    if (productError) throw productError;
 
-    return invoiceData;
+    return productData;
   } catch (error) {
-    console.error('Error fetching invoice data:', error);
-    alert('There was an error fetching the invoice data.');
+    console.error('Error fetching product data:', error);
+    alert('There was an error fetching the product data.');
     return null;
   }
 };
 export const getcustomer = async (id:string) => {
   try {
-    // Fetch from the invoices table
+    // Fetch from the products table
     const { data: customerData, error: customerError } = await supabase
       .from('buyers')
       .select('*')
@@ -53,8 +53,8 @@ export const getcustomer = async (id:string) => {
 
     return customerData;
   } catch (error) {
-    console.error('Error fetching invoice data:', error);
-    alert('There was an error fetching the invoice data.');
+    console.error('Error fetching customer data:', error);
+    alert('There was an error fetching the customer data.');
     return null;
   }
 };

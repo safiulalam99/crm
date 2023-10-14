@@ -13,10 +13,10 @@ import ConfirmationDialog from 'src/components/ConfirmationDialog';
 
 function CustomerTablePage() {
   const {
-    customers, 
+    customers,
     error: customerDataError,
     isLoading: customerDataLoading
-  } = useGetCustomers(); 
+  } = useGetCustomers();
   const initalRows = customers ? customers : [];
   const [rows, setRows] = useState(initalRows);
   useEffect(() => {
@@ -24,7 +24,7 @@ function CustomerTablePage() {
       setRows(customers);
     }
   }, [customers]);
-  
+
   const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -43,7 +43,7 @@ function CustomerTablePage() {
       console.log('Delete failed', error);
       openSnackbar(error.details, 'error');
     }
-    setDeleteDialogOpen(false); 
+    setDeleteDialogOpen(false);
   };
 
   const handleDeleteCancel = () => {
@@ -55,7 +55,7 @@ function CustomerTablePage() {
     { field: 'id', headerName: 'ID', width: 90 },
     {
       field: 'name',
-      headerName: 'Product Name',
+      headerName: 'Name',
       width: 150,
       renderCell: (params) => (
         <Link to={`/components/customers/edit/${params.id}`}>
@@ -83,8 +83,6 @@ function CustomerTablePage() {
       }
     }
   ];
-
-
 
   return (
     <>

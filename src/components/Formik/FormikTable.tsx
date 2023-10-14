@@ -43,7 +43,7 @@ const columns: readonly Column[] = [
     minWidth: 100,
     align: 'center'
   },
-  { id: 'lot', label: 'lot', minWidth: 100, align: 'center' },
+  { id: 'lot', label: 'lot/exp', minWidth: 100, align: 'center' },
   { id: 'Quantity', label: 'Quantity', minWidth: 100, align: 'center' },
   {
     id: 'Unit Price',
@@ -247,7 +247,7 @@ const FormikTable = (props) => {
                         <TableCell>
                           <FormikControl
                             control="input"
-                            type="text"
+                            type="number"
                             name={`${name}.${index}.units`}
                             onChange={(e) =>
                               handleUnitsChange(index, e.target.value)
@@ -258,7 +258,7 @@ const FormikTable = (props) => {
                         <TableCell>
                           <FormikControl
                             control="input"
-                            type="text"
+                            type="number"
                             name={`${name}.${index}.unitPrice`}
                             defaultValue={values[index].name?.price}
                             onChange={(e) =>

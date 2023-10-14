@@ -22,7 +22,7 @@ const Invoice = ({ sample_data }) => {
     sample_data?.products
   );
   const colorCode = '#42aed9';
-  const tableColWidth = hasLanguageVersion && hasProductLot ? '10%' : '17%';
+  const tableColWidth = hasLanguageVersion && hasProductLot ? '15%' : '17%';
   return (
     <>
       <Page size="A4" style={styles.body}>
@@ -34,9 +34,9 @@ const Invoice = ({ sample_data }) => {
               <Image style={styles.logo} src="/bio2.png" />
             </View>
             <View style={{ width: 250, alignItems: 'flex-start' }}>
-              <Text style={styles.companytitle}>
+              {/* <Text style={styles.companytitle}>
                 {sample_data?.sellers?.name}
-              </Text>
+              </Text> */}
               <Text style={styles.companydisplayname}>
                 {sample_data?.sellers?.displayname}
               </Text>
@@ -59,31 +59,44 @@ const Invoice = ({ sample_data }) => {
                 {formatDate(sample_data?.date)}
               </Text>
             </Text>
-            <Text style={styles.headerSpace}>
-              Currency:{' '}
-              <Text style={{ color: '#6b6b6b' }}>
-                {sample_data?.buyers?.currency?.name} (
-                {sample_data?.buyers?.currency?.symbol})
+            {sample_data?.buyers?.contractnumber ? (
+              <Text style={styles.headerSpace}>
+                Contract Number:{' '}
+                <Text style={{ color: '#6b6b6b' }}>
+                  {sample_data?.buyers?.contractnumber}
+                </Text>
               </Text>
-            </Text>
-            <Text style={{ marginBottom: 2 }}>
-              Delivery Date:{' '}
-              <Text style={{ color: '#6b6b6b' }}>
-                {formatDate(sample_data?.deliverydate)}
-              </Text>
-            </Text>
-            <Text style={{ marginBottom: 2 }}>
+            ) : null}
+
+            <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
               Country of Origin:{' '}
               <Text style={{ color: '#6b6b6b' }}>
                 {sample_data?.sellers?.country}
               </Text>
             </Text>
-            <Text style={{ marginBottom: 2 }}>
-              Payment Term:{' '}
-              <Text style={{ color: '#6b6b6b' }}>
-                {sample_data?.buyers?.paymentterm}
+            {sample_data?.buyers?.paymentterm ? (
+              <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
+                Payment Term:{' '}
+                <Text style={{ color: '#6b6b6b' }}>
+                  {sample_data?.buyers?.paymentterm}
+                </Text>
+              </Text>
+            ) : null}
+            <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
+              Currency:{' '}
+              <Text>
+                {sample_data?.buyers?.currency?.name} (
+                {sample_data?.buyers?.currency?.symbol})
               </Text>
             </Text>
+            {sample_data?.deliverydate ? (
+              <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
+                Delivery Date:{' '}
+                <Text style={{ color: '#6b6b6b' }}>
+                  {formatDate(sample_data?.deliverydate)}
+                </Text>
+              </Text>
+            ) : null}
           </View>
         </View>
 
@@ -94,71 +107,68 @@ const Invoice = ({ sample_data }) => {
               {/* Buyer Info */}
               <Text style={styles.subtitle}>Buyer</Text>
               <Text style={{ marginBottom: 2 }}>
-                Company:{' '}
                 <Text style={{ color: '#6b6b6b' }}>
                   {sample_data?.buyers?.name}
                 </Text>
               </Text>
               <Text style={{ marginBottom: 2 }}>
-                Address:{' '}
                 <Text style={{ color: '#6b6b6b' }}>
-                  {sample_data?.buyers?.address}
+                  {sample_data?.buyers?.address}, {sample_data?.buyers?.country}
                 </Text>
               </Text>
-              <Text style={{ marginBottom: 2 }}>
-                Country:{' '}
-                <Text style={{ color: '#6b6b6b' }}>
-                  {sample_data?.buyers?.country}
-                </Text>
-              </Text>
-              <Text style={{ marginBottom: 2 }}>
+              <Text style={{ marginBottom: 2 }}></Text>
+              <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
                 Vat No:{' '}
                 <Text style={{ color: '#6b6b6b' }}>
                   {sample_data?.buyers?.vatnumber}
                 </Text>
               </Text>
-              <Text style={{ marginBottom: 2 }}>
-                Managing director:{' '}
-                <Text style={{ color: '#6b6b6b' }}>
-                  {sample_data?.buyers?.contactperson}
+              {sample_data?.buyers?.contactperson ? (
+                <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
+                  Managing Director:{' '}
+                  <Text style={{ color: '#6b6b6b' }}>
+                    {sample_data?.buyers?.contactperson}
+                  </Text>
                 </Text>
-              </Text>
+              ) : null}
               {/* Seller Info */}
             </View>
             <View>
               <Text style={styles.manufacturertitle}>Manufacturer</Text>
               <Text style={{ marginBottom: 2 }}>
-                Company:{' '}
                 <Text style={{ color: '#6b6b6b' }}>
                   {sample_data?.sellers?.name}
                 </Text>
               </Text>
               <Text style={{ marginBottom: 2 }}>
-                Address:{' '}
                 <Text style={{ color: '#6b6b6b' }}>
                   {sample_data?.sellers?.address},{' '}
                   {sample_data?.sellers?.country}
                 </Text>
               </Text>
-              <Text style={{ marginBottom: 2 }}>
+              <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
                 Vat No:{' '}
                 <Text style={{ color: '#6b6b6b' }}>
                   {sample_data?.sellers?.vatnumber}
                 </Text>
               </Text>
-              <Text style={{ marginBottom: 2 }}>
-                Managing director:{' '}
-                <Text style={{ color: '#6b6b6b' }}>
-                  {sample_data?.sellers?.managingdirector}
+              {sample_data?.sellers?.managingdirector ? (
+                <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
+                  Managing Director:{' '}
+                  <Text style={{ color: '#6b6b6b' }}>
+                    {sample_data?.sellers?.managingdirector}
+                  </Text>
                 </Text>
-              </Text>
+              ) : null}
             </View>
           </View>
 
           {/* Comments */}
           <View style={styles.comments}>
-            <Text style={styles.subtitle}>Notes</Text>
-            <Text>{sample_data?.comments}</Text>
+            <View style={styles.subs}>
+              <Text style={styles.subtitle}>Notes</Text>
+              <Text>{sample_data?.comments}</Text>
+            </View>
           </View>
         </View>
 
@@ -167,7 +177,7 @@ const Invoice = ({ sample_data }) => {
         <View style={styles.productsTable}>
           <View style={styles.tableHeader}>
             <Text style={styles.tableColUnits}>Units</Text>
-            <Text style={styles.tableColName}>Name</Text>
+            <Text style={styles.tableColName}>Product</Text>
             {hasLanguageVersion && (
               <Text style={[styles.tableColc, { width: tableColWidth }]}>
                 Language Version
@@ -175,7 +185,7 @@ const Invoice = ({ sample_data }) => {
             )}
             {hasProductLot && (
               <Text style={[styles.tableColc, { width: tableColWidth }]}>
-                Lot No
+                Lot/Exp
               </Text>
             )}
             <Text style={[styles.tableColc, { width: tableColWidth }]}>
@@ -191,7 +201,9 @@ const Invoice = ({ sample_data }) => {
               key={index}
             >
               <Text style={styles.tableColUnits}>{product?.units}</Text>
-              <Text style={[styles.tableColName, { color: product?.name?.color }]}>
+              <Text
+                style={[styles.tableColName, { color: product?.name?.color }]}
+              >
                 {product?.name?.name}
               </Text>
               {hasLanguageVersion && (
@@ -207,7 +219,12 @@ const Invoice = ({ sample_data }) => {
               <Text style={[styles.tableColc, { width: tableColWidth }]}>
                 {product?.unitprice}
               </Text>
-              <Text style={[styles.tableColc, { width: tableColWidth }]}>
+              <Text
+                style={[
+                  styles.tableColc,
+                  { width: tableColWidth, textAlign: 'right' }
+                ]}
+              >
                 {product?.unittotal}
               </Text>
             </View>

@@ -35,9 +35,7 @@ const Docx = Loader(lazy(() => import('src/content/applications/docs')));
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
 );
-const PDF = Loader(
-  lazy(() => import('src/components/PDF/PDFPreview'))
-);
+const PDF = Loader(lazy(() => import('src/content/pages/PDF/PDFPreview')));
 const UserProfile = Loader(
   lazy(() => import('src/content/applications/Users/profile'))
 );
@@ -52,7 +50,7 @@ const Status500 = Loader(
 const CreateInvoice = Loader(
   lazy(() => import('src/content/pages/CreateInvoice'))
 );
-const InvoicePage = Loader(lazy(() => import('src/content/pages/InvoicePage')));
+const InvoicePage = Loader(lazy(() => import('src/content/pages/OrderConfirmationPage')));
 
 const CreateCustomer = Loader(
   lazy(() => import('src/content/pages/CustomersPage/CreateCustomer'))
@@ -104,7 +102,11 @@ const routes: RouteObject[] = [
   },
   {
     path: '',
-    element: <BaseLayout />,
+    element: (
+      <AuthWrapper>
+        <BaseLayout />
+      </AuthWrapper>
+    ),
     children: [
       // {
       //   path: '/',
@@ -112,7 +114,7 @@ const routes: RouteObject[] = [
       // },
       {
         path: 'final/:id',
-        element: <AuthWrapper><Invoice_final /></AuthWrapper>
+        element: <Invoice_final />
       },
       // {
       //   path: 'pdf',
@@ -128,7 +130,11 @@ const routes: RouteObject[] = [
       // },
       {
         path: 'overview',
-        element: <Navigate to="/" replace />
+        element: (
+          <AuthWrapper>
+            <Navigate to="/" replace />{' '}
+          </AuthWrapper>
+        )
       },
       {
         path: 'status',
@@ -224,11 +230,11 @@ const routes: RouteObject[] = [
       },
       {
         path: 'pdf',
-        element: <AuthWrapper><PDF /></AuthWrapper>
+        element: <PDF />
       },
       {
         path: 'pdf/:id',
-        element: <AuthWrapper><PDF /></AuthWrapper>
+        element: <PDF />
       },
       {
         path: 'my/new',
@@ -240,13 +246,13 @@ const routes: RouteObject[] = [
       },
       {
         path: 'products/new',
-        element: <CreateProduct afterCreate={null}/>
+        element: <CreateProduct afterCreate={null} />
       },
 
       {
         path: 'products/edit/:id',
         element: <EditProduct />
-      },
+      }
       // {
       //   path: 'invoice/preview/:id',
       //   element: <InvoicePreview />

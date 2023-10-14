@@ -30,29 +30,33 @@ export const onDeleteProduct = async (id, openSnackbar) => {
       .eq('id', id);
 
     if (productserror) throw productserror;
-    console.log(productserror);
     openSnackbar(`${id} deleted!`, 'success');
+    console.log(products)
 
     // navigate(`/components/invoice/preview/${values.invoiceNumber}`);
   } catch (error) {
     openSnackbar(error.details, 'error');
-    console.log(error);
   }
 };
 
 export const onDeleteInvoice = async (id, openSnackbar) => {
   try {
-    // Start a transaction
-    const { data: products, error: productsError } = await supabase
-      .rpc('delete_invoice_and_products', { invoice_id: id });
+    // Call the function to delete the order confirmation and related products
+    const { data, error } = await supabase
+      .rpc('delete_order_confirmation_and_products', { invoicenumber_param: id });
+
+    if (error) throw error;
     
-    if (productsError) throw productsError;
     openSnackbar(`${id} deleted!`, 'success');
-    return Promise.resolve(products);  // Resolve the promise with the deleted invoice and product data
+    console.log(data)
+    return Promise.resolve(data);  // Resolve the promise with the result
 
   } catch (error) {
     openSnackbar(error.details, 'error');
+    console.log(error)
     return Promise.reject(error);  // Reject the promise with the error
+
   }
 };
+
 

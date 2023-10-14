@@ -17,18 +17,19 @@ export const styles = StyleSheet.create({
   invoiceTitle: {
     fontSize: 18,
     marginTop: 10,
-        color: '#827f7f',
-
+    color: '#827f7f'
   },
   invoiceNo: {
-    fontSize: 13
+    fontSize: 13,
+    color: '#6b6b6b',
   },
   colorItems: {
     color: '#42aed9'
   },
   headerSpace: {
     marginTop: 5,
-    marginBottom: 2
+    marginBottom: 2,
+    color: '#6b6b6b',
   },
   invoiceDetails: {
     fontSize: 9,
@@ -42,15 +43,20 @@ export const styles = StyleSheet.create({
     marginTop: 2
   },
   comments: {
+    marginTop: 2,
     fontSize: 9,
     width: '40%',
 
     flexWrap: 'wrap'
   },
+  subs: {
+    marginTop: 40,
+  
+  },
   productsTable: {
-    width: '100%',
+    width: '100%'
 
-    marginBottom: 20
+    // marginBottom:
   },
   tableHeader: {
     flexDirection: 'row',
@@ -63,12 +69,14 @@ export const styles = StyleSheet.create({
   },
   subtitle: {
     fontWeight: 'bold',
-    fontSize: 12,
+    marginBottom: 3,
+    fontSize: 12
   },
   manufacturertitle: {
     fontWeight: 'bold',
+    marginBottom: 3,
     fontSize: 12,
-    marginTop: 5,
+    marginTop: 5
   },
   tableCol: {
     width: '25%',
@@ -87,7 +95,7 @@ export const styles = StyleSheet.create({
     width: '40%',
     // borderRightWidth: 1,
     padding: 8,
-    fontSize: 9,
+    fontSize: 9
   },
   tableColNameColor: {
     width: '40%',
@@ -105,7 +113,7 @@ export const styles = StyleSheet.create({
     // borderRightWidth: 1,
     padding: 8,
     fontSize: 9,
-    textAlign: 'center'
+    textAlign: 'right'
   },
   buyerseller: {
     fontSize: 9,
@@ -120,10 +128,10 @@ export const styles = StyleSheet.create({
   },
 
   logoAndSeller: {
-    flexDirection: 'column', 
-    alignItems: 'flex-start', 
-    marginTop: 20, 
-    // width: '50%' 
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginTop: 20
+    // width: '50%'
   },
   summarySection: {
     flexDirection: 'row',
@@ -142,18 +150,17 @@ export const styles = StyleSheet.create({
   companytitle: {
     fontSize: 14,
     fontWeight: 'bold',
-    marginBottom: 5 ,
-    color: '#6b6b6b',
-
-},
-companydisplayname: {
+    marginBottom: 5,
+    color: '#6b6b6b'
+  },
+  companydisplayname: {
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 5,
     color: '#827f7f',
-    fontStyle: 'italic',  // Add this line to make the font italic
+    fontStyle: 'italic' // Add this line to make the font italic
   },
-  
+
   buyertitle: {
     fontSize: 12,
     fontWeight: 'bold'
@@ -179,7 +186,6 @@ companydisplayname: {
     textAlign: 'right',
     width: '60%',
     marginBottom: 2
-
   },
   numberinwords: {
     marginTop: 5

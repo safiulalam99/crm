@@ -11,7 +11,7 @@ export const onSubmitInvoice = async (
   try {
     // Insert into the invoices table
     const { data: invoiceData, error: invoiceError } = await supabase
-      .from('invoices')
+      .from('order_confirmation')
       .insert([
         {
           buyer_id: values.buyerData.id,
@@ -40,7 +40,7 @@ export const onSubmitInvoice = async (
     // Insert into the invoice_products table
     for (let product of values.products) {
       const { error: productError } = await supabase
-        .from('invoice_products')
+        .from('order_confirmation_products')
         .insert([
           {
             invoicenumber: values.invoiceNumber,
@@ -62,6 +62,7 @@ export const onSubmitInvoice = async (
     actions.resetForm();
     window.open(`/components/pdf/${values.invoiceNumber}`, '_blank');
   } catch (error) {
+    console.log('this is the one',error)
     openSnackbar('There was an error inserting the invoice data.', 'error');
   }
 };

@@ -90,7 +90,6 @@ function ProductTablePage() {
         </Link>
       )
     },
-    { field: 'description', headerName: 'Description', width: 200 },
     { field: 'price', headerName: 'Price', width: 110 },
     {
       field: 'time_stamp',

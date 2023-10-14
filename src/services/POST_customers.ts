@@ -31,12 +31,12 @@ export const onSubmitCustomer = async (
 
     if (customererror) throw customererror;
 
-    openSnackbar('Invoice data successfully inserted!', 'success');
+    openSnackbar('Customer successfully inserted!', 'success');
 
     actions.resetForm();
     return { success: true };  // <-- Return success flag
   } catch (error) {
-    openSnackbar('There was an error inserting the invoice data.', 'error');
+    openSnackbar('There was an error inserting the customer data.', 'error');
     return { success: false }; // <-- Return failure flag
   }
 };
