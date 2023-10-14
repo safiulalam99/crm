@@ -15,6 +15,8 @@ import { onSubmitInvoice } from '../../services/POST_InvoiceData';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { getLoggedInUserDetails } from 'src/contexts/AuthContext';
 
+
+
 const FormikContainer = () => {
   const navigate = useNavigate();
   const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
@@ -31,6 +33,7 @@ const FormikContainer = () => {
     fetchUserDetails();
   }, []);
 
+  
   return (
     <Container maxWidth="lg">
       <Box sx={{ position: 'relative' }}>
@@ -59,7 +62,7 @@ const FormikContainer = () => {
                 <>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6} md={6} lg={6} marginTop={2}>
-                      <Grid xs={12} sm={12} md={12} lg={12}>
+                      <Grid item  xs={12} sm={12} md={12} lg={12}>
                         <FormikControl
                           control="input"
                           label={'Notes'}
@@ -72,7 +75,7 @@ const FormikContainer = () => {
                       </Grid>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={6} marginTop={2}>
-                      <Grid xs={12} sm={12} md={12} lg={12}>
+                      <Grid item  xs={12} sm={12} md={12} lg={12}>
                         <FormikControl
                           control="input"
                           type="number"

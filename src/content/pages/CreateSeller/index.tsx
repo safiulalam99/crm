@@ -42,12 +42,12 @@ const CreateCustomerForm = () => {
   } = useSellers();
 
   const initialValues = {
-    id:  sellers?.[0].id || "",
-    name:  sellers?.[0].name || "",
-    address:  sellers?.[0].address || "",
-    country:  sellers?.[0].country || "",
-    vatnumber:  sellers?.[0].vatnumber || "",
-    managingdirector:  sellers?.[0].managingdirector || ""
+    id: sellers?.[0].id || '',
+    name: sellers?.[0].name || '',
+    address: sellers?.[0].address || '',
+    country: sellers?.[0].country || '',
+    vatnumber: sellers?.[0].vatnumber || '',
+    managingdirector: sellers?.[0].managingdirector || ''
   };
 
   useEffect(() => {
@@ -63,101 +63,107 @@ const CreateCustomerForm = () => {
 
   return (
     <Container>
-      <Box mt={4} mb={2}>
-        <Typography variant="h4" gutterBottom>
-          Edit Company Details
-        </Typography>
-      </Box>
-      <Container
-        maxWidth="md"
-        style={{ background: 'white', padding: '24px', borderRadius: '8px' }}
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        enableReinitialize
+        onSubmit={
+          (values, actions) =>
+            onUpdateSeller(values, actions, openSnackbar, user) // Changed to onUpdateSeller
+        }
       >
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          enableReinitialize
-          onSubmit={
-            (values, actions) =>
-              onUpdateSeller(values, actions, openSnackbar, user) // Changed to onUpdateSeller
-          }
-        >
-          {(formik) => (
-            <Form>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <FormikControl
-                    control="input"
-                    label="Name"
-                    name="name"
-                    placeholder="John Doe"
-                    labelLayout="left"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormikControl
-                    control="input"
-                    label="Address"
-                    name="address"
-                    placeholder="123 Street, City"
-                    labelLayout="left"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormikControl
-                    control="dropdown"
-                    type="text"
-                    label="Country"
-                    name="country"
-                    options={countriesList}
-                    labelLayout="left"
-                  />{' '}
-                </Grid>
-                <Grid item xs={12}>
-                  <Tooltip title="VAT Number for the customer's country">
+        {(formik) => (
+          <>
+            <Box mt={4} mb={2}>
+              <Typography variant="h4" gutterBottom>
+                Edit Company Details
+              </Typography>
+            </Box>
+            <Container
+              maxWidth="md"
+              style={{
+                background: 'white',
+                padding: '24px',
+                borderRadius: '8px'
+              }}
+            >
+              <Form>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
                     <FormikControl
                       control="input"
-                      label="VAT Number"
-                      name="vatnumber"
-                      placeholder="XX12345678"
+                      label="Name"
+                      name="name"
+                      placeholder="John Doe"
                       labelLayout="left"
                     />
-                  </Tooltip>
-                </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormikControl
+                      control="input"
+                      label="Address"
+                      name="address"
+                      placeholder="123 Street, City"
+                      labelLayout="left"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormikControl
+                      control="dropdown"
+                      type="text"
+                      label="Country"
+                      name="country"
+                      options={countriesList}
+                      labelLayout="left"
+                    />{' '}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Tooltip title="VAT Number for the customer's country">
+                      <FormikControl
+                        control="input"
+                        label="VAT Number"
+                        name="vatnumber"
+                        placeholder="XX12345678"
+                        labelLayout="left"
+                      />
+                    </Tooltip>
+                  </Grid>
 
-                <Grid item xs={12}>
-                  <FormikControl
-                    control="input"
-                    label="Managing Director"
-                    name="managingdirector"
-                    labelLayout="left"
-                  />
-                </Grid>
+                  <Grid item xs={12}>
+                    <FormikControl
+                      control="input"
+                      label="Managing Director"
+                      name="managingdirector"
+                      labelLayout="left"
+                    />
+                  </Grid>
 
-                <Grid item xs={12}>
-                  <FormikControl
-                    control="input"
-                    label="Display Name"
-                    name="displayname"
-                    labelLayout="left"
-                  />
+                  <Grid item xs={12}>
+                    <FormikControl
+                      control="input"
+                      label="Display Name"
+                      name="displayname"
+                      labelLayout="left"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      // disabled={!formik.isValid}
+                      style={{ float: 'right', marginTop: '20px' }}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    // disabled={!formik.isValid}
-                    style={{ float: 'right', marginTop: '20px' }}
-                  >
-                    Update
-                  </Button>
-                </Grid>
-              </Grid>
-              {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
-            </Form>
-          )}
-        </Formik>
-      </Container>
+                {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
+              </Form>
+            </Container>
+          </>
+        )}
+      </Formik>
     </Container>
   );
 };

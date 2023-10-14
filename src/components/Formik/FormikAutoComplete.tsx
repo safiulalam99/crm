@@ -66,7 +66,7 @@ const FormikAutoComplete = <T, >(props: FormikAutoCompleteProps<T>) => {
               </InputLabel>
               <Autocomplete
                 {...rest}
-                options={options}
+                options={options || []}
                 getOptionLabel={getOptionLabel}
                 id={name}
                 renderInput={(params) => (

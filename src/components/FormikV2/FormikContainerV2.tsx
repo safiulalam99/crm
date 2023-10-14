@@ -20,7 +20,7 @@ const FormikContainer = () => {
     deiveryDate: Yup.date().required('Required'),
     sellerData: Yup.object().required('Required')
   });
-  const onSubmit = (values) => console.log('Form data', values);
+  // const onSubmit = (values) => console.log('Form data', values);
 
   const form = useForm();
   const { register, control } = form;
@@ -30,7 +30,7 @@ const FormikContainer = () => {
       <form>
         <Grid container justifyContent={'center'} spacing={2}>
           <Header1 />
-          <Header2 />
+          {/* <Header2 /> */}
           {/* <Paper sx={{ width: '100%', marginTop: 2 }}>
             <FormikTable values={formik.values?.products} name="products" />
           </Paper> */}

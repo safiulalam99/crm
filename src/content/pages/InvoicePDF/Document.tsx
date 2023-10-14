@@ -45,10 +45,10 @@ const Invoice = ({ sample_data }) => {
 
           {/* Invoice Title and Details */}
           <View style={styles.invoiceDetails}>
-            <Text style={styles.invoiceTitle}>ORDER CONFIRMATION</Text>
+            <Text style={styles.invoiceTitle}>INVOICE</Text>
             <Text style={styles.invoiceTitle}></Text>
             <Text style={styles.invoiceNo}>
-            <Text>Order No: </Text>
+              Order No:{' '}
               <Text style={styles.colorItems}>
                 {sample_data?.invoicenumber}{' '}
               </Text>
@@ -217,7 +217,7 @@ const Invoice = ({ sample_data }) => {
                 </Text>
               )}
               <Text style={[styles.tableColc, { width: tableColWidth }]}>
-                {product?.unitprice.toFixed(2)}
+                {product?.unitprice}
               </Text>
               <Text
                 style={[
@@ -225,7 +225,7 @@ const Invoice = ({ sample_data }) => {
                   { width: tableColWidth, textAlign: 'right' }
                 ]}
               >
-                {product?.unittotal.toFixed(2)}
+                {product?.unittotal}
               </Text>
             </View>
           ))}
@@ -255,19 +255,19 @@ const Invoice = ({ sample_data }) => {
               <Text style={styles.summaryTitle}>
                 Subtotal ({sample_data?.buyers?.currency?.symbol})
               </Text>
-              <Text style={styles.summaryValue}>{sample_data?.subtotal.toFixed(2)}</Text>
+              <Text style={styles.summaryValue}>{sample_data?.subtotal}</Text>
             </View>
             <View style={styles.summaryRow}>
               <Text style={styles.summaryTitle}>
                 VAT ({sample_data?.taxrate}%)
               </Text>
-              <Text style={styles.summaryValue}>{sample_data?.totaltax.toFixed(2)}</Text>
+              <Text style={styles.summaryValue}>{sample_data?.totaltax}</Text>
             </View>
             {sample_data?.totaldiscount && sample_data?.totaldiscount !== 0 ? (
               <View style={styles.summaryRow}>
                 <Text style={styles.summaryTitle}>Discount</Text>
                 <Text style={styles.summaryValue}>
-                  {sample_data?.totaldiscount.toFixed(2)}
+                  {sample_data?.totaldiscount}
                 </Text>
               </View>
             ) : null}
@@ -276,7 +276,7 @@ const Invoice = ({ sample_data }) => {
               <Text style={styles.summaryTitle}>
                 Total ({sample_data?.buyers?.currency?.symbol})
               </Text>
-              <Text style={styles.summaryValue}>{sample_data?.total.toFixed(2)}</Text>
+              <Text style={styles.summaryValue}>{sample_data?.total}</Text>
             </View>
           </View>
         </View>

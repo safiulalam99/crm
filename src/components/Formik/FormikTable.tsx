@@ -127,16 +127,10 @@ const FormikTable = (props) => {
     );
   };
 
-  const debouncedSave = useRef(
-    _.debounce((values) => {
-      values.forEach((product, index) => {
-        const unitTotal = Number(product.unitPrice) * Number(product.units);
-        formik.setFieldValue(`${name}.${index}.unitTotal`, unitTotal);
-      });
-    }, 100)
-  ).current;
 
   const formikValues = formik.values as any;
+  const formatToTwoDecimalPlaces = (num) => parseFloat(num.toFixed(2));
+
   useEffect(() => {
     const subtotal = parseFloat(calculateSubTotal(values).toFixed(2));
     formik.setFieldValue('subTotal', Number(subtotal));

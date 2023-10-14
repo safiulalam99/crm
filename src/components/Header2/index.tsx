@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Box, CardActions, Typography, Button, Drawer } from '@mui/material';
 import FormikControl from '../Formik/FormikControl';
 import {
@@ -125,4 +125,4 @@ const Header2 = ({ setFieldValue }) => {
   );
 };
 
-export default Header2;
+export default memo(Header2);

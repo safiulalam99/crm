@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import FormikInput from './FormikInput';
 import FormikAutoComplete from './FormikAutoComplete';
 import FormikDatePicker from './FormikDatePicker';
@@ -33,4 +33,4 @@ const FormikControl = (props) => {
   return <></>;
 };
 
-export default FormikControl;
+export default memo(FormikControl);

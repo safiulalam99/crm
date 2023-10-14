@@ -24,14 +24,14 @@ export default function DataTable({ rows, columns, ...props }) {
         },
         "& .MuiDataGrid-renderingZone": {
           "& .MuiDataGrid-row": {
-            "&:nth-child(2n)": { 
+           "&:nth-of-type(2n)": { 
               backgroundColor: "rgba(235, 235, 235, .7)" 
             }
           }
         },
         "& .MuiDataGrid-virtualScrollerRenderZone": {
           "& .MuiDataGrid-row": {
-            "&:nth-child(2n)": { backgroundColor: "rgba(235, 235, 235, .7)" }
+           "&:nth-of-type(2n)": { backgroundColor: "rgba(235, 235, 235, .7)" }
           }
         }
       }}

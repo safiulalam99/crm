@@ -17,14 +17,6 @@ import {
 } from '@mui/material';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 
-import TeamOverview from './TeamOverview';
-import TasksAnalytics from './TasksAnalytics';
-import Performance from './Performance';
-import Projects from './Projects';
-import Checklist from './Checklist';
-import Profile from './Profile';
-import TaskSearch from './TaskSearch';
-import supabase from 'src/config/supabaseClient';
 import useTopproducts from 'src/services/GET_product_metrics';
 import TopProductsSection from './TopProductSection';
 

@@ -29,8 +29,25 @@ const Invoice = () => {
 
     fetchData();
   }, []);
-
-  return (
+  function testNumberToWords() {
+    const testValues = [
+      10110.40,
+      234234.30,
+      3234424.32,
+      10000.00,
+      10001.00,
+      10100.00,
+      11000.00,
+      11111.11,
+    ];
+  
+    for (let i = 0; i < testValues.length; i++) {
+      const value = testValues[i];
+      console.log(`${value} => ${numberToWords(value)}`);
+    }
+  }
+  
+  testNumberToWords();  return (
     <div className="container">
       <div className="pdf-viewer">
         <PDFViewer showToolbar={true} className="viewer">
@@ -53,8 +70,6 @@ const Invoice = () => {
           }
         </PDFDownloadLink>
       </div> */}
-              {/* <pre>{JSON.stringify(sample_data, null, 2)}</pre> */}
-
     </div>
   );
 };

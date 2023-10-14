@@ -17,7 +17,7 @@ function formatDate(isoString) {
   const date = new Date(isoString);
   return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 }
-function InvoicePage() {
+function OrderConfirmationPage() {
   const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
   const {
     invoiceData,
@@ -171,7 +171,7 @@ function InvoicePage() {
   );
 }
 
-export default InvoicePage;
+export default OrderConfirmationPage;
 function setFetchedData(data: any[]) {
   throw new Error('Function not implemented.');
 }

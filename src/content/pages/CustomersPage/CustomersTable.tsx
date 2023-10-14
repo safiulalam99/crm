@@ -40,7 +40,6 @@ function CustomerTablePage() {
       await onDeleteCustomer(customerToDelete, openSnackbar);
       setRows(rows.filter((row) => row.id !== customerToDelete));
     } catch (error) {
-      console.log('Delete failed', error);
       openSnackbar(error.details, 'error');
     }
     setDeleteDialogOpen(false);
