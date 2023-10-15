@@ -1,6 +1,5 @@
 import React, { memo, useState } from 'react';
 import { Box, CardActions, Typography, Button, Drawer } from '@mui/material';
-import FormikControl from '../Formik/FormikControl';
 import AddIcon from '@mui/icons-material/Add';
 import {
   Container,
@@ -11,36 +10,55 @@ import {
   Divider
 } from '@mui/material';
 import { Formik, useField } from 'formik';
-import useBuyers from '../../services/GET_buyers_data'; // Adjust the path to your hook
-import useSellers from '../../services/GET_seller_data'; // Adjust the path to your hook
 import CreateCustomer from 'src/content/pages/CustomersPage/CreateCustomer';
+import useBuyers from 'src/services/GET_buyers_data';
+import useSellers from 'src/services/GET_seller_data';
+import FormikControl from 'src/components/Formik/FormikControl';
+import CreateSeller from '../CreateSeller';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const Header2 = ({ setFieldValue }) => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const { buyers, error, isLoading, refreshBuyers } = useBuyers(); // Notice the new refreshBuyers function here
-  const {
-    sellers,
-    error: sellerError,
-    isLoading: sellerLoading
-  } = useSellers();
 
+const BuyerandSellerOptions = ({ setFieldValue }) => {
+  const [buyerDrawerOpen, setBuyerDrawerOpen] = useState(false);
+  const [sellerDrawerOpen, setSellerDrawerOpen] = useState(false);
   const [buyerField, buyerMeta, buyerHelpers] = useField('buyerData');
   const selectedBuyer = buyerField.value;
   const [sellerField, sellerMeta, sellerHelpers] = useField('sellerData');
   const selectedSeller = sellerField.value;
 
+  
+  const { buyers, error, isLoading, refreshBuyers } = useBuyers(); // Notice the new refreshBuyers function here
+  const {
+    sellers,
+    error: sellerError,
+    isLoading: sellerLoading,
+    refreshSellers
+  } = useSellers();
+
+  const handleCloseDrawer = () => {
+    setBuyerDrawerOpen(false);
+  };
+  const handleCloseSellerDrawer = () => {
+    setSellerDrawerOpen(false);
+  };
+  
+  
   // if (buyerLoading || sellerLoading) return <p>Loading...</p>;
   // if (buyerError) return <p>Error: {buyerError.message}</p>;
   if (sellerError) return <p>Error: {sellerError.message}</p>;
 
-  const toggleDrawer = (open) => (event) => {
+  const toggleDrawer = (drawer, open) => (event) => {
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
-    setDrawerOpen(open);
+    if (drawer === 'buyer') {
+      setBuyerDrawerOpen(open);
+    } else {
+      setSellerDrawerOpen(open);
+    }
   };
 
   return (
@@ -52,19 +70,25 @@ const Header2 = ({ setFieldValue }) => {
             <Grid container justifyContent="flex-end">
               <Drawer
                 anchor="right"
-                open={drawerOpen}
-                onClose={toggleDrawer(false)}
+                open={buyerDrawerOpen}
+                onClose={toggleDrawer('buyer', false)}
                 PaperProps={{
                   style: {
                     width: '70%'
                   }
                 }}
               >
-                <Button onClick={toggleDrawer(false)}>Close</Button>
-                <CreateCustomer refreshBuyers={refreshBuyers} />
+                <Grid container justifyContent="flex-start">
+                  <Button onClick={toggleDrawer('buyer', false)}>
+                    <ArrowBackIcon />
+                    Close
+                  </Button>
+                </Grid>
+                <CreateCustomer refreshBuyers={refreshBuyers} handleCloseDrawer={handleCloseDrawer} />
               </Drawer>
-
-              <Button onClick={toggleDrawer(true)}><AddIcon/> Create New Buyer</Button>
+              <Button onClick={toggleDrawer('buyer', true)}>
+                <AddIcon /> Create New Buyer
+              </Button>
             </Grid>
             <FormikControl
               control="autocomplete"
@@ -95,6 +119,29 @@ const Header2 = ({ setFieldValue }) => {
         <Box m={2}></Box>
         <Card>
           <CardContent>
+            <Grid container justifyContent="flex-end">
+              <Drawer
+                anchor="right"
+                open={sellerDrawerOpen}
+                onClose={toggleDrawer('seller', false)}
+                PaperProps={{
+                  style: {
+                    width: '70%'
+                  }
+                }}
+              >
+                <Grid container justifyContent="flex-start">
+                  <Button onClick={toggleDrawer('seller', false)}>
+                    <ArrowBackIcon />
+                    Close
+                  </Button>
+                </Grid>{' '}
+                <CreateSeller refreshSellers={refreshSellers} handleCloseSellerDrawer={handleCloseSellerDrawer} />
+              </Drawer>
+              <Button onClick={toggleDrawer('seller', true)}>
+                <AddIcon /> Edit Company Details
+              </Button>
+            </Grid>
             <FormikControl
               control="autocomplete"
               type="text"
@@ -126,4 +173,4 @@ const Header2 = ({ setFieldValue }) => {
   );
 };
 
-export default memo(Header2);
+export default memo(BuyerandSellerOptions);

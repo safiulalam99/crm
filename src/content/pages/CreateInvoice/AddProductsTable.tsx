@@ -7,18 +7,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import FormikControl from './FormikControl';
 import { Field, ErrorMessage, FieldArray } from 'formik';
 // import DeleteIcon from '@material-ui/icons/Delete';
 import { Box, Button, Drawer, Grid } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import productData from '../../Data/products.json';
 import { INITIAL_VALUES } from 'src/utils/utils';
 import { useFormikContext } from 'formik';
 import _ from 'lodash';
 import { numberToWords } from 'src/services/services';
-import useProducts from '../../services/GET_PRODUCTS';
 import CreateProductForm from 'src/content/pages/ProductsPage/CreateProduct';
+import useProducts from 'src/services/GET_PRODUCTS';
+import FormikControl from 'src/components/Formik/FormikControl';
 interface Column {
   id:
     | 'Product'
@@ -74,6 +73,8 @@ const generateId = () => {
 const FormikTable = (props) => {
   const { label, name, values, ...rest } = props;
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const closeDrawer = () => setDrawerOpen(false);
+
   const {
     products,
     error: productError,
@@ -187,7 +188,7 @@ const FormikTable = (props) => {
                 }}
               >
                 <Button onClick={toggleDrawer(false)}>Close</Button>
-                <CreateProductForm afterCreate={refreshProducts} /> {/* <-- Pass refreshProducts here */}
+                <CreateProductForm afterCreate={refreshProducts} closeDrawer={closeDrawer} />
               </Drawer>
               <Button onClick={toggleDrawer(true)}><AddIcon/> Create New Product</Button>
             </Grid>

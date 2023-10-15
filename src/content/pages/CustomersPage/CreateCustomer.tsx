@@ -46,7 +46,7 @@ const validationSchema = Yup.object({
 });
 
 
-const CreateCustomerForm = ({ refreshBuyers }) => {
+const CreateCustomerForm = ({ refreshBuyers, handleCloseDrawer }) => {
   const navigate = useNavigate();
 const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
 const [user, setUser] = useState('');
@@ -55,6 +55,8 @@ const handleSubmit = async (values, actions) => {
   const result = await onSubmitCustomer(values, actions, navigate, openSnackbar, user);
   if (result.success) {
     refreshBuyers();  // <-- Call the refreshBuyers function
+    handleCloseDrawer();
+
   }
 };
 
@@ -95,6 +97,8 @@ useEffect(() => {
                     name="name"
                     placeholder="John Doe"
                     labelLayout="left"
+                    labelRequired="true"
+
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -104,6 +108,8 @@ useEffect(() => {
                     name="address"
                     placeholder="123 Street, City"
                     labelLayout="left"
+                    labelRequired="true"
+
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -114,6 +120,7 @@ useEffect(() => {
                     name="country"
                     options={countriesList}
                     labelLayout="left"
+                    
                   />{' '}
                 </Grid>
                 <Grid item xs={12}>

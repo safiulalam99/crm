@@ -73,7 +73,7 @@ function InvoicePage() {
       headerName: 'Invoice#',
       width: 130,
       renderCell: (params) => (
-        <Link to={`/components/pdf/${params.value}`}>
+        <Link to={`/components/invoice/pdf/${params.value}`}>
           {params.value.toString()}
         </Link>
       )
@@ -110,22 +110,22 @@ function InvoicePage() {
   return (
     <>
       <Helmet>
-        <title>Order Confirmations </title>
+        <title>Invoices </title>
       </Helmet>
       <PageTitleWrapper>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h3" component="h3" gutterBottom>
-              Order Confirmation
+              Invoices
             </Typography>
             <Typography variant="subtitle2">
-              These are your recent Order Confirmation
+              These are your recent Invoices
             </Typography>
           </Grid>
           <Grid item>
             <Link to={'/components/invoice/new'}>
               <Button sx={{ mt: { xs: 2, md: 0 } }} variant="contained">
-                Create Order Confirmation
+                New Invoice
               </Button>
             </Link>
           </Grid>
@@ -172,6 +172,3 @@ function InvoicePage() {
 }
 
 export default InvoicePage;
-function setFetchedData(data: any[]) {
-  throw new Error('Function not implemented.');
-}

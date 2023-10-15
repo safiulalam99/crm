@@ -1,8 +1,7 @@
 // Header1.js
 import React from 'react';
 import { Box, Grid } from '@mui/material';
-import FormikControl from '../Formik/FormikControl';
-import VatTypes from '../../Data/vatType.json';
+import FormikControl from 'src/components/Formik/FormikControl';
 const statusData= [
   { value: 'paid', label: 'Paid' },
   { value: 'status', label: 'Status' },

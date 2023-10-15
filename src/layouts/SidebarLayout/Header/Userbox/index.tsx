@@ -134,7 +134,7 @@ function HeaderUserbox() {
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
         <List sx={{ p: 1 }} component="nav">
-          <ListItem button to="/components/my/new" component={NavLink}>
+          <ListItem button to="/management/company_details" component={NavLink}>
             <AccountBoxTwoToneIcon fontSize="small" />
             <ListItemText primary="Edit Company" />
           </ListItem>

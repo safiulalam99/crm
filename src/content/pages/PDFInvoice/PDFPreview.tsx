@@ -29,14 +29,14 @@ const Invoice = () => {
 
     fetchData();
   }, []);
-
+console.log(sample_data)
   return (
     <div className="container">
       <div className="pdf-viewer">
         <PDFViewer showToolbar={true} className="viewer">
           <Document>
             <PDF sample_data={sample_data} />
-            <Content />
+            {/* <Content /> */}
           </Document>
         </PDFViewer>
       </div>

@@ -204,6 +204,17 @@ function SidebarMenu() {
                   to="/components/invoice"
                   startIcon={<TableChartTwoToneIcon />}
                 >
+                  Invoice
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/components/order_confirmation"
+                  startIcon={<TableChartTwoToneIcon />}
+                >
                   Order Confirmation
                 </Button>
               </ListItem>
@@ -267,7 +278,7 @@ function SidebarMenu() {
         >
           <SubMenuWrapper>
             <List component="div">
-              <ListItem component="div">
+              {/* <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
@@ -277,13 +288,13 @@ function SidebarMenu() {
                 >
                   User Profile
                 </Button>
-              </ListItem>
+              </ListItem> */}
               <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/profile/settings"
+                  to="/management/company_details"
                   startIcon={<DisplaySettingsTwoToneIcon />}
                 >
                   Account Settings

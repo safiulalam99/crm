@@ -13,6 +13,8 @@ import { AuthWrapper } from './contexts/AuthContext';
 import CreateSeller from './content/pages/CreateSeller';
 import EditProduct from './content/pages/ProductsPage/EditProduct';
 import EditCustomer from './content/pages/CustomersPage/EditCustomer';
+import CreateInvoice from './content/pages/CreateInvoice';
+import InvoicePage from './content/pages/InvoicePage';
 
 const Loader = (Component) => (props) =>
   (
@@ -35,7 +37,8 @@ const Docx = Loader(lazy(() => import('src/content/applications/docs')));
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
 );
-const PDF = Loader(lazy(() => import('src/content/pages/OrderConfirmationPDF/PDFPreview')));
+const OrderConfiramtionPDF = Loader(lazy(() => import('src/content/pages/PDFOrderConfirmation/PDFPreview')));
+const InvoicePDF = Loader(lazy(() => import('src/content/pages/PDFInvoice/PDFPreview')));
 const UserProfile = Loader(
   lazy(() => import('src/content/applications/Users/profile'))
 );
@@ -47,8 +50,8 @@ const Status500 = Loader(
 );
 
 // Components
-const CreateInvoice = Loader(
-  lazy(() => import('src/content/pages/CreateInvoice'))
+const CreateOrderConfirmation = Loader(
+  lazy(() => import('src/content/pages/CreateOrderConfirmation'))
 );
 const OrderConfirmationPage = Loader(lazy(() => import('src/content/pages/OrderConfirmationPage')));
 
@@ -173,6 +176,10 @@ const routes: RouteObject[] = [
         element: <Transactions />
       },
       {
+        path: 'company_details',
+        element: <CreateSeller refreshSellers={null} handleCloseSellerDrawer={null} />
+      },
+      {
         path: 'profile',
         children: [
           {
@@ -204,14 +211,17 @@ const routes: RouteObject[] = [
         element: <Navigate to="/" replace />
       },
       {
-        path: 'invoice',
+        path: 'order_confirmation',
         element: <OrderConfirmationPage />
       },
-      // {
-      //   path: 'doc',
-      //   element: <Docx />
-      // },
-
+      {
+        path: 'order_confirmation/new',
+        element: <CreateOrderConfirmation />
+      },
+      {
+        path: 'invoice',
+        element: <InvoicePage />
+      },
       {
         path: 'invoice/new',
         element: <CreateInvoice />
@@ -228,25 +238,26 @@ const routes: RouteObject[] = [
         path: 'customers/edit/:id',
         element: <EditCustomer />
       },
+      // {
+      //   path: 'pdf',
+      //   element: <PDF />
+      // },
       {
-        path: 'pdf',
-        element: <PDF />
+        path: 'order_confirmation/pdf/:id',
+        element: <OrderConfiramtionPDF />
       },
       {
-        path: 'pdf/:id',
-        element: <PDF />
+        path: 'invoice/pdf/:id',
+        element: <InvoicePDF />
       },
-      {
-        path: 'my/new',
-        element: <CreateSeller />
-      },
+
       {
         path: 'products',
         element: <ProductsTable />
       },
       {
         path: 'products/new',
-        element: <CreateProduct afterCreate={null} />
+        element: <CreateProduct closeDrawer={null} afterCreate={null} />
       },
 
       {

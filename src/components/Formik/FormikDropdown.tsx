@@ -4,7 +4,7 @@ import { Field, ErrorMessage } from 'formik';
 import { FormControl, InputLabel, Select, MenuItem, FormHelperText, Grid } from '@mui/material';
 
 const FormikSelect = (props) => {
-  const { label, name, options, labelLayout: propLabelLayout, ...rest } = props;
+  const { label, name, options, labelLayout: propLabelLayout, labelRequired, ...rest } = props; // add labelRequired
 
   // Detect screen size
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -19,13 +19,14 @@ const FormikSelect = (props) => {
           <>
             {labelLayout === 'left' ? (
               <Grid container alignItems="center" spacing={3}>
-                <Grid item xs={3}>
+                              <Grid item xs={3}>
                   <div style={{ minWidth: '100px' }}>
                     <InputLabel
                       style={{ color: '#5A5A5A' }}
                       htmlFor={name}
                     >
                       {label}
+                      {labelRequired && <span style={{ color: 'red' }}> *</span>} {/* add required indicator */}
                     </InputLabel>
                   </div>
                 </Grid>

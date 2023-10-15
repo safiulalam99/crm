@@ -1,7 +1,14 @@
 import supabase from '../config/supabaseClient.js';
 
-export const onUpdateSeller = async (values, actions, openSnackbar, user) => {
+export const onUpdateSeller = async (
+  values,
+  actions,
+  openSnackbar,
+  user,
+  refreshSellers
+) => {
   try {
+    // Update the sellers table
     const { data: updatedSeller, error: sellerError } = await supabase
       .from('sellers')
       .update({
@@ -12,18 +19,42 @@ export const onUpdateSeller = async (values, actions, openSnackbar, user) => {
         managingdirector: values.managingdirector,
         country: values.country
       })
-      .eq('id', values.id).select();
+      .eq('id', values.id)
+      .select();
 
     if (sellerError) throw sellerError;
 
-    openSnackbar('Seller details successfully updated!', 'success');
+    // Retrieve the seller_id from the updatedSeller data
+    const seller_id = updatedSeller[0]?.id;
 
-    actions.resetForm();
-    window.location.reload();
+    if (!seller_id) {
+      throw new Error('Seller ID not found');
+    }
+    // console.log(seller_id)
+    const { data: updatedBankDetails, error: bankDetailsError } = await supabase
+      .from('bank_details')
+      .update({
+        iban: values.iban,
+        bank: values.bankname,
+        bic: values.bankbic,
+        accountname: values.bankaccountname,
+        user_id: user,
+        seller_id: seller_id
+      })
+      .eq('user_id', user)
+      .select();
 
-    // You can navigate or perform additional actions here
+    if (bankDetailsError) throw bankDetailsError;
+
+    openSnackbar('Seller and Bank details successfully updated!', 'success');
+    refreshSellers!= null ? await refreshSellers() : ""
+    return { success: true };
   } catch (error) {
-    openSnackbar('There was an error updating the seller details.', 'error');
+    openSnackbar(
+      `There was an error updating the details: ${error.message}`,
+      'error'
+    );
+    return { success: false, error: error.message };
   }
 };
 
@@ -40,9 +71,10 @@ export const onUpdateBuyer = async (values, actions, openSnackbar, user) => {
         country: values.country,
         currency_id: values.currency_id,
         registrationnumber: values.registrationnumber,
-        contractnumber: values.contractnumber,
+        contractnumber: values.contractnumber
       })
-      .eq('id', values.id).select();
+      .eq('id', values.id)
+      .select();
 
     if (sellerError) throw sellerError;
 

@@ -2,13 +2,13 @@ import { Helmet } from 'react-helmet-async';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import { Grid, Container, Typography, Button } from '@mui/material';
 import Tables from 'src/components/DataTable';
-import useInvoices from '../../../services/GET_Invoices';
+import useInvoices from '../../../services/GET_order_confirmation';
 import { Link } from 'react-router-dom';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import Status500 from '../Status/Status500';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import { onDeleteInvoice } from 'src/services/DELETE';
+import { onDeleteInvoice, onDeleteOrderConfirmation } from 'src/services/DELETE';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { useEffect, useState } from 'react';
 import ConfirmationDialog from 'src/components/ConfirmationDialog';
@@ -53,7 +53,7 @@ function OrderConfirmationPage() {
 
   const handleDeleteConfirm = async () => {
     try {
-      await onDeleteInvoice(invoiceToDelete, openSnackbar); // Wait for the promise to resolve
+      await onDeleteOrderConfirmation(invoiceToDelete, openSnackbar); // Wait for the promise to resolve
       setRows(rows.filter((row) => row.id !== invoiceToDelete)); // Update rows only if the delete was successful
       setDeleteDialogOpen(false); // Close the dialog
     } catch (error) {
@@ -70,10 +70,10 @@ function OrderConfirmationPage() {
   const columns = [
     {
       field: 'invoicenumber',
-      headerName: 'Invoice#',
+      headerName: 'Order#',
       width: 130,
       renderCell: (params) => (
-        <Link to={`/components/pdf/${params.value}`}>
+        <Link to={`/components/order_confirmation/pdf/${params.value}`}>
           {params.value.toString()}
         </Link>
       )
@@ -123,7 +123,7 @@ function OrderConfirmationPage() {
             </Typography>
           </Grid>
           <Grid item>
-            <Link to={'/components/invoice/new'}>
+            <Link to={'/components/order_confirmation/new'}>
               <Button sx={{ mt: { xs: 2, md: 0 } }} variant="contained">
                 Create Order Confirmation
               </Button>

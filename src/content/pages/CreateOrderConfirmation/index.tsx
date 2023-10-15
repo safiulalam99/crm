@@ -10,7 +10,7 @@ import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { getLoggedInUserDetails } from 'src/contexts/AuthContext';
 import Header from './Header';
 import BuyerandSellerOptions from './BuyerandSellerOptions';
-import { onSubmitInvoice } from 'src/services/POST_invoices';
+import { onSubmitInvoice } from 'src/services/POST_orderconfirmation';
 import FormikControl from 'src/components/Formik/FormikControl';
 import AddProductsTable from './AddProductsTable';
 
@@ -34,7 +34,7 @@ function CreateOrderConfirmation() {
     <>
       <Container>
         <Box m={2}></Box>
-        <h1>Create Invoice</h1>
+        <h1>Create</h1>
         &nbsp;
         <Container style={{ background: 'white' }} maxWidth="lg">
           <Container maxWidth="lg">

@@ -37,9 +37,9 @@ const Invoice = ({ sample_data }) => {
               {/* <Text style={styles.companytitle}>
                 {sample_data?.sellers?.name}
               </Text> */}
-              <Text style={styles.companydisplayname}>
+              {/* <Text style={styles.companydisplayname}>
                 {sample_data?.sellers?.displayname}
-              </Text>
+              </Text> */}
             </View>
           </View>
 

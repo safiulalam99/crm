@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Grid, Container, Button, Box, Paper } from '@mui/material';
-import FormikControl from './FormikControl';
-import { INITIAL_VALUES, validationSchema } from '../../utils/utils';
-import { Rowing } from '@mui/icons-material';
-import Header1 from '../Header1';
-import Header2 from '../Header2';
-import FormikTable from './FormikTable';
-import supabase from '../../config/supabaseClient.js';
+import { INITIAL_VALUES, validationSchema } from '../../../utils/utils';
+
 import { useNavigate } from 'react-router-dom';
 
-import { onSubmitInvoice } from '../../services/POST_orderconfirmation';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { getLoggedInUserDetails } from 'src/contexts/AuthContext';
+import Header from './Header';
+import BuyerandSellerOptions from './BuyerandSellerOptions';
+import { onSubmitInvoice } from 'src/services/POST_orderconfirmation';
+import FormikControl from 'src/components/Formik/FormikControl';
+import AddProductsTable from './AddProductsTable';
 
 
 
@@ -51,10 +50,10 @@ const FormikContainer = () => {
             <Form>
               <Grid container justifyContent={'center'} spacing={2}>
                 {/* <HeadeliveryDater1 /> */}
-                <Header1 />
-                <Header2 setFieldValue={formik.setFieldValue} />
+                <Header />
+                <BuyerandSellerOptions setFieldValue={formik.setFieldValue} />
                 <Paper sx={{ width: '100%', marginTop: 2 }}>
-                  <FormikTable
+                  <AddProductsTable
                     values={formik.values?.products}
                     name="products"
                   />

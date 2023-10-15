@@ -34,7 +34,7 @@ const validationSchema = Yup.object({
   imageurl: Yup.string().matches(URL, 'Enter correct url!')
 });
 
-const CreateProductForm = ({ afterCreate }) => {
+const CreateProductForm = ({ afterCreate, closeDrawer }) => {
   const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar(); // <-- Use useSnackbar
   const [user, setUser] = useState('');
   const [color, setColor] = useState('#aabbcc');
@@ -42,7 +42,8 @@ const CreateProductForm = ({ afterCreate }) => {
   const handleOnSubmit = async (values, actions) => {
     const success = await onSubmitProduct(values, actions, openSnackbar, user);
     if (success) {
-      afterCreate(); // <-- Call the 'afterCreate' function if the product creation was successful
+      afterCreate();
+      closeDrawer();
     }
   };
   useEffect(() => {

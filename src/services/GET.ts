@@ -58,3 +58,57 @@ export const getcustomer = async (id:string) => {
     return null;
   }
 };
+
+
+
+import { useState, useEffect } from 'react';
+
+type BankDetail = {
+  name: string;
+  bankbic: string;
+  bankname: string;
+  accountname: string;
+  id: number;
+  iban: string;
+  bank: string;
+  bic: string;
+  seller_id: number;
+  user_id: string | null;
+};
+
+type UseBankDetailsResult = {
+  bankDetails: BankDetail[] | null;
+  error: any;
+  isLoading: boolean;
+};
+
+export const useBankDetails = (): UseBankDetailsResult => {
+  const [bankDetails, setBankDetails] = useState<BankDetail[] | null>(null);
+  const [error, setError] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchBankDetails = async () => {
+      try {
+        let { data, error } = await supabase
+          .from('bank_details')
+          .select('*');
+          // .eq('seller_id', seller_id);
+        if (error) throw error;
+        setBankDetails(data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+      fetchBankDetails();
+    
+  }, []);  // Re-fetch bank details whenever seller_id changes
+
+  return { bankDetails, error, isLoading };
+};
+
+export default useBankDetails;
+

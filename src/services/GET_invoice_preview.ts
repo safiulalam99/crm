@@ -1,10 +1,10 @@
 import supabase from '../config/supabaseClient.js';
 
-export const getInvoiceData = async (order_confirmationNumber) => {
+export const getInvoiceData = async (invoicesNumber) => {
   try {
-    // Fetch from the order_confirmations table
-    const { data: order_confirmationData, error: order_confirmationError } = await supabase
-      .from('order_confirmation')
+    // Fetch from the invoicess table
+    const { data: invoicesData, error: invoicesError } = await supabase
+      .from('invoices')
       .select(
         `
       *,
@@ -13,22 +13,22 @@ export const getInvoiceData = async (order_confirmationNumber) => {
         currency:currencies(name, symbol)
       ),
       sellers:sellers (*),
-      products: order_confirmation_products(
+      bank_details:bank_details (*),
+      products: invoices_products(
         *,
         name:products (*)
       )
     `
       )
-      .eq('invoicenumber', order_confirmationNumber);
+      .eq('invoicenumber', invoicesNumber);
+    if (invoicesError) throw invoicesError;
 
-    if (order_confirmationError) throw order_confirmationError;
-
-    // The data will be structured such that the main order_confirmation details are in the root of the returned object.
-    // Nested within are the details of the buyer, seller, and the products associated with this order_confirmation.
-    return order_confirmationData;
+    // The data will be structured such that the main invoices details are in the root of the returned object.
+    // Nested within are the details of the buyer, seller, and the products associated with this invoices.
+    return invoicesData;
   } catch (error) {
-    console.error('Error fetching order_confirmation data:', error);
-    alert('There was an error fetching the order_confirmation data.');
+    console.error('Error fetching invoices data:', error);
+    alert('There was an error fetching the invoices data.');
     return null;
   }
 };
