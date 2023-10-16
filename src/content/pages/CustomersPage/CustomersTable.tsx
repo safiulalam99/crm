@@ -55,7 +55,7 @@ function CustomerTablePage() {
     {
       field: 'name',
       headerName: 'Name',
-      width: 150,
+      width: 210,
       renderCell: (params) => (
         <Link to={`/components/customers/edit/${params.id}`}>
           {params.value}
@@ -73,10 +73,11 @@ function CustomerTablePage() {
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
+          icon={<DeleteIcon color="error" />}
+          label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
+            showInMenu
           />
         ];
       }

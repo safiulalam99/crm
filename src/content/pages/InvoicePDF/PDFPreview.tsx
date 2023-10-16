@@ -24,7 +24,7 @@ const Invoice = () => {
 
     fetchData();
   }, []);
-console.log(id)
+// console.log(id)
   return (
     <div className="container">
       <div className="pdf-viewer">

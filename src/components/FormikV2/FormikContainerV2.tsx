@@ -20,7 +20,6 @@ const FormikContainer = () => {
     deiveryDate: Yup.date().required('Required'),
     sellerData: Yup.object().required('Required')
   });
-  // const onSubmit = (values) => console.log('Form data', values);
 
   const form = useForm();
   const { register, control } = form;

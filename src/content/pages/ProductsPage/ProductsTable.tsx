@@ -72,7 +72,7 @@ function ProductTablePage() {
       setRows(rows.filter((row) => row.id !== toBeDeletedId));
       setDialogOpen(false);  // Close the dialog
     } catch (error) {
-      console.log('Delete failed', error);
+      // console.log('Delete failed', error);
       setDialogOpen(false);  // Close the dialog
     }
   };
@@ -83,14 +83,14 @@ function ProductTablePage() {
     {
       field: 'name',
       headerName: 'Product Name',
-      width: 150,
+      width: 210,
       renderCell: (params) => (
         <Link to={`/components/products/edit/${params.id}`}>
           {params.value.toString()}
         </Link>
       )
     },
-    { field: 'price', headerName: 'Price', width: 110 },
+    { field: 'price', headerName: 'Price', width: 90 },
     {
       field: 'time_stamp',
       headerName: 'Created At',

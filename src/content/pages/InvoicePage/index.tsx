@@ -12,6 +12,7 @@ import { onDeleteInvoice } from 'src/services/DELETE';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { useEffect, useState } from 'react';
 import ConfirmationDialog from 'src/components/ConfirmationDialog';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 function formatDate(isoString) {
   const date = new Date(isoString);
@@ -50,6 +51,10 @@ function InvoicePage() {
     setInvoiceToDelete(id);
     setDeleteDialogOpen(true);
   };
+  const handleProforma = (id) => () => {
+    // console.log("asdasdasdasd")
+    return <Link to={`/proforma/pdf/${id}`} />;
+  };
 
   const handleDeleteConfirm = async () => {
     try {
@@ -57,7 +62,6 @@ function InvoicePage() {
       setRows(rows.filter((row) => row.id !== invoiceToDelete)); // Update rows only if the delete was successful
       setDeleteDialogOpen(false); // Close the dialog
     } catch (error) {
-      // Handle the error if the delete was unsuccessful
       console.log('Delete failed', error);
     }
   };
@@ -70,7 +74,7 @@ function InvoicePage() {
   const columns = [
     {
       field: 'invoicenumber',
-      headerName: 'Invoice#',
+      headerName: 'Order#',
       width: 130,
       renderCell: (params) => (
         <Link to={`/components/invoice/pdf/${params.value}`}>
@@ -96,10 +100,18 @@ function InvoicePage() {
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
-            icon={<DeleteIcon />}
+            icon={<PictureAsPdfIcon />}
+            label="View as proforma invoice"
+            onClick={() => window.open(`/components/proforma/pdf/${id}`)}
+            color="inherit"
+            showInMenu
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon color="error" />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
+            showInMenu
           />
         ];
       }

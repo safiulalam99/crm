@@ -12,7 +12,7 @@ import { Button, Typography } from '@mui/material';
 import Content from './Content';
 import { numberToWords } from 'src/utils/towords';
 
-const Invoice = () => {
+const ProformaInvoice = () => {
   const [sample_data, setSample_data] = useState(null);
   const { id } = useParams();
 
@@ -59,5 +59,5 @@ const Invoice = () => {
   );
 };
 
-export default Invoice;
+export default ProformaInvoice;
 

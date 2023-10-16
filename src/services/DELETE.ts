@@ -31,7 +31,6 @@ export const onDeleteProduct = async (id, openSnackbar) => {
 
     if (productserror) throw productserror;
     openSnackbar(`${id} deleted!`, 'success');
-    console.log(products)
 
     // navigate(`/components/invoice/preview/${values.invoiceNumber}`);
   } catch (error) {
@@ -48,12 +47,10 @@ export const onDeleteInvoice = async (id, openSnackbar) => {
     if (error) throw error;
     
     openSnackbar(`${id} deleted!`, 'success');
-    console.log(data)
     return Promise.resolve(data);  // Resolve the promise with the result
 
   } catch (error) {
     openSnackbar(error.details, 'error');
-    console.log(error)
     return Promise.reject(error);  // Reject the promise with the error
 
   }
@@ -67,12 +64,10 @@ export const onDeleteOrderConfirmation = async (id, openSnackbar) => {
     if (error) throw error;
     
     openSnackbar(`${id} deleted!`, 'success');
-    console.log(data)
     return Promise.resolve(data);  // Resolve the promise with the result
 
   } catch (error) {
     openSnackbar(error.details, 'error');
-    console.log(error)
     return Promise.reject(error);  // Reject the promise with the error
 
   }

@@ -45,31 +45,35 @@ const validationSchema = Yup.object({
   registrationnumber: Yup.string()
 });
 
-
 const CreateCustomerForm = ({ refreshBuyers, handleCloseDrawer }) => {
   const navigate = useNavigate();
-const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
-const [user, setUser] = useState('');
+  const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
+  const [user, setUser] = useState('');
 
-const handleSubmit = async (values, actions) => {
-  const result = await onSubmitCustomer(values, actions, navigate, openSnackbar, user);
-  if (result.success) {
-    refreshBuyers();  // <-- Call the refreshBuyers function
-    handleCloseDrawer();
-
-  }
-};
-
-useEffect(() => {
-  const fetchUserDetails = async () => {
-    const userDetails = await getLoggedInUserDetails();
-    if (userDetails) {
-      setUser(userDetails?.id);
+  const handleSubmit = async (values, actions) => {
+    const result = await onSubmitCustomer(
+      values,
+      actions,
+      navigate,
+      openSnackbar,
+      user
+    );
+    if (result.success) {
+      refreshBuyers(); // <-- Call the refreshBuyers function
+      handleCloseDrawer();
     }
   };
 
-  fetchUserDetails();
-}, []);
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const userDetails = await getLoggedInUserDetails();
+      if (userDetails) {
+        setUser(userDetails?.id);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   return (
     <Container>
@@ -85,8 +89,8 @@ useEffect(() => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}  // <-- Update here
-          >
+          onSubmit={handleSubmit} // <-- Update here
+        >
           {(formik) => (
             <Form>
               <Grid container spacing={3}>
@@ -98,7 +102,6 @@ useEffect(() => {
                     placeholder="John Doe"
                     labelLayout="left"
                     labelRequired="true"
-
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -109,18 +112,17 @@ useEffect(() => {
                     placeholder="123 Street, City"
                     labelLayout="left"
                     labelRequired="true"
-
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormikControl
+                    labelRequired="true"
                     control="dropdown"
                     type="text"
                     label="Country"
                     name="country"
                     options={countriesList}
                     labelLayout="left"
-                    
                   />{' '}
                 </Grid>
                 <Grid item xs={12}>

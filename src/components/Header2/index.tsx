@@ -61,7 +61,7 @@ const Header2 = ({ setFieldValue }) => {
                 }}
               >
                 <Button onClick={toggleDrawer(false)}>Close</Button>
-                <CreateCustomer refreshBuyers={refreshBuyers} />
+                <CreateCustomer handleCloseDrawer={null} refreshBuyers={refreshBuyers} />
               </Drawer>
 
               <Button onClick={toggleDrawer(true)}><AddIcon/> Create New Buyer</Button>

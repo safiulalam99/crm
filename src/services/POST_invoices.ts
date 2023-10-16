@@ -32,7 +32,9 @@ export const onSubmitInvoice = async (
           totaldiscount: values.totalDiscount,
           totaltax: values.totalTax,
           user_id: user,
+          bank_details_id: values.bankdetailsid,
         }
+        
       ]);
 
     if (invoiceError) throw invoiceError;
@@ -58,11 +60,10 @@ export const onSubmitInvoice = async (
     }
 
     openSnackbar('Invoice data successfully inserted!', 'success');
-
     actions.resetForm();
     window.open(`/components/invoice/pdf/${values.invoiceNumber}`, '_blank');
   } catch (error) {
-    console.log('this is the one',error)
-    openSnackbar('There was an error inserting the invoice data.', 'error');
+    console.log(error)
+    openSnackbar(`There was an error inserting the invoice data. ${error}`, 'error');
   }
 };

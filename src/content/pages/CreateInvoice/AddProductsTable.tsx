@@ -190,7 +190,7 @@ const FormikTable = (props) => {
                 <Button onClick={toggleDrawer(false)}>Close</Button>
                 <CreateProductForm afterCreate={refreshProducts} closeDrawer={closeDrawer} />
               </Drawer>
-              <Button onClick={toggleDrawer(true)}><AddIcon/> Create New Product</Button>
+              <Button  sx={{color:'green'}}  onClick={toggleDrawer(true)}><AddIcon/> Create New Product</Button>
             </Grid>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>

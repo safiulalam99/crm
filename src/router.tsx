@@ -15,6 +15,7 @@ import EditProduct from './content/pages/ProductsPage/EditProduct';
 import EditCustomer from './content/pages/CustomersPage/EditCustomer';
 import CreateInvoice from './content/pages/CreateInvoice';
 import InvoicePage from './content/pages/InvoicePage';
+import ProformaInvoice from './content/pages/PDFProformaInvoice/PDFPreview';
 
 const Loader = (Component) => (props) =>
   (
@@ -245,6 +246,10 @@ const routes: RouteObject[] = [
       {
         path: 'order_confirmation/pdf/:id',
         element: <OrderConfiramtionPDF />
+      },
+      {
+        path: 'proforma/pdf/:id',
+        element: <ProformaInvoice />
       },
       {
         path: 'invoice/pdf/:id',

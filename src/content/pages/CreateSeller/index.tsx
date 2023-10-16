@@ -24,6 +24,7 @@ import clsx from 'clsx';
 import { onUpdateSeller } from 'src/services/UPDATE';
 import TabPanel from 'src/components/TabPanel';
 import useBankDetails from 'src/services/GET';
+import BankDetailsForm from './BankDetailsForm';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Required'),
@@ -38,7 +39,7 @@ const validationSchema = Yup.object({
   bankbic: Yup.string()
 });
 
-const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => { 
+const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
   const navigate = useNavigate();
   const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
   const [user, setUser] = useState('');
@@ -56,7 +57,11 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
   const seller_id = sellers?.[0].id || null;
 
   // Get the bank details for the specified seller
-  const { bankDetails, error: bankDetailsError, isLoading: bankDetailsLoading } = useBankDetails();
+  const {
+    bankDetails,
+    error: bankDetailsError,
+    isLoading: bankDetailsLoading
+  } = useBankDetails();
 
   const initialValues = {
     id: sellers?.[0].id || '',
@@ -83,14 +88,14 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
     fetchUserDetails();
   }, []);
   const handleSubmit = (values, actions) => {
-    onUpdateSeller(values, actions, openSnackbar, user, refreshSellers)
-      .then(response => {
+    onUpdateSeller(values, actions, openSnackbar, user, refreshSellers).then(
+      (response) => {
         if (response.success) {
-          handleCloseSellerDrawer();  // Call the function to close the drawer
+          handleCloseSellerDrawer();
         }
-      });
+      }
+    );
   };
-
 
   return (
     <Container>
@@ -98,8 +103,7 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         enableReinitialize
-        onSubmit={handleSubmit} 
-
+        onSubmit={handleSubmit}
       >
         {(formik) => (
           <>
@@ -133,7 +137,7 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
                 }}
               >
                 <Tabs value={tabValue} onChange={handleTabChange}>
-                  <Tab  label="Details" />
+                  <Tab label="Details" />
                   <Tab label="Bank Details" />
                 </Tabs>
                 <Divider />
@@ -147,7 +151,6 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
                         placeholder=""
                         labelLayout="left"
                         labelRequired="true"
-
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -158,7 +161,6 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
                         placeholder="123 Street, City"
                         labelLayout="left"
                         labelRequired="true"
-
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -170,7 +172,6 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
                         options={countriesList}
                         labelLayout="left"
                         labelRequired="true"
-
                       />{' '}
                     </Grid>
                     <Grid item xs={12}>
@@ -204,43 +205,13 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
                     </Grid>
                   </Grid>
                 </TabPanel>
-                <TabPanel value={tabValue} index={1}>
-                  <Grid container spacing={3}>
-         
-                    <Grid item xs={12}>
-                      <FormikControl
-                        control="input"
-                        label="Account Name"
-                        name="bankaccountname"
-                        labelLayout="left"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormikControl
-                        control="input"
-                        label="IBAN"
-                        name="iban"
-                        labelLayout="left"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormikControl
-                        control="input"
-                        label="Bank"
-                        name="bankname"
-                        labelLayout="left"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormikControl
-                        control="input"
-                        label="BIC"
-                        name="bankbic"
-                        labelLayout="left"
-                      />
-                    </Grid>
-                  </Grid>
-                </TabPanel>
+                <BankDetailsForm
+                  seller_id={seller_id}
+                  bankDetails={bankDetails}
+                  openSnackbar={openSnackbar}
+                  user={user}
+                  tabValue={tabValue}
+                />
               </Container>
             </Form>
           </>

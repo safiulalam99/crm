@@ -8,7 +8,10 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import Status500 from '../Status/Status500';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import { onDeleteInvoice, onDeleteOrderConfirmation } from 'src/services/DELETE';
+import {
+  onDeleteInvoice,
+  onDeleteOrderConfirmation
+} from 'src/services/DELETE';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { useEffect, useState } from 'react';
 import ConfirmationDialog from 'src/components/ConfirmationDialog';
@@ -78,7 +81,7 @@ function OrderConfirmationPage() {
         </Link>
       )
     },
-    { field: 'name', headerName: 'Customer', width: 130 },
+    { field: 'name', headerName: 'Customer', width: 210 },
     { field: 'deliverydate', headerName: 'Due Date', width: 130 },
     { field: 'total', headerName: 'Amount', width: 90 },
     {
@@ -96,10 +99,11 @@ function OrderConfirmationPage() {
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
-            icon={<DeleteIcon />}
+            icon={<DeleteIcon color="error" />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
+            showInMenu
           />
         ];
       }

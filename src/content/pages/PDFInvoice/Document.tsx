@@ -23,7 +23,7 @@ const PDFInvoice = ({ sample_data }) => {
     sample_data?.products
   );
   const colorCode = '#42aed9';
-  const tableColWidth = hasLanguageVersion && hasProductLot ? '15%' : '17%';
+  const tableColWidth = hasLanguageVersion && hasProductLot ? '15%' : '47%';
   return (
     <>
       <Page size="A4" style={styles.body}>
@@ -46,7 +46,7 @@ const PDFInvoice = ({ sample_data }) => {
 
           {/* PDFInvoice Title and Details */}
           <View style={styles.invoiceDetails}>
-            <Text style={styles.invoiceTitle}>INVOICE</Text>
+            <Text style={styles.invoiceTitle}>COMMERCIAL INVOICE</Text>
             <Text style={styles.invoiceTitle}></Text>
             <Text style={styles.invoiceNo}>
               <Text>Order No: </Text>
@@ -249,7 +249,7 @@ const PDFInvoice = ({ sample_data }) => {
               <View style={styles.summaryRow}>
                 <Text style={styles.summaryTitle}>Discount</Text>
                 <Text style={styles.summaryValue}>
-                  {sample_data?.totaldiscount.toFixed(2)}
+                  - {sample_data?.totaldiscount.toFixed(2)}
                 </Text>
               </View>
             ) : null}
@@ -268,10 +268,11 @@ const PDFInvoice = ({ sample_data }) => {
         {/* signature */}
 
         <View style={styles.signatureSection}>
-          {' '}
-          {/* Apply the new style here */}
           <View style={styles.signature}>
-              <Text>Name, Date and Signature: ___________________________</Text>
+            <Text> Signature: __________________</Text>
+            <Text style={styles.signaturename}>
+              {/* {sample_data?.buyers?.contactperson} */}
+            </Text>
           </View>
         </View>
 

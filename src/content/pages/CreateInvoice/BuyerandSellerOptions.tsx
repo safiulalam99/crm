@@ -86,7 +86,7 @@ const BuyerandSellerOptions = ({ setFieldValue }) => {
                 </Grid>
                 <CreateCustomer refreshBuyers={refreshBuyers} handleCloseDrawer={handleCloseDrawer} />
               </Drawer>
-              <Button onClick={toggleDrawer('buyer', true)}>
+              <Button  sx={{color:'green'}}  onClick={toggleDrawer('buyer', true)}>
                 <AddIcon /> Create New Buyer
               </Button>
             </Grid>
@@ -138,7 +138,7 @@ const BuyerandSellerOptions = ({ setFieldValue }) => {
                 </Grid>{' '}
                 <CreateSeller refreshSellers={refreshSellers} handleCloseSellerDrawer={handleCloseSellerDrawer} />
               </Drawer>
-              <Button onClick={toggleDrawer('seller', true)}>
+              <Button sx={{color:'green'}} onClick={toggleDrawer('seller', true)}>
                 <AddIcon /> Edit Company Details
               </Button>
             </Grid>

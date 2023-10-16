@@ -33,7 +33,7 @@ const FormikSelect = (props) => {
                 <Grid item xs={9}>
                   <FormControl error={form.errors[name] && form.touched[name]} fullWidth>
                     <Select id={name} {...field} {...rest} fullWidth>
-                      <MenuItem value="">None</MenuItem>
+                      {/* <MenuItem value="">None</MenuItem> */}
                       {options.map((option) => (
                         <MenuItem key={option.label} value={option.value}>
                           {option.label}
@@ -56,7 +56,7 @@ const FormikSelect = (props) => {
                 </InputLabel>
                 <FormControl error={form.errors[name] && form.touched[name]} fullWidth>
                   <Select id={name} {...field} {...rest} fullWidth>
-                    <MenuItem value="">None</MenuItem>
+                    {/* <MenuItem value="">None</MenuItem> */}
                     {options.map((option) => (
                       <MenuItem key={option.label} value={option.value}>
                         {option.label}

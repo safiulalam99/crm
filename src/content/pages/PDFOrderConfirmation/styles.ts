@@ -136,7 +136,7 @@ export const styles = StyleSheet.create({
   summarySection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20
+    marginTop: 10
   },
   commentsSection: {
     width: '50%',
@@ -220,7 +220,7 @@ export const styles = StyleSheet.create({
     fontSize: 9
   },
   signatureSection: {
-    marginTop: 50 // Adjust this value to position the signature section
+    marginTop: 20 // Adjust this value to position the signature section
   },
 
   pageNumber: {

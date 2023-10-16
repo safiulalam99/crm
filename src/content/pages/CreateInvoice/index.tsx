@@ -39,8 +39,6 @@ function CreateOrderConfirmation() {
         <Container style={{ background: 'white' }} maxWidth="lg">
           <Container maxWidth="lg">
             <Box sx={{ position: 'relative' }}>
-              {' '}
-              {/* Add this Box */}
               <Formik
                 initialValues={INITIAL_VALUES}
                 validationSchema={validationSchema}
@@ -52,7 +50,7 @@ function CreateOrderConfirmation() {
                       navigate,
                       openSnackbar,
                       user
-                    ) // Step 3
+                    ) 
                 }
               >
                 {(formik) => (

@@ -38,6 +38,7 @@ export const INITIAL_VALUES = {
   discountRate: 0,
   numberInWords: '',
   comments: '',
+  bankdetailsid: '',
   paymentStatus: ''
 };
 
@@ -52,6 +53,7 @@ export const validationSchema = Yup.object().shape({
     symbol: Yup.string()
   }),
   deliveryTerm: Yup.string(),
+  bankdetailsid: Yup.number(),
   deliveryDate: Yup.date().nullable().required('Delivery date is required'),
   paymentSplit: Yup.string(),
   products: Yup.array()

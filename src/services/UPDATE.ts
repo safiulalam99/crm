@@ -1,5 +1,6 @@
 import supabase from '../config/supabaseClient.js';
 
+// src/services/UPDATE.js
 export const onUpdateSeller = async (
   values,
   actions,
@@ -7,19 +8,21 @@ export const onUpdateSeller = async (
   user,
   refreshSellers
 ) => {
+  let updatedBankDetails, bankDetailsError;  // Declare these variables at the top of your function
+
   try {
     // Update the sellers table
     const { data: updatedSeller, error: sellerError } = await supabase
-      .from('sellers')
+      .from("sellers")
       .update({
         name: values.name,
         address: values.address,
         vatnumber: values.vatnumber,
         displayname: values.displayname,
         managingdirector: values.managingdirector,
-        country: values.country
+        country: values.country,
       })
-      .eq('id', values.id)
+      .eq("id", values.id)
       .select();
 
     if (sellerError) throw sellerError;
@@ -28,35 +31,56 @@ export const onUpdateSeller = async (
     const seller_id = updatedSeller[0]?.id;
 
     if (!seller_id) {
-      throw new Error('Seller ID not found');
+      throw new Error("Seller ID not found");
     }
-    // console.log(seller_id)
-    const { data: updatedBankDetails, error: bankDetailsError } = await supabase
-      .from('bank_details')
-      .update({
-        iban: values.iban,
-        bank: values.bankname,
-        bic: values.bankbic,
-        accountname: values.bankaccountname,
-        user_id: user,
-        seller_id: seller_id
-      })
-      .eq('user_id', user)
-      .select();
+
+    // Check for existing bank details
+    const { data: existingBankDetails, error: fetchBankDetailsError } =
+      await supabase.from("bank_details").select().eq("user_id", user);
+
+    if (fetchBankDetailsError) throw fetchBankDetailsError;
+
+    if (existingBankDetails.length === 0) {
+      // No existing record, create a new one
+      ({ data: updatedBankDetails, error: bankDetailsError } = await supabase
+        .from("bank_details")
+        .insert({
+          iban: values.iban,
+          bank: values.bankname,
+          bic: values.bankbic,
+          accountname: values.bankaccountname,
+          user_id: user,
+          seller_id: seller_id,
+        }));
+    } else {
+      // Existing record, update it
+      ({ data: updatedBankDetails, error: bankDetailsError } = await supabase
+        .from("bank_details")
+        .update({
+          iban: values.iban,
+          bank: values.bankname,
+          bic: values.bankbic,
+          accountname: values.bankaccountname,
+          user_id: user,
+          seller_id: seller_id,
+        })
+        .eq("user_id", user));
+    }
 
     if (bankDetailsError) throw bankDetailsError;
 
-    openSnackbar('Seller and Bank details successfully updated!', 'success');
-    refreshSellers!= null ? await refreshSellers() : ""
+    openSnackbar("Seller and Bank details successfully updated!", "success");
+    refreshSellers != null ? await refreshSellers() : "";
     return { success: true };
   } catch (error) {
     openSnackbar(
       `There was an error updating the details: ${error.message}`,
-      'error'
+      "error"
     );
     return { success: false, error: error.message };
   }
 };
+
 
 export const onUpdateBuyer = async (values, actions, openSnackbar, user) => {
   try {

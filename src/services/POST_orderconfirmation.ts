@@ -62,7 +62,7 @@ export const onSubmitInvoice = async (
     actions.resetForm();
     window.open(`/components/order_confirmation/pdf/${values.invoiceNumber}`, '_blank');
   } catch (error) {
-    console.log('this is the one',error)
+    // console.log('this is the one',error)
     openSnackbar('There was an error inserting the Order Confirmation.', 'error');
   }
 };
