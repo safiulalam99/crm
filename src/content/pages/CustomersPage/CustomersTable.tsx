@@ -3,13 +3,14 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import { Grid, Container, Typography, Button } from '@mui/material';
 import DataTable from 'src/components/DataTable';
 import useGetCustomers from 'src/services/GET_CUSTOMERS';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { useEffect, useState } from 'react';
 import { onDeleteCustomer } from 'src/services/DELETE';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import ConfirmationDialog from 'src/components/ConfirmationDialog';
+import EditIcon from '@mui/icons-material/Edit';
 
 function CustomerTablePage() {
   const {
@@ -36,6 +37,7 @@ function CustomerTablePage() {
   };
 
   const handleDeleteConfirm = async () => {
+
     try {
       await onDeleteCustomer(customerToDelete, openSnackbar);
       setRows(rows.filter((row) => row.id !== customerToDelete));
@@ -78,11 +80,19 @@ function CustomerTablePage() {
             onClick={handleDeleteClick(id)}
             color="inherit"
             showInMenu
-          />
+          />,
+          <GridActionsCellItem
+          icon={<EditIcon color="action" />}
+          label="Delete"
+          onClick={() => { navigate(`/components/proforma/pdf/${id}`); }}
+          color="inherit"
+            showInMenu
+          />,
         ];
       }
     }
   ];
+  const navigate = useNavigate();
 
   return (
     <>

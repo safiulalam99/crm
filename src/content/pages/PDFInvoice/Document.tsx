@@ -219,12 +219,14 @@ const PDFInvoice = ({ sample_data }) => {
               <Text>{sample_data?.numberinwords}</Text>
             </View>
             {/* Comments */}
-            <View style={styles.numberinwords}>
-              <View style={styles.subs}>
-                <Text style={styles.subtitle}>Notes</Text>
-                <Text>{sample_data?.comments}</Text>
+            {sample_data?.comments && sample_data?.comments !== "" ? (
+              <View style={styles.numberinwords}>
+                <View style={styles.subs}>
+                  <Text style={styles.subtitle}>Notes</Text>
+                  <Text>{sample_data?.comments}</Text>
+                </View>
               </View>
-            </View>
+            ) : null}
           </View>
 
           {/* Summary Table */}

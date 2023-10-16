@@ -219,7 +219,7 @@ const PDFInvoice = ({ sample_data }) => {
               <Text>{sample_data?.numberinwords}</Text>
             </View>
             {/* Comments */}
-            {sample_data?.totaldiscount && sample_data?.totaldiscount !== 0 ? (
+            {sample_data?.comments && sample_data?.comments !== "" ? (
               <View style={styles.numberinwords}>
                 <View style={styles.subs}>
                   <Text style={styles.subtitle}>Notes</Text>
