@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Document,
-  PDFViewer,
-  PDFDownloadLink
-} from '@react-pdf/renderer';
+import { Document, PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 import PDF from './Document';
 import './index.css';
 import { getInvoiceData } from 'src/services/GET_invoice_preview';
@@ -21,7 +17,6 @@ const ProformaInvoice = () => {
       try {
         const data = await getInvoiceData(id);
         setSample_data(data[0]);
-        
       } catch (error) {
         console.error('Failed to fetch invoice data:', error);
       }
@@ -29,7 +24,7 @@ const ProformaInvoice = () => {
 
     fetchData();
   }, []);
-// console.log(sample_data)
+  // console.log(sample_data)
   return (
     <div className="container">
       <div className="pdf-viewer">
@@ -53,11 +48,9 @@ const ProformaInvoice = () => {
           }
         </PDFDownloadLink>
       </div> */}
-              {/* <pre>{JSON.stringify(sample_data, null, 2)}</pre> */}
-
+      {/* <pre>{JSON.stringify(sample_data, null, 2)}</pre> */}
     </div>
   );
 };
 
 export default ProformaInvoice;
-

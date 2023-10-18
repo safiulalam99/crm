@@ -219,7 +219,7 @@ const PDFInvoice = ({ sample_data }) => {
               <Text>{sample_data?.numberinwords}</Text>
             </View>
             {/* Comments */}
-            {sample_data?.comments && sample_data?.comments !== "" ? (
+            {sample_data?.comments && sample_data?.comments !== '' ? (
               <View style={styles.numberinwords}>
                 <View style={styles.subs}>
                   <Text style={styles.subtitle}>Notes</Text>
@@ -271,7 +271,20 @@ const PDFInvoice = ({ sample_data }) => {
 
         <View style={styles.signatureSection}>
           <View style={styles.signature}>
-            <Text> Signature: __________________</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft:20 }}>
+              <Text>Signature: </Text>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomColor: 'black',
+                  flex: 0.7,
+                  marginLeft: 5
+                }}
+              />
+            </View>
+            <Text style={{ textAlign: 'center', marginTop: 1 }}>
+              {sample_data?.sellers?.managingdirector}
+            </Text>
             <Text style={styles.signaturename}>
               {/* {sample_data?.buyers?.contactperson} */}
             </Text>

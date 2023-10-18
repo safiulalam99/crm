@@ -16,8 +16,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#827f7f',
-
+    color: '#827f7f'
   },
   content: {
     marginBottom: 10,
@@ -69,12 +68,16 @@ const Invoice = () => {
 
       <Text style={styles.title}>PACKAGING INFO</Text>
       <Text style={styles.nospacecontent}>
-        Tube 100ml with carton box | 90 units in delivery box (38 x 27.5 x
-        30cm)
+        Tube 100ml with carton box | 90 units in delivery box (38 x 27.5 x 30cm)
       </Text>
       <Text style={styles.nospacecontent}>
-        Roll on 75ml with carton box | 87 units in delivery box (38 x 27.5 x 30cm)
+        Roll on 75ml with carton box | 70 units in delivery box (38 x 27.5 x 22cm){' '}
       </Text>
+      <Text style={styles.nospacecontent}>
+        Roll on 75ml with carton box | 87 units in delivery box (38 x 27.5 x
+        30cm)
+      </Text>
+
       <Text style={styles.nospacecontent}>
         Sachets 3ml | 2400 units in deliver box (38 x 27.5 x 30cm)
       </Text>
@@ -119,8 +122,8 @@ const Invoice = () => {
 
       <Text style={styles.title}>PAYMENT</Text>
       <Text style={styles.content}>
-        Payment must be in EUR currency. Invoice shall be paid in Viking
-        Lab Oy’s bank account in Finland.
+        Payment must be in EUR currency. Invoice shall be paid in Viking Lab
+        Oy’s bank account in Finland.
       </Text>
 
       <Text style={styles.title}>FORCE MAJEURE</Text>

@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   },
   invoiceNo: {
     fontSize: 13,
-    color: '#6b6b6b',
+    color: '#6b6b6b'
   },
   colorItems: {
     color: '#42aed9'
@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
   headerSpace: {
     marginTop: 5,
     marginBottom: 2,
-    color: '#6b6b6b',
+    color: '#6b6b6b'
   },
   invoiceDetails: {
     fontSize: 9,
@@ -40,14 +40,14 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     // marginBottom: 20,
-    marginTop: 2,
+    marginTop: 2
     // backgroundColor: "#cfc8b8",
   },
   manufacturerSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 10,
-    marginTop: 2,
+    marginTop: 2
     // backgroundColor: "#cfc8b8",
   },
   comments: {
@@ -61,13 +61,13 @@ export const styles = StyleSheet.create({
   notes: {
     marginTop: 2,
     fontSize: 9,
-    width: '40%',
+    width: '40%'
     // backgroundColor: "#bfa250",
     // justifyContent: 'space-between',
     // flexWrap: 'wrap'
   },
   subs: {
-    marginTop: 5,
+    marginTop: 5
   },
   productsTable: {
     width: '100%'
@@ -142,7 +142,13 @@ export const styles = StyleSheet.create({
     height: 70,
     objectFit: 'cover'
   },
-
+  sign: {
+    // backgroundColor:'red',
+    width: 140, // Set width
+    height: 50, // Set height
+    marginBottom: 0, // Optional: add some margin if needed
+    marginLeft: 90 // Optional: add some margin if needed
+  },
   logoAndSeller: {
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -162,10 +168,10 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     width: '50%',
     fontSize: 9,
-    marginBottom: 10,
+    marginBottom: 10
   },
   signaturename: {
-    fontSize: 9,
+    fontSize: 9
   },
   commentsSection: {
     width: '50%',
@@ -217,7 +223,7 @@ export const styles = StyleSheet.create({
     marginBottom: 2
   },
   numberinwords: {
-    marginTop: 5,
+    marginTop: 5
     // backgroundColor:"red"
   },
   footer: {
@@ -228,9 +234,9 @@ export const styles = StyleSheet.create({
     right: 0,
     textAlign: 'center',
     color: '#42aed9',
-    zIndex: 1000, 
+    zIndex: 1000
   },
-  
+
   signaturePlace: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -258,9 +264,9 @@ export const styles = StyleSheet.create({
     bottom: 30,
     left: 0,
     right: 0,
-    textAlign: 'left',
+    textAlign: 'left'
     // color: '#42aed9',
-    // zIndex: 1000, 
+    // zIndex: 1000,
   },
 
   pageNumber: {

@@ -21,6 +21,7 @@ const Invoice = ({ sample_data }) => {
   const { hasLanguageVersion, hasProductLot } = checkColumns(
     sample_data?.products
   );
+  // console.log(sample_data)
   const colorCode = '#42aed9';
   const tableColWidth = hasLanguageVersion && hasProductLot ? '15%' : '17%';
   return (
@@ -164,12 +165,15 @@ const Invoice = ({ sample_data }) => {
           </View>
 
           {/* Comments */}
+          {sample_data?.comments && sample_data?.comments !== " " ? (
+
           <View style={styles.comments}>
             <View style={styles.subs}>
               <Text style={styles.subtitle}>Notes</Text>
               <Text>{sample_data?.comments}</Text>
             </View>
           </View>
+          ) : null}
         </View>
 
         {/* Products Table */}
