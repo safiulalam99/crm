@@ -39,12 +39,13 @@ export const INITIAL_VALUES = {
   numberInWords: '',
   comments: '',
   bankdetailsid: '',
-  paymentStatus: ''
+  paymentStatus: '',
+  sellerAddress: '',
 };
 
 export const validationSchema = Yup.object().shape({
   invoiceNumber: Yup.string().required('Invoice number is required'),
-  buyerData: Yup.object().required('Buyer data is required'),
+  buyerData: Yup.object().required('Buyer is required'),
   sellerData: Yup.object().nullable().required('Seller data is required'),
   vatType: Yup.object(),
   date: Yup.date().nullable().required('Date is required'),
@@ -54,6 +55,7 @@ export const validationSchema = Yup.object().shape({
   }),
   deliveryTerm: Yup.string(),
   bankdetailsid: Yup.number(),
+  sellerAddress: Yup.string().required('Address is required'),
   deliveryDate: Yup.date().nullable().required('Delivery date is required'),
   paymentSplit: Yup.string(),
   products: Yup.array()

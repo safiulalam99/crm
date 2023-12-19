@@ -13,6 +13,7 @@ export const getInvoiceData = async (invoicesNumber) => {
         currency:currencies(name, symbol)
       ),
       sellers:sellers (*),
+      address:seller_addresses (id, country, address),
       bank_details:bank_details (*),
       products: invoices_products(
         *,

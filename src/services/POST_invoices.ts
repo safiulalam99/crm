@@ -33,6 +33,8 @@ export const onSubmitInvoice = async (
           totaltax: values.totalTax,
           user_id: user,
           bank_details_id: values.bankdetailsid,
+          address_id: values.sellerAddress,
+
         }
         
       ]);

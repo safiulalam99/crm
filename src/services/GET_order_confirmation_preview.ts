@@ -13,6 +13,7 @@ export const getOrder_confirmation = async (order_confirmationNumber) => {
         currency:currencies(name, symbol)
       ),
       sellers:sellers (*),
+      address:seller_addresses (id, country, address),
       products: order_confirmation_products(
         *,
         name:products (*)

@@ -17,7 +17,6 @@ import FormikControl from 'src/components/Formik/FormikControl';
 import CreateSeller from '../CreateSeller';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-
 const BuyerandSellerOptions = ({ setFieldValue }) => {
   const [buyerDrawerOpen, setBuyerDrawerOpen] = useState(false);
   const [sellerDrawerOpen, setSellerDrawerOpen] = useState(false);
@@ -26,7 +25,6 @@ const BuyerandSellerOptions = ({ setFieldValue }) => {
   const [sellerField, sellerMeta, sellerHelpers] = useField('sellerData');
   const selectedSeller = sellerField.value;
 
-  
   const { buyers, error, isLoading, refreshBuyers } = useBuyers(); // Notice the new refreshBuyers function here
   const {
     sellers,
@@ -41,8 +39,7 @@ const BuyerandSellerOptions = ({ setFieldValue }) => {
   const handleCloseSellerDrawer = () => {
     setSellerDrawerOpen(false);
   };
-  
-  
+
   // if (buyerLoading || sellerLoading) return <p>Loading...</p>;
   // if (buyerError) return <p>Error: {buyerError.message}</p>;
   if (sellerError) return <p>Error: {sellerError.message}</p>;
@@ -84,9 +81,15 @@ const BuyerandSellerOptions = ({ setFieldValue }) => {
                     Close
                   </Button>
                 </Grid>
-                <CreateCustomer refreshBuyers={refreshBuyers} handleCloseDrawer={handleCloseDrawer} />
+                <CreateCustomer
+                  refreshBuyers={refreshBuyers}
+                  handleCloseDrawer={handleCloseDrawer}
+                />
               </Drawer>
-              <Button  sx={{color:'green'}}  onClick={toggleDrawer('buyer', true)}>
+              <Button
+                sx={{ color: 'green' }}
+                onClick={toggleDrawer('buyer', true)}
+              >
                 <AddIcon /> Create New Buyer
               </Button>
             </Grid>
@@ -136,9 +139,15 @@ const BuyerandSellerOptions = ({ setFieldValue }) => {
                     Close
                   </Button>
                 </Grid>{' '}
-                <CreateSeller refreshSellers={refreshSellers} handleCloseSellerDrawer={handleCloseSellerDrawer} />
+                <CreateSeller
+                  refreshSellers={refreshSellers}
+                  handleCloseSellerDrawer={handleCloseSellerDrawer}
+                />
               </Drawer>
-              <Button sx={{color:'green'}} onClick={toggleDrawer('seller', true)}>
+              <Button
+                sx={{ color: 'green' }}
+                onClick={toggleDrawer('seller', true)}
+              >
                 <AddIcon /> Edit Company Details
               </Button>
             </Grid>
@@ -153,19 +162,34 @@ const BuyerandSellerOptions = ({ setFieldValue }) => {
             />
           </CardContent>
           <CardContent>
-            {selectedSeller && Object.keys(selectedSeller).length > 0 && (
-              <>
-                <Typography variant="h6">
-                  {' '}
-                  <b> {selectedSeller.name}</b>
-                </Typography>
-                <Typography> {selectedSeller.address}</Typography>
-                <Typography> {selectedSeller.city}</Typography>
-                <Typography>{selectedSeller.postalCode}</Typography>
-                <Typography> {selectedSeller.country}</Typography>
-                <Typography>{selectedSeller.managingDirector}</Typography>
-              </>
-            )}
+            <Grid
+              container
+              justifyContent="space-between"
+              alignItems="flex-start"
+            >
+              <Grid item xs={8}>
+                {selectedSeller && Object.keys(selectedSeller).length > 0 && (
+                  <>
+                    <Typography variant="h6">
+                      <b>{selectedSeller.name}</b>
+                    </Typography>
+                    <Typography>{selectedSeller.address}</Typography>
+                    <Typography>{selectedSeller.city}</Typography>
+                    <Typography>{selectedSeller.postalCode}</Typography>
+                    <Typography>{selectedSeller.country}</Typography>
+                    <Typography>{selectedSeller.managingDirector}</Typography>
+                  </>
+                )}
+              </Grid>
+              {/* <Grid item xs={4} style={{ textAlign: 'right' }}>
+                <Button
+                  variant="contained"
+                  onClick={toggleDrawer('seller', true)}
+                >
+                  Change address
+                </Button>
+              </Grid> */}
+            </Grid>
           </CardContent>
         </Card>
       </Grid>

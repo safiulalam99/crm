@@ -19,6 +19,7 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 
 import useTopproducts from 'src/services/GET_product_metrics';
 import TopProductsSection from './TopProductSection';
+import TopProducts from 'src/components/TopTable/TopTable';
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }) => `
@@ -109,19 +110,20 @@ function DashboardTasks() {
   if (error) {
     console.error('Error fetching top products:', error);
   }
-  
   return (
     <>
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
+      {/* <pre>{  JSON.stringify(topproducts, null, 2)}</pre>
+       */}
       <PageTitleWrapper>
         <PageHeader />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         {topproducts && topproducts.length > 0 ? (
-          <TopProductsSection topproducts={topproducts} />
-        ) : (
+      <TopProducts data={topproducts} />
+      ) : (
           <Typography variant="h6">No top products data available.</Typography>
         )}
       </Container>

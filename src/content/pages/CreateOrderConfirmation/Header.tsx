@@ -2,6 +2,8 @@
 import React from 'react';
 import { Box, Grid } from '@mui/material';
 import FormikControl from 'src/components/Formik/FormikControl';
+import useAddressDetail from 'src/services/GET_SELLERS_ADDRESS';
+
 const statusData= [
   { value: 'paid', label: 'Paid' },
   { value: 'status', label: 'Status' },
@@ -11,6 +13,13 @@ const Header1 = () => {
   const isoDateString = '2023-07-31T22:24:06.989Z';
   const date = new Date(isoDateString);
   const formattedDate = date.toISOString().split('T')[0]; // "2023-07-31"
+  const { seller_addresses } = useAddressDetail();
+
+  // Creating address options with safety check
+  let addressArray = seller_addresses ? seller_addresses.map((detail) => ({
+    value: detail.id,
+    label: `${detail.address} - ${detail.country}`
+  })) : [];
 
   return (
     <Grid container spacing={2}>
@@ -41,6 +50,15 @@ const Header1 = () => {
           label="Delivery Date"
           name="deliveryDate"
         />
+      </Grid>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
+        <FormikControl
+          control="dropdown"
+          type="text"
+          label="Address"
+          name="sellerAddress"
+          options={addressArray}
+        />{' '}
       </Grid>
     </Grid>
   );

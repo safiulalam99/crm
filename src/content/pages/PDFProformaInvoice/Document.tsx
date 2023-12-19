@@ -126,12 +126,16 @@ const PDFInvoice = ({ sample_data }) => {
               </Text>
               {sample_data?.buyers?.contactperson ? (
                 <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
-                  Managing Director:{' '}
+                  {sample_data.buyers.contactpersonrole !== ''
+                    ? sample_data.buyers.contactpersonrole
+                    : 'Contact Person'}
+                  :{' '}
                   <Text style={{ color: '#6b6b6b' }}>
                     {sample_data?.buyers?.contactperson}
                   </Text>
                 </Text>
               ) : null}
+
               {/* Seller Info */}
             </View>
           </View>
@@ -271,7 +275,13 @@ const PDFInvoice = ({ sample_data }) => {
 
         <View style={styles.signatureSection}>
           <View style={styles.signature}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft:20 }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginLeft: 20
+              }}
+            >
               <Text>Signature: </Text>
               <View
                 style={{

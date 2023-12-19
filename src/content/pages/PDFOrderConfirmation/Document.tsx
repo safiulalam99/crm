@@ -17,7 +17,7 @@ const Invoice = ({ sample_data }) => {
   if (!sample_data || !sample_data.products) {
     return null; // or return a loading indicator
   }
-
+  console.log(sample_data);
   const { hasLanguageVersion, hasProductLot } = checkColumns(
     sample_data?.products
   );
@@ -49,7 +49,7 @@ const Invoice = ({ sample_data }) => {
             <Text style={styles.invoiceTitle}>ORDER CONFIRMATION</Text>
             <Text style={styles.invoiceTitle}></Text>
             <Text style={styles.invoiceNo}>
-            <Text>Order No: </Text>
+              <Text>Order No: </Text>
               <Text style={styles.colorItems}>
                 {sample_data?.invoicenumber}{' '}
               </Text>
@@ -126,12 +126,16 @@ const Invoice = ({ sample_data }) => {
               </Text>
               {sample_data?.buyers?.contactperson ? (
                 <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
-                  Managing Director:{' '}
+                  {sample_data.buyers.contactpersonrole !== ''
+                    ? sample_data.buyers.contactpersonrole
+                    : 'Contact Person'}
+                  :{' '}
                   <Text style={{ color: '#6b6b6b' }}>
                     {sample_data?.buyers?.contactperson}
                   </Text>
                 </Text>
               ) : null}
+y
               {/* Seller Info */}
             </View>
             <View>
@@ -142,11 +146,15 @@ const Invoice = ({ sample_data }) => {
                 </Text>
               </Text>
               <Text style={{ marginBottom: 2 }}>
-                <Text style={{ color: '#6b6b6b' }}>
-                  {sample_data?.sellers?.address},{' '}
-                  {sample_data?.sellers?.country}
-                </Text>
-              </Text>
+  <Text style={{ color: '#6b6b6b' }}>
+    {sample_data?.address?.address}
+    {sample_data?.address?.address && sample_data?.address?.country && ', '}
+  </Text>
+  <Text style={{ color: '#6b6b6b' }}>
+    {sample_data?.address?.country}
+  </Text>
+</Text>
+
               <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
                 Vat No:{' '}
                 <Text style={{ color: '#6b6b6b' }}>
@@ -165,14 +173,13 @@ const Invoice = ({ sample_data }) => {
           </View>
 
           {/* Comments */}
-          {sample_data?.comments && sample_data?.comments !== " " ? (
-
-          <View style={styles.comments}>
-            <View style={styles.subs}>
-              <Text style={styles.subtitle}>Notes</Text>
-              <Text>{sample_data?.comments}</Text>
+          {sample_data?.comments && sample_data?.comments !== ' ' ? (
+            <View style={styles.comments}>
+              <View style={styles.subs}>
+                <Text style={styles.subtitle}>Notes</Text>
+                <Text>{sample_data?.comments}</Text>
+              </View>
             </View>
-          </View>
           ) : null}
         </View>
 
@@ -259,19 +266,23 @@ const Invoice = ({ sample_data }) => {
               <Text style={styles.summaryTitle}>
                 Subtotal ({sample_data?.buyers?.currency?.symbol})
               </Text>
-              <Text style={styles.summaryValue}>{sample_data?.subtotal.toFixed(2)}</Text>
+              <Text style={styles.summaryValue}>
+                {sample_data?.subtotal.toFixed(2)}
+              </Text>
             </View>
             <View style={styles.summaryRow}>
               <Text style={styles.summaryTitle}>
                 VAT ({sample_data?.taxrate}%)
               </Text>
-              <Text style={styles.summaryValue}>{sample_data?.totaltax.toFixed(2)}</Text>
+              <Text style={styles.summaryValue}>
+                {sample_data?.totaltax.toFixed(2)}
+              </Text>
             </View>
             {sample_data?.totaldiscount && sample_data?.totaldiscount !== 0 ? (
               <View style={styles.summaryRow}>
                 <Text style={styles.summaryTitle}>Discount</Text>
                 <Text style={styles.summaryValue}>
-                 - {sample_data?.totaldiscount.toFixed(2)}
+                  - {sample_data?.totaldiscount.toFixed(2)}
                 </Text>
               </View>
             ) : null}
@@ -280,7 +291,9 @@ const Invoice = ({ sample_data }) => {
               <Text style={styles.summaryTitle}>
                 Total ({sample_data?.buyers?.currency?.symbol})
               </Text>
-              <Text style={styles.summaryValue}>{sample_data?.total.toFixed(2)}</Text>
+              <Text style={styles.summaryValue}>
+                {sample_data?.total.toFixed(2)}
+              </Text>
             </View>
           </View>
         </View>

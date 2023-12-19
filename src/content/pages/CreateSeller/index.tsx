@@ -25,6 +25,7 @@ import { onUpdateSeller } from 'src/services/UPDATE';
 import TabPanel from 'src/components/TabPanel';
 import useBankDetails from 'src/services/GET';
 import BankDetailsForm from './BankDetailsForm';
+import AddressDetailsForm from './AddressDetailsForm';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Required'),
@@ -138,6 +139,7 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
               >
                 <Tabs value={tabValue} onChange={handleTabChange}>
                   <Tab label="Details" />
+                  <Tab label="Address" />
                   <Tab label="Bank Details" />
                 </Tabs>
                 <Divider />
@@ -152,27 +154,6 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
                         labelLayout="left"
                         labelRequired="true"
                       />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormikControl
-                        control="input"
-                        label="Address"
-                        name="address"
-                        placeholder="123 Street, City"
-                        labelLayout="left"
-                        labelRequired="true"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormikControl
-                        control="dropdown"
-                        type="text"
-                        label="Country"
-                        name="country"
-                        options={countriesList}
-                        labelLayout="left"
-                        labelRequired="true"
-                      />{' '}
                     </Grid>
                     <Grid item xs={12}>
                       <Tooltip title="VAT Number for the customer's country">
@@ -205,13 +186,26 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
                     </Grid>
                   </Grid>
                 </TabPanel>
-                <BankDetailsForm
-                  seller_id={seller_id}
-                  bankDetails={bankDetails}
-                  openSnackbar={openSnackbar}
-                  user={user}
-                  tabValue={tabValue}
-                />
+                <TabPanel value={tabValue} index={1}>
+                  {' '}
+                  {/* New TabPanel for Address */}
+                  <AddressDetailsForm
+                    seller_id={seller_id}
+                    openSnackbar={openSnackbar}
+                    user={user}
+                  />
+                </TabPanel>
+                <TabPanel value={tabValue} index={2}>
+                  {' '}
+                  {/* New TabPanel for Address */}
+                  <BankDetailsForm
+                    seller_id={seller_id}
+                    bankDetails={bankDetails}
+                    openSnackbar={openSnackbar}
+                    user={user}
+                    tabValue={tabValue}
+                  />
+                </TabPanel>
               </Container>
             </Form>
           </>

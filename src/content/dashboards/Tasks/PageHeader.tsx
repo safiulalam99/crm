@@ -76,7 +76,7 @@ function PageHeader() {
         </Box>
       </Box>
       <Box mt={{ xs: 3, md: 0 }}>
-        <Button href='/components/my/new' variant="contained" startIcon={<DocumentScannerTwoToneIcon />}>
+        <Button href='/management/company_details' variant="contained" startIcon={<DocumentScannerTwoToneIcon />}>
           Edit your company information 
         </Button>
       </Box>

@@ -1,16 +1,11 @@
+import React, { useEffect } from 'react';
 import {
   Button,
   Card,
   CardContent,
-  Container,
   Grid,
   Typography,
-  Box
-} from '@mui/material';
-import React from 'react';
-import FormikControl from 'src/components/Formik/FormikControl';
-import TabPanel from 'src/components/TabPanel';
-import {
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
@@ -18,10 +13,12 @@ import {
 } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { postBankDetails } from 'src/services/POST_BANK_DETAILS';
-import useBankDetail from 'src/services/GET_BANK_DETAILS';
-import { useDeleteBankDetail } from 'src/services/DELETE_BANK_DETAILS';
+import FormikControl from 'src/components/Formik/FormikControl';
 import ClearIcon from '@mui/icons-material/Clear';
+import { postAddressDetails } from 'src/services/POST_SELLER_ADDRESS';
+import useAddressDetail from 'src/services/GET_SELLERS_ADDRESS';
+import { useDeleteAddressDetail } from 'src/services/DELETE_SELLER_ADDRESS';
+import countriesList from '../../../Data/countries.json';
 
 const validationSchema = Yup.object({
   bankaccountname: Yup.string(),
@@ -35,51 +32,33 @@ const BankInputForm = () => (
     <Grid item xs={12}>
       <FormikControl
         control="input"
-        label="Account Name"
-        name="bankaccountname"
+        label="Address"
+        name="address"
+        placeholder="123 Street, City"
         labelLayout="left"
+        // labelRequired="true"
       />
     </Grid>
     <Grid item xs={12}>
       <FormikControl
-        control="input"
-        label="IBAN"
-        name="iban"
+        control="dropdown"
+        type="text"
+        label="Country"
+        name="country"
+        options={countriesList}
         labelLayout="left"
-      />
-    </Grid>
-    <Grid item xs={12}>
-      <FormikControl
-        control="input"
-        label="Bank"
-        name="bankname"
-        labelLayout="left"
-      />
-    </Grid>
-    <Grid item xs={12}>
-      <FormikControl
-        control="input"
-        label="BIC"
-        name="bankbic"
-        labelLayout="left"
-      />
+        // labelRequired="true"
+      />{' '}
     </Grid>
   </Grid>
 );
 
-const BankDetailsForm = ({
-  tabValue,
-  bankDetails,
-  user,
-  seller_id,
-  openSnackbar
-}) => {
+const BankDetailsForm = ({ user, seller_id, openSnackbar }) => {
   const [refetchTrigger, setRefetchTrigger] = React.useState(0);
-  const { bank_details, refetch } = useBankDetail();
+  const { seller_addresses, refetch_address } = useAddressDetail();
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [bankDetailIdToDelete, setBankDetailIdToDelete] = React.useState(null);
-  console.log("bank_details", bank_details)
-
+  console.log('seller_addresses', seller_addresses);
   const handleDeleteDialogOpen = (bankDetailId) => {
     setBankDetailIdToDelete(bankDetailId);
     setDeleteDialogOpen(true);
@@ -98,7 +77,7 @@ const BankDetailsForm = ({
   };
 
   // Instantiate the hook and extract the mutate function
-  const deleteBankDetailMutation = useDeleteBankDetail();
+  const deleteBankDetailMutation = useDeleteAddressDetail();
 
   const [open, setOpen] = React.useState(false);
 
@@ -117,7 +96,7 @@ const BankDetailsForm = ({
   };
 
   const renderBankDetailsCards = () => {
-    return bank_details?.map((detail, index) => (
+    return seller_addresses?.map((detail, index) => (
       <Grid item xs={12} sm={12} md={6} lg={6} key={index}>
         <Card
           sx={{
@@ -148,12 +127,8 @@ const BankDetailsForm = ({
               paddingTop: '48px' // Added padding-top to prevent overlap with the button
             }}
           >
-            <Typography fontWeight={3} variant="h6" sx={{ mb: 0.1 }}>
-              <strong> Bank: {detail?.accountname}</strong>
-            </Typography>
-            <Typography>Account Name: {detail?.bank}</Typography>
-            <Typography>IBAN: {detail?.iban}</Typography>
-            <Typography>BIC: {detail?.bic}</Typography>
+            <Typography>Account Name: {detail?.address}</Typography>
+            <Typography>IBAN: {detail?.country}</Typography>
           </CardContent>
         </Card>
       </Grid>
@@ -163,42 +138,36 @@ const BankDetailsForm = ({
   return (
     <>
       <>
-          <Box
-            sx={{
-              //   backgroundColor: 'blue',
-              padding: '10px',
-              borderRadius: '6px',
-              boxShadow: 1,
-              width: '100%'
-            }}
-          >
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end'
-                  }}
+        <Box
+          sx={{
+            padding: '10px',
+            borderRadius: '6px',
+            boxShadow: 1,
+            width: '100%'
+          }}
+        >
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-end'
+                }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: 'green' }}
+                  onClick={handleClickOpen}
                 >
-                  <Button
-                    variant="contained"
-                    sx={{ backgroundColor: 'green' }}
-                    onClick={handleClickOpen}
-                  >
-                    New Bank Account
-                  </Button>
-                </Box>
-              </Grid>
-              {renderBankDetailsCards()}
-              <Grid item xs={12}>
-                {/* <Box sx={{ flexGrow: 1 }}>
-                  <BankInputForm />
-                </Box> */}
-              </Grid>
+                  Add New Address
+                </Button>
+              </Box>
             </Grid>
-          </Box>
+            {renderBankDetailsCards()}
+          </Grid>
+        </Box>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle variant="h4">Create New Bank Account</DialogTitle>
+          <DialogTitle variant="h4">Add New Address</DialogTitle>
           <DialogContent>
             <Formik
               initialValues={{
@@ -209,14 +178,14 @@ const BankDetailsForm = ({
               }}
               validationSchema={validationSchema}
               onSubmit={async (values) => {
-                const result = await postBankDetails(
+                const result = await postAddressDetails(
                   values,
                   user,
                   seller_id,
                   openSnackbar
                 );
                 if (result.success) {
-                  refetch();
+                    refetch_address();
                   handleClose();
                 }
               }}
