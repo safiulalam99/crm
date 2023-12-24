@@ -2,46 +2,47 @@ import { Helmet } from 'react-helmet-async';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import { Grid, Container, Typography, Button } from '@mui/material';
 import Tables from 'src/components/DataTable';
-import useInvoices from '../../../services/GET_Invoices';
+import useInvoices from '../../../services/GET_proforma';
 import { Link } from 'react-router-dom';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import Status500 from '../Status/Status500';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import { onDeleteInvoice } from 'src/services/DELETE';
+import { onDeleteInvoice, onDeleteProforma } from 'src/services/DELETE';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ConfirmationDialog from 'src/components/ConfirmationDialog';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { UserContext } from 'src/contexts/UserContext';
 
 function formatDate(isoString) {
   const date = new Date(isoString);
   return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 }
-function InvoicePage() {
+function OrderConfirmationPage() {
   const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
   const {
     invoiceData,
     error: invoiceDataError,
     isLoading: invoiceDataLoading
   } = useInvoices();
-
+  const userContext = useContext(UserContext);
   const [rows, setRows] = useState([]); // Initialize rows state
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [invoiceToDelete, setInvoiceToDelete] = useState(null);
-
+  const { user } = userContext;
   useEffect(() => {
     // Update rows state when invoiceData changes
     if (invoiceData) {
       setRows(
         invoiceData.map((item, index) => ({
-          id: item.invoicenumber,
+          id: item.proforma_id,
           time_stamp: item.time_stamp,
           invoicenumber: item.invoicenumber,
           // @ts-ignore
           name: item?.buyers?.name,
           deliverydate: item.deliverydate,
-          total: item.total
+          total: item.total,
+          proforma_id: item?.proforma_id
         }))
       );
     }
@@ -51,18 +52,24 @@ function InvoicePage() {
     setInvoiceToDelete(id);
     setDeleteDialogOpen(true);
   };
-  const handleProforma = (id) => () => {
-    // console.log("asdasdasdasd")
-    return <Link to={`/proforma/pdf/${id}`} />;
-  };
 
   const handleDeleteConfirm = async () => {
+    if (!invoiceToDelete) return;
     try {
-      await onDeleteInvoice(invoiceToDelete, openSnackbar); // Wait for the promise to resolve
-      setRows(rows.filter((row) => row.id !== invoiceToDelete)); // Update rows only if the delete was successful
-      setDeleteDialogOpen(false); // Close the dialog
+      // Assuming invoiceToDelete now contains the entire row data
+      await onDeleteProforma(
+        invoiceToDelete.invoicenumber,
+        user?.id,
+        invoiceToDelete.proforma_id,
+        openSnackbar
+      );
+      setRows(
+        rows.filter((row) => row.proforma_id !== invoiceToDelete.proforma_id)
+      );
+      setDeleteDialogOpen(false);
     } catch (error) {
       console.log('Delete failed', error);
+      // Consider showing a more user-friendly error message here
     }
   };
 
@@ -72,17 +79,27 @@ function InvoicePage() {
   };
 
   const columns = [
+    // {
+    //   field: 'proforma_id',
+    //   headerName: 'Order#',
+    //   width: 200,
+    //   renderCell: (params) => (
+    //     <Link to={`/components/proforma/pdf/${params.row.name}`}>
+    //       {params.value.toString()}
+    //     </Link>
+    //   )
+    // },
     {
       field: 'invoicenumber',
-      headerName: 'Order#',
-      width: 130,
+      headerName: 'ID',
+      width: 210,
       renderCell: (params) => (
-        <Link to={`/components/invoice/pdf/${params.value}`}>
+        <Link to={`/components/proforma/pdf/${params.row.proforma_id}`}>
           {params.value.toString()}
         </Link>
       )
     },
-    { field: 'name', headerName: 'Customer', width: 130 },
+    { field: 'name', headerName: 'Customer', width: 210 },
     { field: 'deliverydate', headerName: 'Due Date', width: 130 },
     { field: 'total', headerName: 'Amount', width: 90 },
     {
@@ -95,21 +112,14 @@ function InvoicePage() {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 100,
-      cellClassName: 'actions',
-      getActions: ({ id }) => {
+      // ... other properties ...
+      getActions: (params) => {
+        // Pass the entire row data to handleDeleteClick
         return [
-          <GridActionsCellItem
-            icon={<PictureAsPdfIcon />}
-            label="View as proforma invoice"
-            onClick={() => window.open(`/components/proforma/pdf/${id}`)}
-            color="inherit"
-            showInMenu
-          />,
           <GridActionsCellItem
             icon={<DeleteIcon color="error" />}
             label="Delete"
-            onClick={handleDeleteClick(id)}
+            onClick={handleDeleteClick(params.row)}
             color="inherit"
             showInMenu
           />
@@ -122,22 +132,20 @@ function InvoicePage() {
   return (
     <>
       <Helmet>
-        <title>Invoices </title>
+        <title>Pro Forma</title>
       </Helmet>
       <PageTitleWrapper>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h3" component="h3" gutterBottom>
-              Invoices
+              Pro Forma
             </Typography>
-            <Typography variant="subtitle2">
-              These are your recent Invoices
-            </Typography>
+            <Typography variant="subtitle2"></Typography>
           </Grid>
           <Grid item>
-            <Link to={'/components/invoice/new'}>
+            <Link to={'/components/proforma/new'}>
               <Button sx={{ mt: { xs: 2, md: 0 } }} variant="contained">
-                New Invoice
+                Create Pro Forma
               </Button>
             </Link>
           </Grid>
@@ -177,10 +185,13 @@ function InvoicePage() {
         onConfirm={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
         title="Confirm Delete"
-        message={"Are you sure you want to delete this invoice? This action cannot be undone"}
+        message="Are you sure you want to delete this Proforma?"
       />
     </>
   );
 }
 
-export default InvoicePage;
+export default OrderConfirmationPage;
+function setFetchedData(data: any[]) {
+  throw new Error('Function not implemented.');
+}

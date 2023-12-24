@@ -54,7 +54,11 @@ const Status500 = Loader(
 const CreateOrderConfirmation = Loader(
   lazy(() => import('src/content/pages/CreateOrderConfirmation'))
 );
+const CreateProforma = Loader(
+  lazy(() => import('src/content/pages/CreateProforma'))
+);
 const OrderConfirmationPage = Loader(lazy(() => import('src/content/pages/OrderConfirmationPage')));
+const ProformaPage = Loader(lazy(() => import('src/content/pages/ProformaPage')));
 
 const CreateCustomer = Loader(
   lazy(() => import('src/content/pages/CustomersPage/CreateCustomer'))
@@ -218,6 +222,14 @@ const routes: RouteObject[] = [
       {
         path: 'order_confirmation/new',
         element: <CreateOrderConfirmation />
+      },
+      {
+        path: 'proforma',
+        element: <ProformaPage />
+      },
+      {
+        path: 'proforma/new',
+        element: <CreateProforma />
       },
       {
         path: 'invoice',

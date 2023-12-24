@@ -2,16 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Document, PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 import PDF from './Document';
 import './index.css';
-import { getInvoiceData } from 'src/services/GET_invoice_preview';
+import { getInvoiceData } from 'src/services/GET_proforma_preview';
 import { useParams } from 'react-router-dom';
-import { Button, Typography } from '@mui/material';
-import Content from './Content';
-import { numberToWords } from 'src/utils/towords';
+
 
 const ProformaInvoice = () => {
   const [sample_data, setSample_data] = useState(null);
   const { id } = useParams();
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -24,7 +21,7 @@ const ProformaInvoice = () => {
 
     fetchData();
   }, []);
-  // console.log(sample_data)
+  console.log(sample_data)
   return (
     <div className="container">
       <div className="pdf-viewer">

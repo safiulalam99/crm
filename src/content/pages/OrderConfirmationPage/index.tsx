@@ -169,7 +169,7 @@ function OrderConfirmationPage() {
         onConfirm={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
         title="Confirm Delete"
-        message="Are you sure you want to delete this invoice?"
+        message={"Are you sure you want to delete this Order? This action cannot be undone"}
       />
     </>
   );

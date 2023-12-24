@@ -9,7 +9,8 @@ import { CssBaseline } from '@mui/material';
 import ThemeProvider from './theme/ThemeProvider';
 import { SnackbarProvider } from './contexts/SnackbarContext';
 import GlobalSnackbar from './components/Snackbar';
-import './App.css'
+import './App.css';
+import { UserProvider } from './contexts/UserContext';
 // Create a client
 function App() {
   const content = useRoutes(router);
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <ThemeProvider>
+      <UserProvider>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <CssBaseline />
 
@@ -24,6 +26,7 @@ function App() {
             {content} <GlobalSnackbar />
           </SnackbarProvider>
         </LocalizationProvider>
+      </UserProvider>
     </ThemeProvider>
   );
 }

@@ -58,7 +58,6 @@ const BankDetailsForm = ({ user, seller_id, openSnackbar }) => {
   const { seller_addresses, refetch_address } = useAddressDetail();
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [bankDetailIdToDelete, setBankDetailIdToDelete] = React.useState(null);
-  console.log('seller_addresses', seller_addresses);
   const handleDeleteDialogOpen = (bankDetailId) => {
     setBankDetailIdToDelete(bankDetailId);
     setDeleteDialogOpen(true);
@@ -156,7 +155,7 @@ const BankDetailsForm = ({ user, seller_id, openSnackbar }) => {
               >
                 <Button
                   variant="contained"
-                  sx={{ backgroundColor: 'green' }}
+                  sx={{ backgroundColor: 'primary' }}
                   onClick={handleClickOpen}
                 >
                   Add New Address

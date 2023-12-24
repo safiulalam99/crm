@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION delete_proforma_and_products(
+    proforma_id_param text, 
+    user_id_param uuid,
+    proforma_uuid_param uuid
+) RETURNS void AS $$
+BEGIN
+  -- Delete associated products only if they match invoicenumber, user_id, and proforma_id
+  DELETE FROM proforma_products 
+  WHERE invoicenumber = proforma_id_param 
+    AND user_id = user_id_param
+    AND proforma_id = proforma_uuid_param; -- Assuming 'proforma_id' is the UUID column in proforma_products
+  
+  -- Delete the proforma only if it matches invoicenumber, user_id, and proforma_id
+  DELETE FROM proforma 
+  WHERE invoicenumber = proforma_id_param 
+    AND user_id = user_id_param
+    AND proforma_id = proforma_uuid_param; -- Assuming 'id' is the UUID column in proforma
+  
+  RETURN;
+END;
+$$ LANGUAGE plpgsql;

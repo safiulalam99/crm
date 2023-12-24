@@ -78,7 +78,6 @@ const BankDetailsForm = ({
   const { bank_details, refetch } = useBankDetail();
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [bankDetailIdToDelete, setBankDetailIdToDelete] = React.useState(null);
-  console.log("bank_details", bank_details)
 
   const handleDeleteDialogOpen = (bankDetailId) => {
     setBankDetailIdToDelete(bankDetailId);
@@ -182,7 +181,7 @@ const BankDetailsForm = ({
                 >
                   <Button
                     variant="contained"
-                    sx={{ backgroundColor: 'green' }}
+                    sx={{ backgroundColor: 'primary' }}
                     onClick={handleClickOpen}
                   >
                     New Bank Account

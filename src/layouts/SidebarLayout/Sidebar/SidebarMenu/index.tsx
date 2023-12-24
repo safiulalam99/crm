@@ -240,6 +240,17 @@ function SidebarMenu() {
                   Products
                 </Button>
               </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/components/proforma"
+                  startIcon={<InventoryIcon />}
+                >
+                  Pro Forma
+                </Button>
+              </ListItem>
             </List>
           </SubMenuWrapper>
         </List>

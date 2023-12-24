@@ -17,8 +17,6 @@ export const postAddressDetails = async (values, user, seller_id, openSnackbar) 
     return { success: true, newAddressDetails };
   } catch (error) {
     openSnackbar(`Error posting address details: ${error.message}`, "error");
-    console.log(error)
-
     return { success: false, error: error.message };
   }
 };

@@ -44,7 +44,7 @@ export const INITIAL_VALUES = {
 };
 
 export const validationSchema = Yup.object().shape({
-  invoiceNumber: Yup.string().required('Invoice number is required'),
+  invoiceNumber: Yup.string().required('Proforma number is required'),
   buyerData: Yup.object().required('Buyer is required'),
   sellerData: Yup.object().nullable().required('Seller data is required'),
   vatType: Yup.object(),
