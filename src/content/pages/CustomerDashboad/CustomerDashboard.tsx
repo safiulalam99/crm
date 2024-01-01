@@ -178,9 +178,6 @@ const CustomerDashboard = () => {
         </Grid> */}
       </Grid>
 
-      <Typography variant="h4" gutterBottom paddingTop={2}>
-        Customer Name
-      </Typography>
       <Grid container>
         <Card sx={{ overflow: 'hidden', marginBottom: 2 }}></Card>
         <Grid item xs={12}>
