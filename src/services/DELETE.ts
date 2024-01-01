@@ -41,7 +41,7 @@ export const onDeleteInvoice = async (id, openSnackbar) => {
   try {
     // Call the function to delete the order confirmation and related products
     const { data, error } = await supabase.rpc('delete_invoices_and_products', {
-      invoice_id: id
+      p_invoice_number: id
     });
 
     if (error) throw error;
@@ -49,7 +49,6 @@ export const onDeleteInvoice = async (id, openSnackbar) => {
     openSnackbar(`${id} deleted!`, 'success');
     return Promise.resolve(data); // Resolve the promise with the result
   } catch (error) {
-    console.log(error);
     openSnackbar(error.details, 'error');
     return Promise.reject(error); // Reject the promise with the error
   }
@@ -72,7 +71,6 @@ export const onDeleteProforma = async (invoiceNumber, userId, proformaUuid, open
     return Promise.resolve(data);
 
   } catch (error) {
-    console.log(error);
     openSnackbar(error.message, 'error');
     return Promise.reject(error);
   }
@@ -96,3 +94,5 @@ export const onDeleteOrderConfirmation = async (id, openSnackbar) => {
     return Promise.reject(error); // Reject the promise with the error
   }
 };
+
+

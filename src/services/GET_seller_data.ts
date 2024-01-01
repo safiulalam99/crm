@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import supabase from '../config/supabaseClient'; // Adjust the path to your Supabase configuration
+import { useQuery } from '@tanstack/react-query';
 
 
 type Seller = {
@@ -50,3 +51,25 @@ const useSellers = () => {
 };
 
 export default useSellers;
+
+const fetchPrimaryAddress = async (userId) => {
+  const { data, error } = await supabase
+    .from('sellers')
+      .select(`
+        id,       
+      `)
+      .eq('user_id', userId);
+
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+};
+
+
+export const usePrimaryAddress = (userId:string) => {
+  return useQuery(['primaryAddress', userId], () => fetchPrimaryAddress(userId), {
+    staleTime: Infinity, 
+  });
+};

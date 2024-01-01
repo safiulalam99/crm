@@ -16,6 +16,8 @@ import EditCustomer from './content/pages/CustomersPage/EditCustomer';
 import CreateInvoice from './content/pages/CreateInvoice';
 import InvoicePage from './content/pages/InvoicePage';
 import ProformaInvoice from './content/pages/PDFProformaInvoice/PDFPreview';
+import CustomerDashboard from './content/pages/CustomerDashboad/CustomerDashboard';
+import NewDashboard from './content/pages/CustomerDashboad/NewDashboard';
 
 const Loader = (Component) => (props) =>
   (
@@ -250,6 +252,14 @@ const routes: RouteObject[] = [
       {
         path: 'customers/edit/:id',
         element: <EditCustomer />
+      },
+      {
+        path: 'customers/view/:id',
+        element: <CustomerDashboard />
+      },
+      {
+        path: 'customers/views/:id',
+        element: <NewDashboard />
       },
       // {
       //   path: 'pdf',

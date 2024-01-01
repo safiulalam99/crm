@@ -24,7 +24,6 @@ const BuyerandSellerOptions = ({ setFieldValue }) => {
   const selectedBuyer = buyerField.value;
   const [sellerField, sellerMeta, sellerHelpers] = useField('sellerData');
   const selectedSeller = sellerField.value;
-
   const { buyers, error, isLoading, refreshBuyers } = useBuyers(); // Notice the new refreshBuyers function here
   const {
     sellers,
@@ -181,14 +180,6 @@ const BuyerandSellerOptions = ({ setFieldValue }) => {
                   </>
                 )}
               </Grid>
-              {/* <Grid item xs={4} style={{ textAlign: 'right' }}>
-                <Button
-                  variant="contained"
-                  onClick={toggleDrawer('seller', true)}
-                >
-                  Change address
-                </Button>
-              </Grid> */}
             </Grid>
           </CardContent>
         </Card>

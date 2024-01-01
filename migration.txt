@@ -19,3 +19,7 @@ BEGIN
   RETURN;
 END;
 $$ LANGUAGE plpgsql;
+
+
+create the proforma tables
+update the delete functions

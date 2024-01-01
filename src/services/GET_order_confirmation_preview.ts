@@ -3,10 +3,11 @@ import supabase from '../config/supabaseClient.js';
 export const getOrder_confirmation = async (order_confirmationNumber) => {
   try {
     // Fetch from the order_confirmations table
-    const { data: order_confirmationData, error: order_confirmationError } = await supabase
-      .from('order_confirmation')
-      .select(
-        `
+    const { data: order_confirmationData, error: order_confirmationError } =
+      await supabase
+        .from('order_confirmation')
+        .select(
+          `
       *,
       buyers:buyers (
         *,
@@ -19,8 +20,8 @@ export const getOrder_confirmation = async (order_confirmationNumber) => {
         name:products (*)
       )
     `
-      )
-      .eq('invoicenumber', order_confirmationNumber);
+        )
+        .eq('invoicenumber', order_confirmationNumber);
 
     if (order_confirmationError) throw order_confirmationError;
 

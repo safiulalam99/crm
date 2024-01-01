@@ -52,7 +52,6 @@ function InvoicePage() {
     setDeleteDialogOpen(true);
   };
   const handleProforma = (id) => () => {
-    // console.log("asdasdasdasd")
     return <Link to={`/proforma/pdf/${id}`} />;
   };
 
@@ -62,7 +61,6 @@ function InvoicePage() {
       setRows(rows.filter((row) => row.id !== invoiceToDelete)); // Update rows only if the delete was successful
       setDeleteDialogOpen(false); // Close the dialog
     } catch (error) {
-      console.log('Delete failed', error);
     }
   };
 
@@ -99,13 +97,7 @@ function InvoicePage() {
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
-          <GridActionsCellItem
-            icon={<PictureAsPdfIcon />}
-            label="View as proforma invoice"
-            onClick={() => window.open(`/components/proforma/pdf/${id}`)}
-            color="inherit"
-            showInMenu
-          />,
+    
           <GridActionsCellItem
             icon={<DeleteIcon color="error" />}
             label="Delete"

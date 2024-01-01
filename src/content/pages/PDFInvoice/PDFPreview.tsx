@@ -39,7 +39,7 @@ const Invoice = () => {
             {/* <Content /> */}
           </Document>
         </PDFViewer>
-                            <pre>{JSON.stringify(sample_data, null, 2)}</pre>
+                            {/* <pre>{JSON.stringify(sample_data, null, 2)}</pre> */}
 
       </div>
       {/* <div className="download-button">

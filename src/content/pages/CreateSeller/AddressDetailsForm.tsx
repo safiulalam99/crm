@@ -1,25 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Button,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
   Box,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
+  Stack
 } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import FormikControl from 'src/components/Formik/FormikControl';
-import ClearIcon from '@mui/icons-material/Clear';
 import { postAddressDetails } from 'src/services/POST_SELLER_ADDRESS';
 import useAddressDetail from 'src/services/GET_SELLERS_ADDRESS';
 import { useDeleteAddressDetail } from 'src/services/DELETE_SELLER_ADDRESS';
-import countriesList from '../../../Data/countries.json';
-
+import AddIcon from '@mui/icons-material/Add';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import supabase from 'src/config/supabaseClient';
+import { UserContext } from 'src/contexts/UserContext';
+import AddressDetailCard from './AddressDetailCard';
+import {
+  AddressInputForm,
+  ConfirmPrimaryAddressDialog
+} from './ConfirmPrimaryAddressDialog';
 const validationSchema = Yup.object({
   bankaccountname: Yup.string(),
   iban: Yup.string(),
@@ -27,196 +29,170 @@ const validationSchema = Yup.object({
   bankbic: Yup.string()
 });
 
-const BankInputForm = () => (
-  <Grid container spacing={3}>
-    <Grid item xs={12}>
-      <FormikControl
-        control="input"
-        label="Address"
-        name="address"
-        placeholder="123 Street, City"
-        labelLayout="left"
-        // labelRequired="true"
-      />
-    </Grid>
-    <Grid item xs={12}>
-      <FormikControl
-        control="dropdown"
-        type="text"
-        label="Country"
-        name="country"
-        options={countriesList}
-        labelLayout="left"
-        // labelRequired="true"
-      />{' '}
-    </Grid>
-  </Grid>
-);
+// Function to set the primary address
+const setPrimaryAddress = async ({ sellerId, addressId }) => {
+  const { data, error } = await supabase
+    .from('sellers') 
+    .update({ primary_address: addressId })
+    .eq('user_id', sellerId);
 
-const BankDetailsForm = ({ user, seller_id, openSnackbar }) => {
-  const [refetchTrigger, setRefetchTrigger] = React.useState(0);
+  if (error) throw new Error(error.message);
+  return data;
+};
+
+const AddressDetailsForm = ({ seller_id, openSnackbar }) => {
   const { seller_addresses, refetch_address } = useAddressDetail();
-  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
-  const [bankDetailIdToDelete, setBankDetailIdToDelete] = React.useState(null);
-  const handleDeleteDialogOpen = (bankDetailId) => {
-    setBankDetailIdToDelete(bankDetailId);
-    setDeleteDialogOpen(true);
+  const deleteAddressDetailMutation = useDeleteAddressDetail();
+  const [open, setOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [addressDetailIdToDelete, setAddressDetailIdToDelete] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const queryClient = useQueryClient();
+  const [confirmPrimaryOpen, setConfirmPrimaryOpen] = useState(false);
+  const userContext = useContext(UserContext);
+  const [pendingSelectedAddress, setPendingSelectedAddress] = useState(null);
+
+  const { user } = userContext;
+
+
+  const handleDelete = (addressDetailId) => {
+    deleteAddressDetailMutation.mutate(addressDetailId, {
+      onSuccess: () => {
+        openSnackbar('Address successfully deleted.', 'success');
+        refetch_address();
+      },
+      onError: (error) => {
+        openSnackbar(`Error: ${error}`, 'error');
+      }
+    });
   };
 
-  const handleDeleteDialogClose = () => {
-    setDeleteDialogOpen(false);
-    setBankDetailIdToDelete(null);
-  };
-
-  const handleDeleteConfirm = () => {
-    if (bankDetailIdToDelete !== null) {
-      handleDelete(bankDetailIdToDelete);
+  // Mutation to set the primary address
+  const { mutate: updatePrimaryAddress, isLoading: isUpdating } = useMutation(
+    setPrimaryAddress,
+    {
+      onSuccess: () => {
+        openSnackbar('Primary address set successfully.', 'success');
+        // Invalidate and refetch seller addresses to update the UI
+        queryClient.invalidateQueries(['seller_addresses', seller_id]);
+      },
+      onError: (error) => {
+        openSnackbar(`Error setting primary address: ${error}`, 'error');
+      }
     }
-    handleDeleteDialogClose();
+  );
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setAddressDetailIdToDelete(null); // Reset the address detail id to delete
   };
 
-  // Instantiate the hook and extract the mutate function
-  const deleteBankDetailMutation = useDeleteAddressDetail();
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleSelectAddress = (address) => {
+    setPendingSelectedAddress(address);
+    setConfirmPrimaryOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  // Create a handleDelete function
-  const handleDelete = (bankDetailId) => {
-    // Call the mutate function with the bankDetailId
-    deleteBankDetailMutation.mutate(bankDetailId);
-  };
-
-  const renderBankDetailsCards = () => {
-    return seller_addresses?.map((detail, index) => (
-      <Grid item xs={12} sm={12} md={6} lg={6} key={index}>
-        <Card
-          sx={{
-            mb: 2,
-            maxWidth: 500,
-            mx: 'auto',
-            borderRadius: 2,
-            boxShadow: 1,
-            position: 'relative' // Add this line
-          }}
-          variant="outlined"
-        >
-          <Button
-            onClick={() => handleDeleteDialogOpen(detail.id)}
-            sx={{
-              position: 'absolute',
-              top: 8,
-              right: 8,
-              color: 'red',
-              borderRadius: 100
-            }}
-          >
-            <ClearIcon />
-          </Button>
-          <CardContent
-            sx={{
-              textAlign: 'left',
-              paddingTop: '48px' // Added padding-top to prevent overlap with the button
-            }}
-          >
-            <Typography>Account Name: {detail?.address}</Typography>
-            <Typography>IBAN: {detail?.country}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-    ));
+  const handleSetPrimaryAddress = () => {
+    if (pendingSelectedAddress) {
+      updatePrimaryAddress({
+        sellerId: user?.id,
+        addressId: pendingSelectedAddress.id
+      });
+      setSelectedAddress(pendingSelectedAddress);
+      setPendingSelectedAddress(null); // Reset the pending selection
+    }
+    setConfirmPrimaryOpen(false); // Close the confirmation dialog
   };
 
   return (
-    <>
-      <>
-        <Box
-          sx={{
-            padding: '10px',
-            borderRadius: '6px',
-            boxShadow: 1,
-            width: '100%'
-          }}
+    <Box sx={{ p: 3, borderRadius: 2, boxShadow: 1, overflowY: 'auto' }}>
+      <Stack spacing={2} mb={2}>
+        <Button
+          startIcon={<AddIcon />}
+          variant="contained"
+          onClick={() => setOpen(true)}
         >
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-end'
-                }}
-              >
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: 'primary' }}
-                  onClick={handleClickOpen}
-                >
-                  Add New Address
-                </Button>
-              </Box>
-            </Grid>
-            {renderBankDetailsCards()}
-          </Grid>
-        </Box>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle variant="h4">Add New Address</DialogTitle>
-          <DialogContent>
-            <Formik
-              initialValues={{
-                bankaccountname: '',
-                iban: '',
-                bankname: '',
-                bankbic: ''
-              }}
-              validationSchema={validationSchema}
-              onSubmit={async (values) => {
-                const result = await postAddressDetails(
-                  values,
-                  user,
-                  seller_id,
-                  openSnackbar
-                );
-                if (result.success) {
-                    refetch_address();
-                  handleClose();
-                }
-              }}
-            >
-              {() => (
-                <Form>
-                  <BankInputForm />
+          New Address
+        </Button>
 
-                  <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit">Submit</Button>
-                  </DialogActions>
-                </Form>
-              )}
-            </Formik>
-          </DialogContent>
-        </Dialog>
-        <Dialog open={deleteDialogOpen} onClose={handleDeleteDialogClose}>
-          <DialogTitle>Confirm Deletion</DialogTitle>
-          <DialogContent>
-            Are you sure you want to delete this bank detail?
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleDeleteDialogClose}>Cancel</Button>
-            <Button onClick={handleDeleteConfirm} color="error">
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </>
-    </>
+        {seller_addresses?.map((detail, index) => (
+          <AddressDetailCard
+            key={index}
+            detail={detail}
+            selected={selectedAddress?.id === detail.id}
+            onSelect={() => handleSelectAddress(detail)}
+            onDelete={() => {
+              setAddressDetailIdToDelete(detail.id);
+              setDeleteDialogOpen(true);
+            }}
+          />
+        ))}
+      </Stack>
+
+      {/* Form Dialog */}
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Add New Address</DialogTitle>
+        <DialogContent>
+          <Formik
+            initialValues={{
+              address: '',
+              country: ''
+            }}
+            validationSchema={validationSchema}
+            onSubmit={(values, actions) => {
+              postAddressDetails(
+                values,
+                user?.id,
+                seller_id,
+                openSnackbar
+              ).then(() => {
+                actions.setSubmitting(false);
+                setOpen(false);
+                refetch_address();
+              });
+            }}
+          >
+            {(formikProps) => (
+              <Form>
+                <AddressInputForm />
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)}>Cancel</Button>
+                  <Button type="submit" disabled={formikProps.isSubmitting}>
+                    Submit
+                  </Button>
+                </DialogActions>
+              </Form>
+            )}
+          </Formik>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          Are you sure you want to delete this address?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeleteDialog}>Cancel</Button>
+          <Button
+            onClick={() => {
+              handleDelete(addressDetailIdToDelete);
+              closeDeleteDialog(); // Also close the dialog after clicking delete
+            }}
+            color="error"
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <ConfirmPrimaryAddressDialog
+        open={confirmPrimaryOpen}
+        onClose={() => setConfirmPrimaryOpen(false)}
+        onConfirm={handleSetPrimaryAddress}
+      />
+    </Box>
   );
 };
 
-export default BankDetailsForm;
+export default AddressDetailsForm;

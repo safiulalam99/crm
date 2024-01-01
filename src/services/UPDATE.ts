@@ -16,11 +16,11 @@ export const onUpdateSeller = async (
       .from("sellers")
       .update({
         name: values.name,
-        address: values.address,
+        // address: values.address,
         vatnumber: values.vatnumber,
         displayname: values.displayname,
         managingdirector: values.managingdirector,
-        country: values.country,
+        // country: values.country,
       })
       .eq("id", values.id)
       .select();

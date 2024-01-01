@@ -69,7 +69,6 @@ function OrderConfirmationPage() {
     setDeleteDialogOpen(false); // Close the dialog
     setInvoiceToDelete(null); // Reset the invoiceToDelete
   };
-
   const columns = [
     {
       field: 'invoicenumber',

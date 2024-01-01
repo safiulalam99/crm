@@ -68,7 +68,6 @@ function OrderConfirmationPage() {
       );
       setDeleteDialogOpen(false);
     } catch (error) {
-      console.log('Delete failed', error);
       // Consider showing a more user-friendly error message here
     }
   };

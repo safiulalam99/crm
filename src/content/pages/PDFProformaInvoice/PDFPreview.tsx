@@ -21,7 +21,6 @@ const ProformaInvoice = () => {
 
     fetchData();
   }, []);
-  console.log(sample_data)
   return (
     <div className="container">
       <div className="pdf-viewer">

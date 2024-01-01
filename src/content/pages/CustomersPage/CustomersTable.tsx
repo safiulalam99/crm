@@ -59,7 +59,7 @@ function CustomerTablePage() {
       headerName: 'Name',
       width: 210,
       renderCell: (params) => (
-        <Link to={`/components/customers/edit/${params.id}`}>
+        <Link to={`/components/customers/view/${params.id}`}>
           {params.value}
         </Link>
       )

@@ -29,15 +29,15 @@ import AddressDetailsForm from './AddressDetailsForm';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Required'),
-  address: Yup.string().required('Required'),
-  country: Yup.string().required('Required'),
+  // address: Yup.string().required('Required'),
+  // country: Yup.string().required('Required'),
   vatnumber: Yup.string(),
   managingdirector: Yup.string(),
   displayname: Yup.string(),
-  bankaccountname: Yup.string(),
-  iban: Yup.string(),
-  bankname: Yup.string(),
-  bankbic: Yup.string()
+  // bankaccountname: Yup.string(),
+  // iban: Yup.string(),
+  // bankname: Yup.string(),
+  // bankbic: Yup.string()
 });
 
 const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
@@ -192,7 +192,7 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
                   <AddressDetailsForm
                     seller_id={seller_id}
                     openSnackbar={openSnackbar}
-                    user={user}
+                    // user={user}
                   />
                 </TabPanel>
                 <TabPanel value={tabValue} index={2}>
@@ -200,10 +200,8 @@ const CreateSeller = ({ refreshSellers, handleCloseSellerDrawer }) => {
                   {/* New TabPanel for Address */}
                   <BankDetailsForm
                     seller_id={seller_id}
-                    bankDetails={bankDetails}
                     openSnackbar={openSnackbar}
                     user={user}
-                    tabValue={tabValue}
                   />
                 </TabPanel>
               </Container>

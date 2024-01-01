@@ -67,7 +67,7 @@ const Invoice = () => {
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={customTheme}>
-        <pre>{JSON.stringify(invoiceData, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(invoiceData, null, 2)}</pre> */}
 
         {/* <div className="page-break">
           <InvoicePreviewSingle invoiceData={invoiceData} />

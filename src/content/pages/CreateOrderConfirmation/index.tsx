@@ -131,7 +131,7 @@ function CreateOrderConfirmation() {
                     </Grid>
                     <Grid sx={{ marginBottom: '32px' }}></Grid>
 
-                    <pre>{JSON.stringify(formik.values, null, 2)}</pre>
+                    {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
                   </Form>
                 )}
               </Formik>

@@ -51,7 +51,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
     <Card sx={{ maxWidth: 300, mx: 'auto', my: 2, boxShadow: 3 }}>
       <CardContent sx={{ padding: 1 }}>
         <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', pb: 1 }}>
-          Top Products
+           
         </Typography>
         <Divider />
         <List dense>
