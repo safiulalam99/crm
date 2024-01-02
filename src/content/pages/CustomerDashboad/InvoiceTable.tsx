@@ -8,7 +8,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import { formatDate } from 'src/utils/formatDate';
+import { formatDate, convertToRealTime } from 'src/utils/formatDate';
 
 const columns = [
   {
@@ -41,14 +41,14 @@ const columns = [
   {
     field: 'invoice_timestamp',
     headerName: 'Created at',
-    width: 200,
-    valueFormatter: (params) => formatDate(params.value)
+    width: 250,
+    valueFormatter: (params) => convertToRealTime(params.value)
   } // Add more columns as needed
 ];
 
 const InvoiceTable = () => {
   const customerDetails = useAtomValue(customerDashboardDetailsAtom);
-
+console.log("19T04:26:43.956682+00:00-12-2023")
   const {
     multiple_customer_invoices,
     multiple_customer_invoices_error,

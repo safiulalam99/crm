@@ -114,7 +114,6 @@ const CustomerDashboard = () => {
   const currencySymbol =
     customer_dashboard_details?.currency_details?.[0]?.currency?.symbol || '€';
 
-
   if (customer_dashboard_details_isLoading) {
     return <SuspenseLoader />;
   }
@@ -122,9 +121,17 @@ const CustomerDashboard = () => {
   if (customer_dashboard_details_error) {
     return <div>Error: {customer_dashboard_details_error}</div>;
   }
-
+  function formatNumber(num) {
+    return Number(num).toFixed(2);
+  }
   return (
     <div style={{ padding: 20 }}>
+      <Box sx={{ my: 1 }}>
+        
+        <Typography variant="h3" component="h1" gutterBottom>
+          {customer_dashboard_details.buyer_name}
+        </Typography>
+      </Box>
       <Grid
         container
         spacing={2}
@@ -134,7 +141,9 @@ const CustomerDashboard = () => {
         <Grid item xs={12} sm={6} md={4} lg={4}>
           <OverviewBudget
             color="error.main"
-            subtitle={`${customer_dashboard_details?.total_invoice_transactions} Invoices Created`}
+            subtitle={`${formatNumber(
+              customer_dashboard_details?.total_invoice_transactions
+            )} Invoices Created`}
             title="Commercial Invoice"
             difference={12}
             value={`${currencySymbol} ${customer_dashboard_details?.total_amount_invoices}`}
@@ -169,13 +178,6 @@ const CustomerDashboard = () => {
         <Grid item xs={12} md={12}>
           <DetailCard buyer_data={customer_dashboard_details} />
         </Grid>
-
-        {/* <Grid item xs={12} md={6}>
-          <DetailCard
-            title="Client Address"
-            content="1234 Main St, Anytown, AT 12345"
-          />
-        </Grid> */}
       </Grid>
 
       <Grid container>

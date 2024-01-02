@@ -8,7 +8,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import { formatDate } from 'src/utils/formatDate';
+import { formatDate, convertToRealTime } from 'src/utils/formatDate';
 
 const columns = [
     {
@@ -42,7 +42,7 @@ const columns = [
       field: 'proforma_timestamp',
       headerName: 'Created at',
       width: 200,
-      valueFormatter: (params) => formatDate(params.value)
+      valueFormatter: (params) => convertToRealTime(params.value)
     } // Add more columns as needed
   ];
 

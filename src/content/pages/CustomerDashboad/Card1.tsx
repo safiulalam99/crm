@@ -1,8 +1,5 @@
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from '@mui/material';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-
+import ReceiptIcon from '@mui/icons-material/Receipt';
 export const OverviewBudget = (props) => {
   const { difference,  value, title, subtitle, color, icon } = props;
 
@@ -34,7 +31,7 @@ export const OverviewBudget = (props) => {
             }}
           >
             <SvgIcon>
-              <AttachMoneyIcon />
+            <ReceiptIcon/>
             </SvgIcon>
           </Avatar>
         </Stack>
