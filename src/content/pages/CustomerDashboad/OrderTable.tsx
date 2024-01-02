@@ -1,17 +1,11 @@
-import React from 'react';
 import { useAtomValue } from 'jotai';
 import { customerDashboardDetailsAtom } from 'src/atoms/atoms';
-import {
-  useFetchOrderConfirmationsForUser,
-  usefetchInvoicesCustomerForUser
-} from 'src/services/GET_CUSTOMER_DASHBOARD';
+import { useFetchOrderConfirmationsForUser } from 'src/services/GET_CUSTOMER_DASHBOARD';
 import Tables from 'src/components/DataTable';
 import { Link } from 'react-router-dom';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import { GridActionsCellItem } from '@mui/x-data-grid';
+
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import { convertToRealTime, formatDate } from 'src/utils/formatDate';
+import { convertToRealTime } from 'src/utils/formatDate';
 
 const columns = [
   {

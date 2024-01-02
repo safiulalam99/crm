@@ -12,10 +12,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import BusinessIcon from '@mui/icons-material/Business';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PublicIcon from '@mui/icons-material/Public';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import DescriptionIcon from '@mui/icons-material/Description';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import PersonIcon from '@mui/icons-material/Person';
 interface DetailCardProps {

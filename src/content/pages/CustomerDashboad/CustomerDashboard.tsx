@@ -1,40 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Card,
   CardContent,
   Typography,
   Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   Paper,
   Tabs,
   Tab,
   Box,
-  Container
 } from '@mui/material';
 
-import SimpleLineChart from 'src/components/LineChart/LineChart';
 import ProformaTable from './ProformaTable';
 import InvoiceTable from './InvoiceTable';
 import OrderTable from './OrderTable';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { customerDashboardDetailsAtom, userAtom } from 'src/atoms/atoms';
 import { usefetchCustomerDashboardDetails } from 'src/services/GET_CUSTOMER_DASHBOARD';
 import { useParams } from 'react-router-dom';
-import useAddressDetail from 'src/services/GET_SELLERS_ADDRESS';
-import StatCard from './StatCard';
-import CustomerInformation from './CustomerCard';
 import DetailCard from './CustomerCard';
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import { getLoggedInUserDetails } from 'src/contexts/AuthContext';
 import { useCookies } from 'react-cookie';
-import BusinessStatsGrid from './Stat';
 import { OverviewBudget } from './Card1';
-import { OverviewTasksProgress } from './Card2';
 
 interface TabPanelProps {
   children?: React.ReactNode;

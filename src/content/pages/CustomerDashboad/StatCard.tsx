@@ -6,8 +6,6 @@ import {
 } from '@mui/material';
 // import { Doughnut } from 'react-chartjs-2';
 import { useTheme } from '@mui/material';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 interface StatCardProps {
     title: string;
