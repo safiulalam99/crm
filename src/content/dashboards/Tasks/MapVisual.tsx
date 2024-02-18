@@ -69,10 +69,10 @@ const DashboardCard = ({ data }) => {
   };
 
   const navigate = useNavigate();
-
   const handleClose = () => {
     setOpen(false); // Close the dialog
   };
+  console.log(selectedCountry);
   return (
     <Container maxWidth="md">
       <Card raised style={{ height: '100%' }}>
@@ -122,9 +122,14 @@ const DashboardCard = ({ data }) => {
               alt={selectedCountry?.data?.country}
               sx={{ width: 100, height: 'auto' }}
             />
-            <Typography variant="h3">
-              {selectedCountry?.data?.country}
-            </Typography>
+            <div>
+              <Typography variant="h3">
+                {selectedCountry?.data?.country}
+              </Typography>
+              <Typography variant="subtitle2" style={{ color: 'green' }}>
+                {(selectedCountry?.data?.value)?.toFixed(2) || 'No Sales'}
+              </Typography>
+            </div>
           </Box>
           <TableContainer>
             <Table>
@@ -148,7 +153,7 @@ const DashboardCard = ({ data }) => {
                     }
                   >
                     <TableCell component="th" scope="row">
-                      <Typography variant="subtitle1">
+                      <Typography variant="body1">
                         {customer.customer_name}
                       </Typography>
                       <Typography variant="body2">
@@ -157,7 +162,7 @@ const DashboardCard = ({ data }) => {
                     </TableCell>
                     <TableCell align="right">
                       <Typography>
-                        <b>{customer.net_total}</b>
+                        <b>{customer?.net_total?.toFixed(2)}</b>
                       </Typography>
                     </TableCell>
                   </TableRow>

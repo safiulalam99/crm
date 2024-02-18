@@ -17,12 +17,13 @@ const CountrySaleTable = ({ data }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Countries</TableCell>
+              <TableCell>#</TableCell>
+              <TableCell>country</TableCell>
               <TableCell align="right">Earning</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((country, index) => (
+            {data?.map((country, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
                   <Box
@@ -41,17 +42,15 @@ const CountrySaleTable = ({ data }) => {
                       verticalAlign: 'middle'
                     }}
                   />
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    display="inline"
-                  >
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  <Typography variant="body2" display="inline">
                     {country.country}
                   </Typography>
                 </TableCell>
                 <TableCell align="right">
                   <Typography>
-                    <b>{country.value}</b>
+                    <b>{country?.value?.toFixed(2)}</b>
                   </Typography>
                 </TableCell>
               </TableRow>

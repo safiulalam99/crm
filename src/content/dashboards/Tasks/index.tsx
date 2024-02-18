@@ -20,6 +20,7 @@ function DashboardTasks() {
   if (error || salesError) {
     console.error('Error fetching', error);
   }
+
   return (
     <>
       <Helmet>

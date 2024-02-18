@@ -39,6 +39,8 @@ function InvoicePage() {
           time_stamp: item.time_stamp,
           invoicenumber: item.invoicenumber,
           // @ts-ignore
+          country: item.buyers.country,
+          // @ts-ignore
           name: item?.buyers?.name,
           deliverydate: item.deliverydate,
           total: item.total
@@ -81,7 +83,8 @@ function InvoicePage() {
       )
     },
     { field: 'name', headerName: 'Customer', width: 130 },
-    { field: 'deliverydate', headerName: 'Due Date', width: 130 },
+    // { field: 'deliverydate', headerName: 'Due Date', width: 130 },
+    { field: 'country', headerName: 'Country', width: 130 },
     { field: 'total', headerName: 'Amount', width: 90 },
     {
       field: 'time_stamp',
@@ -110,7 +113,6 @@ function InvoicePage() {
     }
   ];
 
-  // console.log(invoiceData);
   return (
     <>
       <Helmet>

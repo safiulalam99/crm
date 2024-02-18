@@ -92,7 +92,7 @@ const useSalesByCountry = () => {
             };
           })
           .sort((a, b) => b.value - a.value)
-          .slice(0, 5);
+          .slice(0,20);
 
         setSalesData(formattedSalesData);
       } catch (err) {
