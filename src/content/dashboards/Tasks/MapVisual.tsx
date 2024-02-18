@@ -108,8 +108,7 @@ const DashboardCard = ({ data }) => {
               display: 'flex',
               alignItems: 'center',
               gap: 2,
-              marginBottom: 2,
-              justifyContent: 'space-between'
+              marginBottom: 2
             }}
           >
             <Box
@@ -122,15 +121,20 @@ const DashboardCard = ({ data }) => {
               alt={selectedCountry?.data?.country}
               sx={{ width: 100, height: 'auto' }}
             />
-            <div>
+            <Box sx={{ flexGrow: 1, textAlign: 'right' }}>
+              {' '}
               <Typography variant="h3">
                 {selectedCountry?.data?.country}
               </Typography>
-              <Typography variant="subtitle2" style={{ color: 'green' }}>
-                {(selectedCountry?.data?.value)?.toFixed(2) || 'No Sales'}
+              <Box>
+
+              <Typography variant="overline" sx={{ color: 'green' }}>
+               <span style={{color:'grey'}}>Total: </span> {selectedCountry?.data?.value?.toFixed(2) || 'No Sales'}
               </Typography>
-            </div>
+              </Box>
+            </Box>
           </Box>
+
           <TableContainer>
             <Table>
               <TableHead>
