@@ -32,7 +32,7 @@ const useBuyers = () => {
     ["proforma"],
     fetchInvoices,
     {
-      staleTime: 10000, // data considered "fresh" for 10 seconds
+      staleTime: 10000, 
     }
   );
 

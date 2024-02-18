@@ -70,7 +70,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ buyer_data }) => {
           <Typography variant="h5">{buyer_data.buyer_name}</Typography>
         </Box>
         <Grid container>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sm={12} lg={6}>
             <Card sx={{ boxShadow: 3, borderRadius: 1 }}>
               <CardContent>
                 {/* Avatar and name */}
@@ -104,7 +104,7 @@ const DetailCard: React.FC<DetailCardProps> = ({ buyer_data }) => {
             </Card>
           </Grid>
           {/* Right-side card */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sm={12} lg={6}>
             <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
               <CardContent>
                 {/* Additional details */}

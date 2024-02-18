@@ -11,16 +11,12 @@ import {
   Tab,
   Divider
 } from '@mui/material';
-import FormikControl from '../../../components/Formik/FormikControl'; // Assuming this is the correct path
-import { onSubmitCustomer } from '../../../services/POST_customers';
-import countriesList from '../../../Data/countries.json';
-import currencyList from '../../../Data/currency.json';
+import FormikControl from '../../../components/Formik/FormikControl'; 
 import { useNavigate } from 'react-router';
 import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { useEffect, useState } from 'react';
 import { getLoggedInUserDetails } from 'src/contexts/AuthContext';
 import useSellers from 'src/services/GET_seller_data';
-import clsx from 'clsx';
 import { onUpdateSeller } from 'src/services/UPDATE';
 import TabPanel from 'src/components/TabPanel';
 import useBankDetails from 'src/services/GET';

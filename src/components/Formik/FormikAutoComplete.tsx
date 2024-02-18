@@ -8,11 +8,20 @@ interface FormikAutoCompleteProps<T> {
   name: string;
   options: T[];
   getOptionLabel: (option: T) => string;
-  labelLayout?: string; // Optional prop for label layout
+  labelLayout?: string;
+  labelRequired?: boolean;
 }
 
-const FormikAutoComplete = <T, >(props: FormikAutoCompleteProps<T>) => {
-  const { label, name, options, getOptionLabel, labelLayout: propLabelLayout, ...rest } = props;
+const FormikAutoComplete = <T,>(props: FormikAutoCompleteProps<T>) => {
+  const {
+    label,
+    name,
+    options,
+    getOptionLabel,
+    labelLayout: propLabelLayout,
+    labelRequired,
+    ...rest
+  } = props;
 
   // Detect screen size
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -28,11 +37,12 @@ const FormikAutoComplete = <T, >(props: FormikAutoCompleteProps<T>) => {
             <Grid container alignItems="center" spacing={3}>
               <Grid item xs={3}>
                 <div style={{ minWidth: '100px' }}>
-                  <InputLabel
-                    style={{ color: '#5A5A5A' }}
-                    htmlFor={name}
-                  >
+                  <InputLabel style={{ color: '#5A5A5A' }} htmlFor={name}>
                     {label}
+                    {labelRequired && (
+                      <span style={{ color: 'red' }}> *</span>
+                    )}{' '}
+                    {/* add required indicator */}
                   </InputLabel>
                 </div>
               </Grid>
@@ -43,7 +53,7 @@ const FormikAutoComplete = <T, >(props: FormikAutoCompleteProps<T>) => {
                   getOptionLabel={getOptionLabel}
                   id={name}
                   renderInput={(params) => (
-                    <TextField
+                    <TextField 
                       {...params}
                       variant="outlined"
                       {...field}

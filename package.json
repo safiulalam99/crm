@@ -19,6 +19,7 @@
     "@mui/x-charts": "^6.18.4",
     "@mui/x-data-grid": "^6.11.1",
     "@mui/x-date-pickers": "latest",
+    "@nivo/geo": "^0.84.0",
     "@react-pdf/renderer": "^3.1.12",
     "@supabase/auth-ui-react": "^0.4.5",
     "@supabase/auth-ui-shared": "^0.1.7",
