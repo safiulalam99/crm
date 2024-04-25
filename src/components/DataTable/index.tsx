@@ -42,13 +42,16 @@ export default function DataTable({ rows, columns, ...props }) {
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 10 }
-          }
+          },
+          sorting: {
+            sortModel: [{ field: 'time_stamp', sort: 'desc' }],
+          },
         }}
         // checkboxSelection
         pageSizeOptions={[5, 10, 30, 50, 100]}
         {...props}
       />
-      </TableContainer>
+      </TableContainer >
     </div>
   );
 }

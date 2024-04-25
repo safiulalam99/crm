@@ -17,7 +17,6 @@ const Invoice = ({ sample_data }) => {
   if (!sample_data || !sample_data.products) {
     return null; // or return a loading indicator
   }
-  console.log(sample_data);
   const { hasLanguageVersion, hasProductLot } = checkColumns(
     sample_data?.products
   );

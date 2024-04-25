@@ -46,7 +46,7 @@ const columns = [
 
 const InvoiceTable = () => {
   const customerDetails = useAtomValue(customerDashboardDetailsAtom);
-
+console.log(customerDetails)
   const {
     multiple_customer_order_confirmations,
     multiple_customer_order_confirmations_error,

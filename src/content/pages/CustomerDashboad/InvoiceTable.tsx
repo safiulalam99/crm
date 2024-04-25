@@ -48,7 +48,6 @@ const columns = [
 
 const InvoiceTable = () => {
   const customerDetails = useAtomValue(customerDashboardDetailsAtom);
-console.log("19T04:26:43.956682+00:00-12-2023")
   const {
     multiple_customer_invoices,
     multiple_customer_invoices_error,

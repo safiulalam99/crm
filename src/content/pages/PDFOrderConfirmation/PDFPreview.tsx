@@ -15,7 +15,6 @@ import { numberToWords } from 'src/utils/towords';
 const Invoice = () => {
   const [sample_data, setSample_data] = useState(null);
   const { id } = useParams();
-console.log(id)
   useEffect(() => {
     async function fetchData() {
       try {
