@@ -12,7 +12,7 @@ const columns = [
       headerName: 'Invoice#',
       width: 130,
       renderCell: (params) => (
-        <Link to={`/components/proforma/pdf/${params.value}`}>
+        <Link to={`/components/proforma/pdf/${params.row.proforma_id}`}>
           {params.value.toString()}
         </Link>
       )

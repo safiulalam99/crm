@@ -40,6 +40,7 @@ function OrderConfirmationPage() {
           id: item.invoicenumber,
           time_stamp: item.time_stamp,
           invoicenumber: item.invoicenumber,
+          order_confirmation_id: item.order_confirmation_id,
           // @ts-ignore
           name: item?.buyers?.name,
           deliverydate: item.deliverydate,
@@ -75,7 +76,7 @@ function OrderConfirmationPage() {
       headerName: 'Order#',
       width: 130,
       renderCell: (params) => (
-        <Link to={`/components/order_confirmation/pdf/${params.value}`}>
+        <Link to={`/components/order_confirmation/pdf/${params.row.order_confirmation_id}`}>
           {params.value.toString()}
         </Link>
       )

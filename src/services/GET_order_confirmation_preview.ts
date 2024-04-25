@@ -15,13 +15,13 @@ export const getOrder_confirmation = async (order_confirmationNumber) => {
       ),
       sellers:sellers (*),
       address:seller_addresses (id, country, address),
-      products: order_confirmation_products(
+      products: order_confirmation_products!order_confirmation_id(
         *,
         name:products (*)
       )
     `
         )
-        .eq('invoicenumber', order_confirmationNumber);
+        .eq('order_confirmation_id', order_confirmationNumber);
 
     if (order_confirmationError) throw order_confirmationError;
 

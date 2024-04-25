@@ -33,38 +33,46 @@ export const onSubmitInvoice = async (
           totaltax: values.totalTax,
           user_id: user,
           bank_details_id: values.bankdetailsid,
-          address_id: values.sellerAddress,
-
+          address_id: values.sellerAddress
         }
-        
-      ]);
-
+      ])
+      .select('invoice_id');
     if (invoiceError) throw invoiceError;
 
-    // Insert into the invoice_products table
-    for (let product of values.products) {
-      const { error: productError } = await supabase
-        .from('invoices_products')
-        .insert([
-          {
-            invoicenumber: values.invoiceNumber,
-            product_id: product.name.id,
-            unitprice: product.unitPrice,
-            units: product.units,
-            productlot: product.productlot,
-            languageversion: product.languageversion,
-            unittotal: product.unitTotal,
-            unitvat: product.unitVat,
-            user_id: user,
-          }
-        ]);
-      if (productError) throw productError;
-    }
+    if (invoiceData && invoiceData.length > 0) {
+      const invoiceId = invoiceData[0].invoice_id;
+      // Insert into the invoice_products table
+      for (let product of values.products) {
+        const { error: productError } = await supabase
+          .from('invoices_products')
+          .insert([
+            {
+              invoicenumber: values.invoiceNumber,
+              product_id: product.name.id,
+              unitprice: product.unitPrice,
+              units: product.units,
+              productlot: product.productlot,
+              languageversion: product.languageversion,
+              unittotal: product.unitTotal,
+              unitvat: product.unitVat,
+              user_id: user,
+              invoice_id:invoiceId
+            }
+          ]);
+        if (productError) throw productError;
+      }
 
-    openSnackbar('Invoice data successfully inserted!', 'success');
-    actions.resetForm();
-    window.open(`/components/invoice/pdf/${values.invoiceNumber}`, '_blank');
+      openSnackbar('Invoice data successfully inserted!', 'success');
+      actions.resetForm();
+      window.open(`/components/invoice/pdf/${invoiceId}`, '_blank');
+    } else {
+      // Handle the case where no data is returned
+      openSnackbar('No proforma ID returned', 'error');
+    }
   } catch (error) {
-    openSnackbar(`There was an error inserting the invoice data. ${error.message}`, 'error');
+    openSnackbar(
+      `There was an error inserting the invoice data. ${error.message}`,
+      'error'
+    );
   }
 };

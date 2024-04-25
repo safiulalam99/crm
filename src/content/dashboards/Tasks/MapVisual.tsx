@@ -63,16 +63,22 @@ const DashboardCard = ({ data }) => {
     isLoading,
     error
   } = useCustomerTotalsByCountry(selectedCountry?.data?.country || '');
+
   const handleCountryClick = (country) => {
+  if (!country?.data) {
+    setSelectedCountry(null);
+    setOpen(false); 
+  } else {
     setSelectedCountry(country);
-    setOpen(true); // Open the dialog on country click
-  };
+    setOpen(true);
+  }
+};
+
 
   const navigate = useNavigate();
   const handleClose = () => {
     setOpen(false); // Close the dialog
   };
-  console.log(selectedCountry);
   return (
     <Container maxWidth="md">
       <Card raised style={{ height: '100%' }}>
@@ -128,7 +134,7 @@ const DashboardCard = ({ data }) => {
               </Typography>
               <Box>
 
-              <Typography variant="overline" sx={{ color: 'green' }}>
+              <Typography variant="h4" sx={{ color: 'primary' }}>
                <span style={{color:'grey'}}>Total: </span> {selectedCountry?.data?.value?.toFixed(2) || 'No Sales'}
               </Typography>
               </Box>

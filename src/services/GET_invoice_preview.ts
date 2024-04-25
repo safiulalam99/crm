@@ -15,13 +15,13 @@ export const getInvoiceData = async (invoicesNumber) => {
       sellers:sellers (*),
       address:seller_addresses (id, country, address),
       bank_details:bank_details (*),
-      products: invoices_products(
+      products: invoices_products!invoice_id(
         *,
         name:products (*)
       )
     `
       )
-      .eq('invoicenumber', invoicesNumber);
+      .eq('invoice_id', invoicesNumber);
     if (invoicesError) throw invoicesError;
 
     // The data will be structured such that the main invoices details are in the root of the returned object.

@@ -16,7 +16,7 @@ const columns = [
     headerName: 'Invoice#',
     width: 130,
     renderCell: (params) => (
-      <Link to={`/components/invoice/pdf/${params.value}`}>
+      <Link to={`/components/invoice/pdf/${params.row.invoice_id}`}>
         {params.value.toString()}
       </Link>
     )

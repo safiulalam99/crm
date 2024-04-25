@@ -32,12 +32,14 @@ export const onSubmitInvoice = async (
           totaldiscount: values.totalDiscount,
           totaltax: values.totalTax,
           user_id: user,
-          address_id: values.sellerAddress,
+          address_id: values.sellerAddress
         }
-      ]);
+      ])
+      .select('order_confirmation_id');
 
     if (invoiceError) throw invoiceError;
-
+    if (invoiceData && invoiceData.length > 0) {
+      const order_confirmationID = invoiceData[0].order_confirmation_id;
     // Insert into the invoice_products table
     for (let product of values.products) {
       const { error: productError } = await supabase
@@ -53,6 +55,7 @@ export const onSubmitInvoice = async (
             unittotal: product.unitTotal,
             unitvat: product.unitVat,
             user_id: user,
+            order_confirmation_id:order_confirmationID
           }
         ]);
       if (productError) throw productError;
@@ -61,9 +64,19 @@ export const onSubmitInvoice = async (
     openSnackbar('Order confirmation data successfully inserted!', 'success');
 
     actions.resetForm();
-    window.open(`/components/order_confirmation/pdf/${values.invoiceNumber}`, '_blank');
+    window.open(
+      `/components/order_confirmation/pdf/${order_confirmationID}`,
+      '_blank'
+    );
+  } else {
+    // Handle the case where no data is returned
+    openSnackbar('No proforma ID returned', 'error');
+  }
   } catch (error) {
     // console.log('this is the one',error)
-    openSnackbar('There was an error inserting the Order Confirmation.', 'error');
+    openSnackbar(
+      'There was an error inserting the Order Confirmation.',
+      'error'
+    );
   }
 };

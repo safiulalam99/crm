@@ -38,6 +38,7 @@ function InvoicePage() {
           id: item.invoicenumber,
           time_stamp: item.time_stamp,
           invoicenumber: item.invoicenumber,
+          invoice_id: item.invoice_id,
           // @ts-ignore
           country: item.buyers.country,
           // @ts-ignore
@@ -76,8 +77,8 @@ function InvoicePage() {
       field: 'invoicenumber',
       headerName: 'Order#',
       width: 130,
-      renderCell: (params) => (
-        <Link to={`/components/invoice/pdf/${params.value}`}>
+      renderCell: (params) => (        
+        <Link to={`/components/invoice/pdf/${params.row.invoice_id}`}>
           {params.value.toString()}
         </Link>
       )

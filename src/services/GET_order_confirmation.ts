@@ -6,7 +6,8 @@ const fetchInvoices = async () => {
     invoicenumber, 
     deliverydate, 
     total, 
-    time_stamp, 
+    time_stamp,
+    order_confirmation_id, 
     buyer_id,
     buyers (
         id, 
