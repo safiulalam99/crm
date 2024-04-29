@@ -82,6 +82,16 @@ const Invoice = ({ sample_data }) => {
                 </Text>
               </Text>
             ) : null}
+
+            {sample_data?.buyers?.deliveryterm ? (
+              <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
+                Delivery Term:{' '}
+                <Text style={{ color: '#6b6b6b' }}>
+                  {sample_data?.buyers?.deliveryterm}
+                </Text>
+              </Text>
+            ) : null}
+
             <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
               Currency:{' '}
               <Text>
@@ -117,12 +127,38 @@ const Invoice = ({ sample_data }) => {
                 </Text>
               </Text>
               <Text style={{ marginBottom: 2 }}></Text>
-              <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
-                Vat No:{' '}
-                <Text style={{ color: '#6b6b6b' }}>
-                  {sample_data?.buyers?.vatnumber}
-                </Text>
-              </Text>
+              {sample_data?.buyers?.vatnumber && (
+                <View>
+                  <Text
+                    style={{
+                      marginBottom: 2,
+                      color: '#6b6b6b',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    Vat No:
+                    <Text style={{ color: '#6b6b6b' }}>
+                      {sample_data?.buyers?.vatnumber}
+                    </Text>
+                  </Text>
+                </View>
+              )}
+              {sample_data?.buyers?.registrationnumber && (
+                <View>
+                  <Text
+                    style={{
+                      marginBottom: 2,
+                      color: '#6b6b6b',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    Registration No:
+                    <Text style={{ color: '#6b6b6b' }}>
+                      <span /> {sample_data?.buyers?.registrationnumber}
+                    </Text>
+                  </Text>
+                </View>
+              )}
               {sample_data?.buyers?.contactperson ? (
                 <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
                   {sample_data.buyers.contactpersonrole !== ''
@@ -134,7 +170,6 @@ const Invoice = ({ sample_data }) => {
                   </Text>
                 </Text>
               ) : null}
-y
               {/* Seller Info */}
             </View>
             <View>
@@ -145,14 +180,16 @@ y
                 </Text>
               </Text>
               <Text style={{ marginBottom: 2 }}>
-  <Text style={{ color: '#6b6b6b' }}>
-    {sample_data?.address?.address}
-    {sample_data?.address?.address && sample_data?.address?.country && ', '}
-  </Text>
-  <Text style={{ color: '#6b6b6b' }}>
-    {sample_data?.address?.country}
-  </Text>
-</Text>
+                <Text style={{ color: '#6b6b6b' }}>
+                  {sample_data?.address?.address}
+                  {sample_data?.address?.address &&
+                    sample_data?.address?.country &&
+                    ', '}
+                </Text>
+                <Text style={{ color: '#6b6b6b' }}>
+                  {sample_data?.address?.country}
+                </Text>
+              </Text>
 
               <Text style={{ marginBottom: 2, color: '#6b6b6b' }}>
                 Vat No:{' '}
