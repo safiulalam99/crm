@@ -189,7 +189,7 @@ const CreateCustomerForm = ({ refreshBuyers, handleCloseDrawer }) => {
                 <Grid item xs={12}>
                   <FormikControl
                     control="input"
-                    label="Registration Number"
+                    label="Company Registration Number"
                     name="registrationnumber"
                     labelLayout="left"
                   />
