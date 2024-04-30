@@ -13,7 +13,7 @@ import BuyerandSellerOptions from './BuyerandSellerOptions';
 import { onSubmitInvoice } from 'src/services/POST_proforma';
 import FormikControl from 'src/components/Formik/FormikControl';
 import AddProductsTable from './AddProductsTable';
-import { checkInvoiceNumberExists } from 'src/services/GET_proforma_preview';
+import { checkProformaNumberExists } from 'src/services/GET_proforma_preview';
 import { UserContext } from 'src/contexts/UserContext';
 
 function CreateOrderConfirmation() {
@@ -28,7 +28,7 @@ function CreateOrderConfirmation() {
       return;
     }
 
-    const exists = await checkInvoiceNumberExists(value, user?.id);
+    const exists = await checkProformaNumberExists(value, user?.id);
     if (exists) {
       setInvoiceNumberWarning('Proforma number already exists');
     } else {
