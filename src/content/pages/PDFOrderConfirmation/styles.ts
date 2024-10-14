@@ -219,9 +219,9 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 9
   },
-  signatureSection: {
-    marginTop: 20 // Adjust this value to position the signature section
-  },
+  // signatureSection: {
+  //   marginTop: 20 // Adjust this value to position the signature section
+  // },
 
   pageNumber: {
     position: 'absolute',
@@ -231,5 +231,46 @@ export const styles = StyleSheet.create({
     right: 0,
     textAlign: 'center',
     color: 'grey'
-  }
+  },
+
+  // someTitle: {
+  //   fontSize: 12,
+  //   fontWeight: 'bold',
+  //   marginBottom: 5,
+  // },
+
+
+  signatureSection: {
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  signatureContainer: {
+    alignItems: 'flex-start',
+    width: '50%', // Adjust this value to control how much of the page width the signature takes
+  },
+  signatureImageContainer: {
+    width: 150,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginBottom: 5,
+  },
+  signatureImage: {
+    maxWidth: '100%',
+    maxHeight: '100%',
+    objectFit: 'contain',
+  },
+  signatureLine: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    width: '100%',
+    marginBottom: 5,
+  },
+  signatureName: {
+    fontSize: 10,
+    marginTop: 5,
+  },
+  buyerSignatureContainer: {
+    marginTop: 10,
+  },
 });

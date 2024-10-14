@@ -254,7 +254,7 @@ const routes: RouteObject[] = [
         element: <EditCustomer />
       },
       {
-        path: 'customers/view/:id',
+        path: `customers/view/:id`,
         element: <CustomerDashboard />
       },
       {

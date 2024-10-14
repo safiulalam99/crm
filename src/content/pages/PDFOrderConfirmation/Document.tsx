@@ -20,7 +20,7 @@ const Invoice = ({ sample_data }) => {
   const { hasLanguageVersion, hasProductLot } = checkColumns(
     sample_data?.products
   );
-  // console.log(sample_data)
+  console.log(sample_data)
   const colorCode = '#42aed9';
   const tableColWidth = hasLanguageVersion && hasProductLot ? '15%' : '17%';
   return (
@@ -336,16 +336,31 @@ const Invoice = ({ sample_data }) => {
 
         {/* signature */}
 
-        <View style={styles.signatureSection}>
-          {' '}
-          {/* Apply the new style here */}
-          <Text style={styles.someTitle}>Buyer's Representative</Text>
-          <View style={styles.summarySection}>
-            <View style={styles.commentsSection}>
-              <Text>Name, Date and Signature: ___________________________</Text>
-            </View>
-          </View>
-        </View>
+{/* Seller's Signature Section */}
+{sample_data?.signature && (
+  <View style={styles.signatureSection}>
+    <Text style={styles.someTitle}>Seller's Signature</Text>
+    <View style={styles.signatureContainer}>
+      <View style={styles.signatureImageContainer}>
+        <Image
+          src={sample_data.signature.image}
+          style={styles.signatureImage}
+        />
+      </View>
+      <View style={styles.signatureLine} />
+      <Text style={styles.signatureName}>{sample_data.signature.name}</Text>
+    </View>
+  </View>
+)}
+
+{/* Buyer's Signature Section */}
+<View style={styles.signatureSection}>
+  <Text style={styles.someTitle}>Buyer's Representative</Text>
+  <View style={styles.buyerSignatureContainer}>
+    <Text>Signature: _________________________________</Text>
+    <Text style={styles.signatureName}>Name: _________________________________</Text>
+  </View>
+</View>
 
         <Text style={styles.footer}>
           OUR VISION AT BIOFROST IS TO BE THE MOST RESPECTED COLD THERAPY BRAND

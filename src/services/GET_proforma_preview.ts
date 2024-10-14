@@ -34,9 +34,39 @@ export const getInvoiceData = async (invoicesNumber) => {
   }
 };
 
-export const checkInvoiceNumberExists = async (invoiceNumber: string, userId: string) => {
+export const checkProformaNumberExists = async (invoiceNumber: string, userId: string) => {
   const { data, error } = await supabase
     .from('proforma')
+    .select('invoicenumber')
+    .eq('invoicenumber', invoiceNumber)
+    .eq('user_id', userId); // Add this line to check against the user's ID
+
+  if (error) {
+    console.error('Error checking invoice number:', error);
+    return false;
+  }
+
+  return data.length > 0; // true if any rows are returned, false otherwise
+};
+
+export const checkInvoiceNumberExists = async (invoiceNumber: string, userId: string) => {
+  const { data, error } = await supabase
+    .from('invoices')
+    .select('invoicenumber')
+    .eq('invoicenumber', invoiceNumber)
+    .eq('user_id', userId); // Add this line to check against the user's ID
+
+  if (error) {
+    console.error('Error checking invoice number:', error);
+    return false;
+  }
+
+  return data.length > 0; // true if any rows are returned, false otherwise
+};
+
+export const checkOrderNumberExists = async (invoiceNumber: string, userId: string) => {
+  const { data, error } = await supabase
+    .from('order_confirmation')
     .select('invoicenumber')
     .eq('invoicenumber', invoiceNumber)
     .eq('user_id', userId); // Add this line to check against the user's ID

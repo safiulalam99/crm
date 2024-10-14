@@ -41,6 +41,8 @@ export const INITIAL_VALUES = {
   bankdetailsid: null,
   paymentStatus: '',
   sellerAddress: '',
+  includeSignature: false,
+  signatureId: null,
 };
 
 export const validationSchema = Yup.object().shape({
@@ -86,5 +88,11 @@ export const validationSchema = Yup.object().shape({
     .min(0, 'Discount rate must be between 0 and 100')
     .max(100, 'Discount rate must be between 1 and 100'),
   comments: Yup.string(),
-  paymentStatus: Yup.string()
+  paymentStatus: Yup.string(),
+  includeSignature: Yup.boolean(),
+  // signatureId: Yup.string().when('includeSignature', {
+  //   is: true,
+  //   then: Yup.string().required('Signature is required when includeSignature is true'),
+  // }),
+  
 });

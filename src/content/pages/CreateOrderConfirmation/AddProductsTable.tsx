@@ -171,7 +171,7 @@ const FormikTable = (props) => {
   };
   return (
     <FieldArray name={name}>
-      {({ insert, remove, push, setFieldValue }) => {
+      {({ insert, remove, push }) => {
         return (
           <>
             {
