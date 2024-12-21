@@ -267,7 +267,7 @@ export const styles = StyleSheet.create({
     fontSize: 9
   },
   signatureWrapper: {
-    marginBottom: 60,  // Space before footer
+    marginBottom: 1,  // Space before footer
     width: '100%',
     position: 'relative',
   },
@@ -280,7 +280,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     left: '10%',
     transform: 'translateX(-50%)',
-    top: 0,  // Position from top instead of bottom
+    top: 5,  // Adjusted from 0 to bring signature closer to line
     width: 200,
     alignItems: 'center',
   },
@@ -288,6 +288,7 @@ export const styles = StyleSheet.create({
     width: 80,
     height: 35,
     objectFit: 'contain',
+    marginBottom: -10, // Added negative margin to bring image closer to line
   },
   signatureLine: {
     flexDirection: 'row',
@@ -295,7 +296,7 @@ export const styles = StyleSheet.create({
     marginLeft: 20,
     paddingRight: 20,
     position: 'absolute',
-    top: 40,  // Position from top instead of bottom
+    top: 35,  // Adjusted from 40 to maintain proper spacing with signature
     width: '100%',
   },
   signatureDash: {
@@ -312,7 +313,7 @@ export const styles = StyleSheet.create({
     transform: 'translateX(-50%)',
     width: 200,
     textAlign: 'center',
-    top: 60,  // Position from top instead of bottom
+    top: 45,  // Changed from 60 to 45 to bring the name closer to the line
   },
   pageNumber: {
     position: 'absolute',
