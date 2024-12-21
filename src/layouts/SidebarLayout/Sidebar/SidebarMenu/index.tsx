@@ -11,27 +11,12 @@ import {
 } from '@mui/material';
 import { NavLink as RouterLink } from 'react-router-dom';
 import { SidebarContext } from 'src/contexts/SidebarContext';
-
-import DesignServicesTwoToneIcon from '@mui/icons-material/DesignServicesTwoTone';
-import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone';
-import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
 import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
-import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
-import BallotTwoToneIcon from '@mui/icons-material/BallotTwoTone';
-import BeachAccessTwoToneIcon from '@mui/icons-material/BeachAccessTwoTone';
-import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
-import FilterVintageTwoToneIcon from '@mui/icons-material/FilterVintageTwoTone';
-import HowToVoteTwoToneIcon from '@mui/icons-material/HowToVoteTwoTone';
-import LocalPharmacyTwoToneIcon from '@mui/icons-material/LocalPharmacyTwoTone';
-import RedeemTwoToneIcon from '@mui/icons-material/RedeemTwoTone';
-import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
-import TrafficTwoToneIcon from '@mui/icons-material/TrafficTwoTone';
-import CheckBoxTwoToneIcon from '@mui/icons-material/CheckBoxTwoTone';
-import ChromeReaderModeTwoToneIcon from '@mui/icons-material/ChromeReaderModeTwoTone';
-import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
-import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
 import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
-
+import InventoryIcon from '@mui/icons-material/Inventory';
+import GroupIcon from '@mui/icons-material/Group';
+import DescriptionIcon from '@mui/icons-material/Description';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
   .MuiList-root {
@@ -183,7 +168,7 @@ function SidebarMenu() {
         <List component="div">
           <SubMenuWrapper>
             <List component="div">
-            <ListItem component="div">
+            {/* <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
@@ -193,14 +178,14 @@ function SidebarMenu() {
                 >
                   Dashboard
                 </Button>
-              </ListItem>
+              </ListItem> */}
               <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
                   to="/components/invoice"
-                  startIcon={<TableChartTwoToneIcon />}
+                  startIcon={<DescriptionIcon />}
                 >
                   Invoice
                 </Button>
@@ -210,17 +195,52 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
+                  to="/components/proforma"
+                  startIcon={<DescriptionIcon />}
+                >
+                  Pro Forma
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/components/order_confirmation"
+                  startIcon={<DescriptionIcon />}
+                >
+                  Order Confirmation
+                </Button>
+              </ListItem>
+              
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
                   to="/components/customers"
-                  startIcon={<TableChartTwoToneIcon />}
+                  startIcon={<GroupIcon />}
                 >
                   Customers
                 </Button>
               </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/components/products"
+                  startIcon={<InventoryIcon />}
+                >
+                  Products
+                </Button>
+              </ListItem>
+
             </List>
           </SubMenuWrapper>
         </List>
 
-        <List
+        {/* <List
           component="div"
           subheader={
             <ListSubheader component="div" disableSticky>
@@ -243,7 +263,7 @@ function SidebarMenu() {
               </ListItem>
             </List>
           </SubMenuWrapper>
-        </List>
+        </List> */}
         <List
           component="div"
           subheader={
@@ -254,7 +274,7 @@ function SidebarMenu() {
         >
           <SubMenuWrapper>
             <List component="div">
-              <ListItem component="div">
+              {/* <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
@@ -264,14 +284,14 @@ function SidebarMenu() {
                 >
                   User Profile
                 </Button>
-              </ListItem>
+              </ListItem> */}
               <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/profile/settings"
-                  startIcon={<DisplaySettingsTwoToneIcon />}
+                  to="/management/company_details"
+                  startIcon={<AccountBalanceIcon />}
                 >
                   Account Settings
                 </Button>
@@ -279,7 +299,7 @@ function SidebarMenu() {
             </List>
           </SubMenuWrapper>
         </List>
-        <List
+        {/* <List
           component="div"
           subheader={
             <ListSubheader component="div" disableSticky>
@@ -335,7 +355,7 @@ function SidebarMenu() {
               </ListItem>
             </List>
           </SubMenuWrapper>
-        </List>
+        </List> */}
       </MenuWrapper>
     </>
   );

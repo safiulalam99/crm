@@ -62,7 +62,6 @@ function Status500() {
         >
           <Grid
             xs={12}
-            md={6}
             alignItems="center"
             display="flex"
             justifyContent="center"
@@ -102,36 +101,7 @@ function Status500() {
               </Box>
             </Container>
           </Grid>
-          <Hidden mdDown>
-            <GridWrapper
-              xs={12}
-              md={6}
-              alignItems="center"
-              display="flex"
-              justifyContent="center"
-              item
-            >
-              <Container maxWidth="sm">
-                <Box textAlign="center">
-                  <TypographyPrimary variant="h1" sx={{ my: 2 }}>
-                    Tokyo Free Black React Typescript Admin Dashboard
-                  </TypographyPrimary>
-                  <TypographySecondary
-                    variant="h4"
-                    fontWeight="normal"
-                    sx={{ mb: 4 }}
-                  >
-                    High performance React template built with lots of powerful
-                    Material-UI components across multiple product niches for
-                    fast &amp; perfect apps development processes.
-                  </TypographySecondary>
-                  <Button href="/overview" size="large" variant="contained">
-                    Overview
-                  </Button>
-                </Box>
-              </Container>
-            </GridWrapper>
-          </Hidden>
+
         </Grid>
       </MainContent>
     </>

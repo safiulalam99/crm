@@ -1,46 +1,123 @@
 import { Helmet } from 'react-helmet-async';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import { Grid, Container, Typography, Button } from '@mui/material';
-import Footer from 'src/components/Footer';
-import PageHeader from 'src/content/dashboards/Tasks/PageHeader';
-import RecentOrders from 'src/content/applications/Transactions/RecentOrders';
-import Tables from 'src/components/Tables';
+import Tables from 'src/components/DataTable';
 import useInvoices from '../../../services/GET_Invoices';
 import { Link } from 'react-router-dom';
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import { getInvoiceData } from 'src/services/GET_invoice_preview';
+import Status500 from '../Status/Status500';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import { onDeleteInvoice } from 'src/services/DELETE';
+import { useSnackbar } from 'src/contexts/SnackbarContext';
 import { useEffect, useState } from 'react';
+import ConfirmationDialog from 'src/components/ConfirmationDialog';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-function ApplicationsTransactions() {
+function formatDate(isoString) {
+  const date = new Date(isoString);
+  return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+}
+function InvoicePage() {
+  const { snackbarInfo, openSnackbar, closeSnackbar } = useSnackbar();
   const {
     invoiceData,
     error: invoiceDataError,
     isLoading: invoiceDataLoading
   } = useInvoices();
-  // console.log(invoiceData);
-  const [fetchedData, setFetchedData] = useState(null);
+
+  const [rows, setRows] = useState([]); // Initialize rows state
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [invoiceToDelete, setInvoiceToDelete] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getInvoiceData('543236574');
-        setFetchedData(data);
-        // console.log(data);
-      } catch (error) {
-        console.error('Failed to fetch invoice data:', error);
+    // Update rows state when invoiceData changes
+    if (invoiceData) {
+      setRows(
+        invoiceData.map((item, index) => ({
+          id: item.invoicenumber,
+          time_stamp: item.time_stamp,
+          invoicenumber: item.invoicenumber,
+          invoice_id: item.invoice_id,
+          // @ts-ignore
+          country: item.buyers.country,
+          // @ts-ignore
+          name: item?.buyers?.name,
+          deliverydate: item.deliverydate,
+          total: item.total
+        }))
+      );
+    }
+  }, [invoiceData]);
+
+  const handleDeleteClick = (id) => () => {
+    setInvoiceToDelete(id);
+    setDeleteDialogOpen(true);
+  };
+  const handleProforma = (id) => () => {
+    return <Link to={`/proforma/pdf/${id}`} />;
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await onDeleteInvoice(invoiceToDelete, openSnackbar); // Wait for the promise to resolve
+      setRows(rows.filter((row) => row.id !== invoiceToDelete)); // Update rows only if the delete was successful
+      setDeleteDialogOpen(false); // Close the dialog
+    } catch (error) {
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false); // Close the dialog
+    setInvoiceToDelete(null); // Reset the invoiceToDelete
+  };
+
+  const columns = [
+    {
+      field: 'invoicenumber',
+      headerName: 'Order#',
+      width: 130,
+      renderCell: (params) => (        
+        <Link to={`/components/invoice/pdf/${params.row.invoice_id}`}>
+          {params.value.toString()}
+        </Link>
+      )
+    },
+    { field: 'name', headerName: 'Customer', width: 130 },
+    // { field: 'deliverydate', headerName: 'Due Date', width: 130 },
+    { field: 'country', headerName: 'Country', width: 130 },
+    { field: 'total', headerName: 'Amount', width: 90 },
+    {
+      field: 'time_stamp',
+      headerName: 'Created at',
+      width: 200,
+      valueFormatter: (params) => formatDate(params.value)
+    },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        return [
+    
+          <GridActionsCellItem
+            icon={<DeleteIcon color="error" />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+            showInMenu
+          />
+        ];
       }
     }
+  ];
 
-    fetchData();
-  }, []); // The empty dependency array ensures this useEffect runs once when the component mounts.
-
-  console.log(fetchedData);
   return (
     <>
-      <pre>{JSON.stringify(fetchedData, null, 2)}</pre>
-
       <Helmet>
-        <title>Transactions - Applications</title>
+        <title>Invoices </title>
       </Helmet>
       <PageTitleWrapper>
         <Grid container justifyContent="space-between" alignItems="center">
@@ -55,11 +132,11 @@ function ApplicationsTransactions() {
           <Grid item>
             <Link to={'/components/invoice/new'}>
               <Button sx={{ mt: { xs: 2, md: 0 } }} variant="contained">
-                Create Invoice
+                New Invoice
               </Button>
             </Link>
           </Grid>
-        </Grid>{' '}
+        </Grid>
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid
@@ -82,18 +159,23 @@ function ApplicationsTransactions() {
                 <SuspenseLoader />
               </div>
             ) : invoiceData ? (
-              <Tables data={invoiceData} />
+              <Tables rows={rows} columns={columns} />
             ) : (
-              <div>Error loading data</div>
+              <Status500 />
             )}
           </Grid>
         </Grid>
       </Container>
+
+      <ConfirmationDialog
+        open={deleteDialogOpen}
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        title="Confirm Delete"
+        message={"Are you sure you want to delete this invoice? This action cannot be undone"}
+      />
     </>
   );
 }
 
-export default ApplicationsTransactions;
-function setFetchedData(data: any[]) {
-  throw new Error('Function not implemented.');
-}
+export default InvoicePage;

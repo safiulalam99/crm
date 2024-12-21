@@ -99,28 +99,15 @@ function Logo() {
 
   return (
     <TooltipWrapper
-      title="Tokyo Free Black React Typescript Admin Dashboard"
+      title="Must Be Paid"
       arrow
     >
-      <LogoWrapper to="/overview">
-        <Badge
-          sx={{
-            '.MuiBadge-badge': {
-              fontSize: theme.typography.pxToRem(11),
-              right: -2,
-              top: 8
-            }
-          }}
-          overlap="circular"
-          color="success"
-          badgeContent="2.0"
-        >
+      <LogoWrapper to="/">
           <LogoSignWrapper>
             <LogoSign>
               <LogoSignInner />
             </LogoSign>
           </LogoSignWrapper>
-        </Badge>
       </LogoWrapper>
     </TooltipWrapper>
   );

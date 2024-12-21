@@ -1,46 +1,26 @@
-import { useState, useEffect } from 'react';
-import supabase from '../config/supabaseClient'; 
+import { useQuery } from '@tanstack/react-query'
+import supabase from "../config/supabaseClient";
 
 type Product = {
-    category: string | null
-    description: string | null
-    id: number
-    name: string
-    price: number
+  category: string | null;
+  description: string | null;
+  id: number;
+  name: string;
+  price: number;
 };
 
-type UseProductsResult = {
-  products: Product[] | null;
-  error: any;
-  isLoading: boolean;
+const fetchProducts = async (): Promise<Product[]> => {
+  const { data, error } = await supabase.from("products").select("*");
+  if (error) {
+    throw error;
+  }
+  return data as Product[];
 };
 
-const useProducts = (): UseProductsResult => {
-  const [products, setProducts] = useState<Product[] | null>(null);
-  const [error, setError] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+const useProducts = () => {
+  const { data: products, error, isLoading, refetch } = useQuery(["products"], fetchProducts);
 
-  useEffect(() => {
-    // Check if products are already in cache
-
-    const fetchProducts = async () => {
-      try {
-        let { data, error } = await supabase.from('products').select('*');
-        if (error) throw error;
-        setProducts(data);
-        // Cache the products data
-        sessionStorage.setItem('products', JSON.stringify(data));
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []); 
-  
-  return { products, error, isLoading };
+  return { products, error, isLoading, refetch };
 };
 
 export default useProducts;

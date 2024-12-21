@@ -1,6 +1,12 @@
 import supabase from '../config/supabaseClient.js';
 
-export const onSubmitCustomer = async (values, actions) => {
+export const onSubmitCustomer = async (
+  values,
+  actions,
+  navigate,
+  openSnackbar,
+  user
+) => {
   try {
     // Insert into the invoices table
     const { data: customer, error: customererror } = await supabase
@@ -12,22 +18,25 @@ export const onSubmitCustomer = async (values, actions) => {
           country: values.country,
           vatnumber: values.vatnumber,
           contractnumber: values.contractnumber,
-          representative: values.representative,
+          contactperson: values.contactperson,
+          contactpersonrole: values.contactpersonrole,
           paymentterm: values.paymentterm,
           deliveryterm: values.deliveryterm,
           currency_id: values.currency,
           registrationnumber: values.registrationnumber,
+          user_id: user
         }
-      ]);
+      ])
+      .select();
 
-      if (customererror) throw customererror;
+    if (customererror) throw customererror;
 
-    // Handle successful insertion
-    alert('Customer data successfully inserted!');
+    openSnackbar('Customer successfully inserted!', 'success');
+
     actions.resetForm();
+    return { success: true };  // <-- Return success flag
   } catch (error) {
-    console.error('Error inserting customer data:', error);
-    alert('There was an error inserting the customer data.');
+    openSnackbar('There was an error inserting the customer data.', 'error');
+    return { success: false }; // <-- Return failure flag
   }
 };
-

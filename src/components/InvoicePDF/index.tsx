@@ -86,7 +86,7 @@ interface InvoiceProps {
 
 const commentStyle = {
   wordWrap: 'break-word',
-  overflowWrap: 'break-word',
+  overflowWrap: 'break-word' as 'break-word',
   maxHeight: '100px', // Fixed height
   overflow: 'auto' // Scrollable
 };
@@ -212,6 +212,7 @@ const InvoicePDF: React.FC<InvoiceProps> = (props) => {
               </Table>
             </Grid>
             <Grid item xs={6}>
+              {/* @ts-ignore */}
               <Typography style={commentStyle}>
                 Comments: {props.comments}
               </Typography>

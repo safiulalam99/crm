@@ -1,0 +1,13 @@
+{
+  "id":"1",
+  "name": "VIKING LAB OY",
+  "address": "LEIJATIE 6 A2, FI-33470 YLÖJÄRVI, FINLAND",
+  "vatNumber": "FI26181268",
+  "displayName":"Viking Lab Ltd. | BIOFROST®",
+  "managingDirector": "HEIKKI LEHMUSLEHTI",
+  "bankDetails": {
+    "IBAN": "FI19 4503 0010 7524 38",
+    "BANK": "AITO SÄÄSTÖPANKKI YLÖJÄRVI",
+    "BIC": "ITELFIHH"
+  }
+}

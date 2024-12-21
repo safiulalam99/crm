@@ -4,7 +4,6 @@ import { Grid, Container, Box } from '@mui/material';
 // import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import FormikInput from 'src/components/Formik/FormikInput';
-import FormikContainer from 'src/components/Formik/FormikContainer';
 import supabase from '../../../config/supabaseClient.js';
 import InvoiceTemplate from 'src/components/InvoiceTemplate/Invoice.js';
 import InvoicePDF from 'src/components/InvoicePDF';
@@ -13,7 +12,7 @@ import { useParams } from 'react-router-dom';
 function InvoicePreview() {
   const [invoiceData, setInvoiceData] = useState(null);
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
   useEffect(() => {
     const fetchInvoiceData = async () => {
       // Call your API to fetch the data using the id

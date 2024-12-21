@@ -56,7 +56,6 @@ const package_invoice = () => {
       try {
         const data = await getInvoiceData('543236574');
         setFetchedData(data);
-        console.log(data);
       } catch (error) {
         console.error('Failed to fetch invoice data:', error);
       }

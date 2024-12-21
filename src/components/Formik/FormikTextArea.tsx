@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
-import { TextField, InputLabel } from '@mui/material';
+import { TextField, InputLabel, Grid, useMediaQuery } from '@mui/material';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { styled } from '@mui/system';
 const blue = {
@@ -60,27 +60,62 @@ const StyledTextarea = styled(TextareaAutosize)(
 );
 
 const FormikInput = (props) => {
-  const { label, name, ...rest } = props;
+  const { label, name, labelLayout: propLabelLayout, ...rest } = props;
+
+  // Detect screen size
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
+
+  // Conditionally set labelLayout
+  const labelLayout = propLabelLayout || (isSmallScreen ? 'top' : 'top');
+
   return (
     <Field name={name}>
       {({ field, form }) => {
         return (
           <>
-            <InputLabel
-              style={{ color: '	#5A5A5A', marginBottom: '5px' }}
-              htmlFor={name}
-            >
-              {label}
-            </InputLabel>
-            <StyledTextarea
-              {...field}
-              {...rest}
-              error={form.errors[name] && form.touched[name]}
-              helperText={<ErrorMessage name={name} />}
-              aria-label="minimum height"
-              minRows={3}
-              placeholder="Minimum 3 rows"
-            />
+            {labelLayout === 'left' ? (
+              <Grid container alignItems="center" spacing={3}>
+                <Grid item xs={3}>
+                  <div style={{ minWidth: '100px' }}>
+                    <InputLabel
+                      style={{ color: '#5A5A5A' }}
+                      htmlFor={name}
+                    >
+                      {label}
+                    </InputLabel>
+                  </div>
+                </Grid>
+                <Grid item xs={9}>
+                  <StyledTextarea
+                    {...field}
+                    {...rest}
+                    error={form.errors[name] && form.touched[name]}
+                    helperText={<ErrorMessage name={name} />}
+                    aria-label="minimum height"
+                    minRows={3}
+                    placeholder="Minimum 3 rows"
+                  />
+                </Grid>
+              </Grid>
+            ) : (
+              <>
+                <InputLabel
+                  style={{ color: '#5A5A5A', marginBottom: '5px' }}
+                  htmlFor={name}
+                >
+                  {label}
+                </InputLabel>
+                <StyledTextarea
+                  {...field}
+                  {...rest}
+                  error={form.errors[name] && form.touched[name]}
+                  helperText={<ErrorMessage name={name} />}
+                  aria-label="minimum height"
+                  minRows={3}
+                  placeholder="Minimum 3 rows"
+                />
+              </>
+            )}
           </>
         );
       }}

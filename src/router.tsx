@@ -6,6 +6,18 @@ import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import CreateProduct from './content/pages/ProductsPage/CreateProduct';
+import ProductsTable from './content/pages/ProductsPage/ProductsTable';
+import CustomersTable from './content/pages/CustomersPage/CustomersTable';
+import { AuthWrapper } from './contexts/AuthContext';
+import CreateSeller from './content/pages/CreateSeller';
+import EditProduct from './content/pages/ProductsPage/EditProduct';
+import EditCustomer from './content/pages/CustomersPage/EditCustomer';
+import CreateInvoice from './content/pages/CreateInvoice';
+import InvoicePage from './content/pages/InvoicePage';
+import ProformaInvoice from './content/pages/PDFProformaInvoice/PDFPreview';
+import CustomerDashboard from './content/pages/CustomerDashboad/CustomerDashboard';
+import NewDashboard from './content/pages/CustomerDashboad/NewDashboard';
 
 const Loader = (Component) => (props) =>
   (
@@ -24,34 +36,38 @@ const Tasks = Loader(lazy(() => import('src/content/dashboards/Tasks')));
 
 // Applications
 
-const Messenger = Loader(
-  lazy(() => import('src/content/applications/Messenger'))
-);
 const Docx = Loader(lazy(() => import('src/content/applications/docs')));
 const Transactions = Loader(
   lazy(() => import('src/content/applications/Transactions'))
 );
+const OrderConfiramtionPDF = Loader(lazy(() => import('src/content/pages/PDFOrderConfirmation/PDFPreview')));
+const InvoicePDF = Loader(lazy(() => import('src/content/pages/PDFInvoice/PDFPreview')));
 const UserProfile = Loader(
   lazy(() => import('src/content/applications/Users/profile'))
 );
 const UserSettings = Loader(
   lazy(() => import('src/content/applications/Users/settings'))
 );
-const Carbone = Loader(lazy(() => import('src/content/applications/Carbone')));
 const Status500 = Loader(
   lazy(() => import('src/content/pages/Status/Status500'))
 );
 
 // Components
-const CreateInvoice = Loader(lazy(() => import('src/content/pages/Invoice')));
-const InvoicePage = Loader(lazy(() => import('src/content/pages/InvoicePage')));
-const InvoiceHTML = Loader(lazy(() => import('src/content/applications/InvoiceHTML')));
-const CustomersPage = Loader(
-  lazy(() => import('src/content/pages/CustomersPage'))
+const CreateOrderConfirmation = Loader(
+  lazy(() => import('src/content/pages/CreateOrderConfirmation'))
+);
+const CreateProforma = Loader(
+  lazy(() => import('src/content/pages/CreateProforma'))
+);
+const OrderConfirmationPage = Loader(lazy(() => import('src/content/pages/OrderConfirmationPage')));
+const ProformaPage = Loader(lazy(() => import('src/content/pages/ProformaPage')));
+
+const CreateCustomer = Loader(
+  lazy(() => import('src/content/pages/CustomersPage/CreateCustomer'))
 );
 
-const Modals = Loader(
-  lazy(() => import('src/content/pages/Components/Modals'))
+const Invoice_final = Loader(
+  lazy(() => import('src/content/pages/Invoice_final/Invoice'))
 );
 const MainInvoice = Loader(
   lazy(() => import('src/components/InvoiceTemplate/MainInvoice'))
@@ -60,7 +76,6 @@ const MainInvoice = Loader(
 const InvoicePreview = Loader(
   lazy(() => import('src/content/pages/InvoicePreview'))
 );
-const Tabs = Loader(lazy(() => import('src/content/pages/Components/Tabs')));
 
 // Status
 
@@ -71,15 +86,65 @@ const Status404 = Loader(
 const routes: RouteObject[] = [
   {
     path: '',
-    element: <BaseLayout />,
+    element: (
+      <AuthWrapper>
+        <SidebarLayout />
+      </AuthWrapper>
+    ),
     children: [
+      // {
+      //   path: '/',
+      //   element: <Overview />
+      // },
       {
         path: '/',
-        element: <Overview />
+        element: <Tasks />
       },
+      // {
+      //   path: '/login',
+      //   element: <Login />
+      // },
       {
         path: 'overview',
         element: <Navigate to="/" replace />
+      }
+    ]
+  },
+  {
+    path: '',
+    element: (
+      <AuthWrapper>
+        <BaseLayout />
+      </AuthWrapper>
+    ),
+    children: [
+      // {
+      //   path: '/',
+      //   element: <Overview />
+      // },
+      {
+        path: 'final/:id',
+        element: <Invoice_final />
+      },
+      // {
+      //   path: 'pdf',
+      //   element: <AuthWrapper><PDF /></AuthWrapper>
+      // },
+      // {
+      //   path: 'pdf/:id',
+      //   element: <AuthWrapper><PDF /></AuthWrapper>
+      // },
+      // {
+      //   path: 'final/',
+      //   element: <AuthWrapper><Invoice_final /></AuthWrapper>
+      // },
+      {
+        path: 'overview',
+        element: (
+          <AuthWrapper>
+            <Navigate to="/" replace />{' '}
+          </AuthWrapper>
+        )
       },
       {
         path: 'status',
@@ -100,27 +165,14 @@ const routes: RouteObject[] = [
       }
     ]
   },
-  {
-    path: 'dashboards',
-    element: <SidebarLayout />,
-    children: [
-      {
-        path: '',
-        element: <Navigate to="tasks" replace />
-      },
-      {
-        path: 'tasks',
-        element: <Tasks />
-      },
-      {
-        path: 'messenger',
-        element: <Messenger />
-      }
-    ]
-  },
+
   {
     path: 'management',
-    element: <SidebarLayout />,
+    element: (
+      <AuthWrapper>
+        <SidebarLayout />
+      </AuthWrapper>
+    ),
     children: [
       {
         path: '',
@@ -129,6 +181,10 @@ const routes: RouteObject[] = [
       {
         path: 'transactions',
         element: <Transactions />
+      },
+      {
+        path: 'company_details',
+        element: <CreateSeller refreshSellers={null} handleCloseSellerDrawer={null} />
       },
       {
         path: 'profile',
@@ -151,27 +207,35 @@ const routes: RouteObject[] = [
   },
   {
     path: '/components',
-    element: <SidebarLayout />,
+    element: (
+      <AuthWrapper>
+        <SidebarLayout />
+      </AuthWrapper>
+    ),
     children: [
       {
         path: '',
         element: <Navigate to="/" replace />
       },
       {
+        path: 'order_confirmation',
+        element: <OrderConfirmationPage />
+      },
+      {
+        path: 'order_confirmation/new',
+        element: <CreateOrderConfirmation />
+      },
+      {
+        path: 'proforma',
+        element: <ProformaPage />
+      },
+      {
+        path: 'proforma/new',
+        element: <CreateProforma />
+      },
+      {
         path: 'invoice',
         element: <InvoicePage />
-      },
-      {
-        path: 'html',
-        element: <InvoiceHTML />
-      },
-      {
-        path: 'carbone',
-        element: <Carbone />
-      },
-      {
-        path: 'doc',
-        element: <Docx />
       },
       {
         path: 'invoice/new',
@@ -179,24 +243,62 @@ const routes: RouteObject[] = [
       },
       {
         path: 'customers',
-        element: <CustomersPage />
+        element: <CustomersTable />
       },
       {
-        path: 'invoice/preview/:id',
-        element: <InvoicePreview />
+        path: 'customers/new',
+        element: <CreateCustomer />
       },
       {
-        path: 'modals',
-        element: <Modals />
+        path: 'customers/edit/:id',
+        element: <EditCustomer />
       },
       {
-        path: 'package',
-        element: <MainInvoice />
+        path: `customers/view/:id`,
+        element: <CustomerDashboard />
       },
       {
-        path: 'tabs',
-        element: <Tabs />
+        path: 'customers/views/:id',
+        element: <NewDashboard />
+      },
+      // {
+      //   path: 'pdf',
+      //   element: <PDF />
+      // },
+      {
+        path: 'order_confirmation/pdf/:id',
+        element: <OrderConfiramtionPDF />
+      },
+      {
+        path: 'proforma/pdf/:id',
+        element: <ProformaInvoice />
+      },
+      {
+        path: 'invoice/pdf/:id',
+        element: <InvoicePDF />
+      },
+
+      {
+        path: 'products',
+        element: <ProductsTable />
+      },
+      {
+        path: 'products/new',
+        element: <CreateProduct closeDrawer={null} afterCreate={null} />
+      },
+
+      {
+        path: 'products/edit/:id',
+        element: <EditProduct />
       }
+      // {
+      //   path: 'invoice/preview/:id',
+      //   element: <InvoicePreview />
+      // }
+      // {
+      //   path: 'package',
+      //   element: <MainInvoice />
+      // },
     ]
   }
 ];

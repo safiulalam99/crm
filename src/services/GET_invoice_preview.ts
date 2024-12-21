@@ -1,28 +1,35 @@
 import supabase from '../config/supabaseClient.js';
 
-export const getInvoiceData = async (invoiceNumber) => {
+export const getInvoiceData = async (invoicesNumber) => {
   try {
-    // Fetch from the invoices table
-    const { data: invoiceData, error: invoiceError } = await supabase
+    // Fetch from the invoicess table
+    const { data: invoicesData, error: invoicesError } = await supabase
       .from('invoices')
       .select(
         `
-          *,
-          buyers (id, name, address, country, vatnumber, contractnumber, representative, paymentterm, deliveryterm, registrationnumber, currency_id),
-          sellers (id, name, address, vatnumber, displayname, managingdirector, country),
-          invoice_products (product_id (id, name, description, category, price, time_stamp), unitprice, units, productlot, unittotal, unitvat)
-        `
+      *,
+      buyers:buyers (
+        *,
+        currency:currencies(name, symbol)
+      ),
+      sellers:sellers (*),
+      address:seller_addresses (id, country, address),
+      bank_details:bank_details (*),
+      products: invoices_products!invoice_id(
+        *,
+        name:products (*)
       )
-      .eq('invoicenumber', invoiceNumber);
+    `
+      )
+      .eq('invoice_id', invoicesNumber);
+    if (invoicesError) throw invoicesError;
 
-    if (invoiceError) throw invoiceError;
-
-    // The data will be structured such that the main invoice details are in the root of the returned object.
-    // Nested within are the details of the buyer, seller, and the products associated with this invoice.
-    return invoiceData;
+    // The data will be structured such that the main invoices details are in the root of the returned object.
+    // Nested within are the details of the buyer, seller, and the products associated with this invoices.
+    return invoicesData;
   } catch (error) {
-    console.error('Error fetching invoice data:', error);
-    alert('There was an error fetching the invoice data.');
+    console.error('Error fetching invoices data:', error);
+    alert('There was an error fetching the invoices data.');
     return null;
   }
 };

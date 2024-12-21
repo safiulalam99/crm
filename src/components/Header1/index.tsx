@@ -19,7 +19,7 @@ const Header1 = () => {
         <FormikControl
           control="input"
           type="text"
-          label="Invoice Number"
+          label="Order Number"
           name="invoiceNumber"
         />
       </Grid>
@@ -43,41 +43,6 @@ const Header1 = () => {
           name="deliveryDate"
         />
       </Grid>
-
-      {/* <Grid item xs={12} sm={6} md={3} lg={3}>
-        <FormikControl
-          control="input"
-          type="text"
-          label="Contract Number"
-          name="contractNumber"
-        />
-      </Grid> */}
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-        <FormikControl
-          control="input"
-          type="text"
-          label="Payment Term"
-          name="paymentSplit"
-        />{' '}
-      </Grid>
-      {/* <Grid item xs={12} sm={6} md={3} lg={3}>
-        <FormikControl
-          control="input"
-          type="text"
-          label="Reference Number"
-          name="referenceNumber"
-        />
-      </Grid> */}
-      {/* <Grid item xs={12} sm={6} md={3} lg={3}>
-        <FormikControl
-          // value={VatTypes}
-          control="dropdown"
-          type="text"
-          label="Status"
-          name="vatType"
-          options={VatTypes}
-        />
-      </Grid> */}
     </Grid>
   );
 };
