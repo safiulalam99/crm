@@ -182,158 +182,154 @@ const PDFInvoice = ({ sample_data }) => {
           styles={styles}
         />
 
-        {/* Products Table */}
-        {/* Products Table */}
-        <View style={styles.productsTable}>
-          <View style={styles.tableHeader}>
-            <Text style={styles.tableColUnits}>Units</Text>
-            <Text style={styles.tableColName}>Product</Text>
-            {hasLanguageVersion && (
-              <Text style={[styles.tableColc, { width: tableColWidth }]}>
-                Language Version
-              </Text>
-            )}
-            {hasProductLot && (
-              <Text style={[styles.tableColc, { width: tableColWidth }]}>
-                Lot/Exp
-              </Text>
-            )}
-            <Text style={[styles.tableColc, { width: tableColWidth }]}>
-              Unit Price
-            </Text>
-            <Text style={[styles.tableColc, { width: tableColWidth }]}>
-              Total
-            </Text>
-          </View>
-          {sample_data?.products.map((product, index) => (
-            <View
-              style={index % 2 === 0 ? styles.tableRow : styles.tableRowShaded}
-              key={index}
-            >
-              <Text style={styles.tableColUnits}>{product?.units}</Text>
-              <Text
-                style={[styles.tableColName, { color: product?.name?.color }]}
-              >
-                {product?.name?.name}
-              </Text>
+        {/* Main content wrapper */}
+        <View style={styles.mainContent}>
+          {/* Products Table */}
+          <View style={styles.productsTable}>
+            <View style={styles.tableHeader}>
+              <Text style={styles.tableColUnits}>Units</Text>
+              <Text style={styles.tableColName}>Product</Text>
               {hasLanguageVersion && (
                 <Text style={[styles.tableColc, { width: tableColWidth }]}>
-                  {product?.languageversion}
+                  Language Version
                 </Text>
               )}
               {hasProductLot && (
                 <Text style={[styles.tableColc, { width: tableColWidth }]}>
-                  {product?.productlot}
+                  Lot/Exp
                 </Text>
               )}
               <Text style={[styles.tableColc, { width: tableColWidth }]}>
-                {product?.unitprice.toFixed(2)}
+                Unit Price
               </Text>
-              <Text
-                style={[
-                  styles.tableColc,
-                  { width: tableColWidth, textAlign: 'right' }
-                ]}
+              <Text style={[styles.tableColc, { width: tableColWidth }]}>
+                Total
+              </Text>
+            </View>
+            {sample_data?.products.map((product, index) => (
+              <View
+                style={index % 2 === 0 ? styles.tableRow : styles.tableRowShaded}
+                key={index}
               >
-                {product?.unittotal.toFixed(2)}
-              </Text>
-            </View>
-          ))}
-        </View>
-
-        {/* Summary and Comments */}
-        <View style={styles.summarySection}>
-          {/* Comments */}
-          <View style={styles.commentsSection}>
-            {sample_data?.taxrate == 0 ? (
-              <Text>Free of VAT</Text>
-            ) : (
-              <Text></Text>
-            )}
-            <Text>
-              Goods sold B2B from {sample_data?.sellers?.country} to{' '}
-              {sample_data?.buyers.country}
-            </Text>
-            <View style={styles.numberinwords}>
-              <Text>{sample_data?.numberinwords}</Text>
-            </View>
-            {/* Comments */}
-            {sample_data?.comments && sample_data?.comments !== '' ? (
-              <View style={styles.numberinwords}>
-                <View style={styles.subs}>
-                  <Text style={styles.subtitle}>Notes</Text>
-                  <Text>{sample_data?.comments}</Text>
-                </View>
-              </View>
-            ) : null}
-          </View>
-
-          {/* Summary Table */}
-          <View style={styles.summaryTable}>
-            <View style={styles.summaryRow}>
-              <Text style={styles.summaryTitle}>
-                Subtotal ({sample_data?.buyers?.currency?.symbol})
-              </Text>
-              <Text style={styles.summaryValue}>
-                {sample_data?.subtotal.toFixed(2)}
-              </Text>
-            </View>
-            <View style={styles.summaryRow}>
-              <Text style={styles.summaryTitle}>
-                VAT ({sample_data?.taxrate}%)
-              </Text>
-              <Text style={styles.summaryValue}>
-                {sample_data?.totaltax.toFixed(2)}
-              </Text>
-            </View>
-            {sample_data?.totaldiscount && sample_data?.totaldiscount !== 0 ? (
-              <View style={styles.summaryRow}>
-                <Text style={styles.summaryTitle}>Discount</Text>
-                <Text style={styles.summaryValue}>
-                  - {sample_data?.totaldiscount.toFixed(2)}
+                <Text style={styles.tableColUnits}>{product?.units}</Text>
+                <Text
+                  style={[styles.tableColName, { color: product?.name?.color }]}
+                >
+                  {product?.name?.name}
+                </Text>
+                {hasLanguageVersion && (
+                  <Text style={[styles.tableColc, { width: tableColWidth }]}>
+                    {product?.languageversion}
+                  </Text>
+                )}
+                {hasProductLot && (
+                  <Text style={[styles.tableColc, { width: tableColWidth }]}>
+                    {product?.productlot}
+                  </Text>
+                )}
+                <Text style={[styles.tableColc, { width: tableColWidth }]}>
+                  {product?.unitprice.toFixed(2)}
+                </Text>
+                <Text
+                  style={[
+                    styles.tableColc,
+                    { width: tableColWidth, textAlign: 'right' }
+                  ]}
+                >
+                  {product?.unittotal.toFixed(2)}
                 </Text>
               </View>
-            ) : null}
+            ))}
+          </View>
 
-            <View style={styles.summaryRow}>
-              <Text style={styles.summaryTitle}>
-                Total ({sample_data?.buyers?.currency?.symbol})
+          {/* Summary and Comments */}
+          <View style={styles.summarySection}>
+            {/* Comments */}
+            <View style={styles.commentsSection}>
+              {sample_data?.taxrate == 0 ? (
+                <Text>Free of VAT</Text>
+              ) : (
+                <Text></Text>
+              )}
+              <Text>
+                Goods sold B2B from {sample_data?.sellers?.country} to{' '}
+                {sample_data?.buyers.country}
               </Text>
-              <Text style={styles.summaryValue}>
-                {sample_data?.total.toFixed(2)}
-              </Text>
+              <View style={styles.numberinwords}>
+                <Text>{sample_data?.numberinwords}</Text>
+              </View>
+              {/* Comments */}
+              {sample_data?.comments && sample_data?.comments !== '' ? (
+                <View style={styles.numberinwords}>
+                  <View style={styles.subs}>
+                    <Text style={styles.subtitle}>Notes</Text>
+                    <Text>{sample_data?.comments}</Text>
+                  </View>
+                </View>
+              ) : null}
+            </View>
+
+            {/* Summary Table */}
+            <View style={styles.summaryTable}>
+              <View style={styles.summaryRow}>
+                <Text style={styles.summaryTitle}>
+                  Subtotal ({sample_data?.buyers?.currency?.symbol})
+                </Text>
+                <Text style={styles.summaryValue}>
+                  {sample_data?.subtotal.toFixed(2)}
+                </Text>
+              </View>
+              <View style={styles.summaryRow}>
+                <Text style={styles.summaryTitle}>
+                  VAT ({sample_data?.taxrate}%)
+                </Text>
+                <Text style={styles.summaryValue}>
+                  {sample_data?.totaltax.toFixed(2)}
+                </Text>
+              </View>
+              {sample_data?.totaldiscount && sample_data?.totaldiscount !== 0 ? (
+                <View style={styles.summaryRow}>
+                  <Text style={styles.summaryTitle}>Discount</Text>
+                  <Text style={styles.summaryValue}>
+                    - {sample_data?.totaldiscount.toFixed(2)}
+                  </Text>
+                </View>
+              ) : null}
+
+              <View style={styles.summaryRow}>
+                <Text style={styles.summaryTitle}>
+                  Total ({sample_data?.buyers?.currency?.symbol})
+                </Text>
+                <Text style={styles.summaryValue}>
+                  {sample_data?.total.toFixed(2)}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
 
-        {/* signature */}
+          {/* Flexible space */}
+          <View style={styles.flexSpace} />
 
-        <View style={styles.signatureSection}>
-          <View style={styles.signature}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginLeft: 20
-              }}
-            >
-              <Text>Signature: </Text>
-              <View
-                style={{
-                  borderBottomWidth: 1,
-                  borderBottomColor: 'black',
-                  flex: 0.7,
-                  marginLeft: 5
-                }}
-              />
+          {/* Signature section */}
+          {sample_data?.signature_id && (
+            <View wrap={false} style={styles.signatureWrapper}>
+              <View style={styles.signatureSection}>
+                <View style={styles.signatureBox}>
+                  <Image
+                    src={sample_data?.signatures?.image}
+                    style={styles.signatureImage}
+                  />
+                </View>
+                <View style={styles.signatureLine}>
+                  <Text style={styles.signatureLabel}>Signature: </Text>
+                  <View style={styles.signatureDash} />
+                </View>
+                <Text style={styles.signatureName}>
+                  {sample_data?.signatures?.name}
+                </Text>
+              </View>
             </View>
-            <Text style={{ textAlign: 'center', marginTop: 1 }}>
-              {sample_data?.sellers?.managingdirector}
-            </Text>
-            <Text style={styles.signaturename}>
-              {/* {sample_data?.buyers?.contactperson} */}
-            </Text>
-          </View>
+          )}
         </View>
 
         <Text fixed style={styles.footer}>

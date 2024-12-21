@@ -4,14 +4,15 @@ body {
   }
   
   .container {
+    padding: 20px;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
   }
   
   .pdf-viewer {
-    width: 90%;
-    margin-left: 80px;
-    margin-top: 60px;
+    flex: 1;
+    min-height: 0;
   }
   
   .viewer {

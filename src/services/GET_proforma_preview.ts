@@ -18,6 +18,12 @@ export const getInvoiceData = async (invoicesNumber) => {
       products: proforma_products(
         *,
         name:products (*)
+      ),
+      signatures:signatures (
+        id,
+        name,
+        email,
+        image
       )
     `
       )

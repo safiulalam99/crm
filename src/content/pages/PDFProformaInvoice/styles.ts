@@ -5,8 +5,17 @@ export const styles = StyleSheet.create({
     paddingTop: 0,
     paddingBottom: 45,
     paddingHorizontal: 25,
-    // color: '#827f7f',
-    borderColor: '#827f7f'
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  mainContent: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  flexSpace: {
+    flex: 1,
+    minHeight: 20,  // Minimum spacing when content is short
   },
   header: {
     flexDirection: 'row',
@@ -257,18 +266,54 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 9
   },
-  signatureSection: {
-    // marginTop: 80,
-    position: 'absolute',
-    fontSize: 11,
-    bottom: 30,
-    left: 0,
-    right: 0,
-    textAlign: 'left'
-    // color: '#42aed9',
-    // zIndex: 1000,
+  signatureWrapper: {
+    marginBottom: 60,  // Space before footer
+    width: '100%',
+    position: 'relative',
   },
-
+  signatureSection: {
+    position: 'relative',  // Changed from absolute
+    width: '100%',
+    height: 100,  // Fixed height for signature section
+  },
+  signatureBox: {
+    position: 'absolute',
+    left: '10%',
+    transform: 'translateX(-50%)',
+    top: 0,  // Position from top instead of bottom
+    width: 200,
+    alignItems: 'center',
+  },
+  signatureImage: {
+    width: 80,
+    height: 35,
+    objectFit: 'contain',
+  },
+  signatureLine: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 20,
+    paddingRight: 20,
+    position: 'absolute',
+    top: 40,  // Position from top instead of bottom
+    width: '100%',
+  },
+  signatureDash: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'black',
+    flex: 0.3,
+    marginLeft: 5,
+  },
+  signatureName: {
+    fontSize: 9,
+    color: '#6b6b6b',
+    position: 'absolute',
+    left: '15%',
+    transform: 'translateX(-50%)',
+    width: 200,
+    textAlign: 'center',
+    top: 60,  // Position from top instead of bottom
+  },
   pageNumber: {
     position: 'absolute',
     fontSize: 7,
@@ -277,5 +322,9 @@ export const styles = StyleSheet.create({
     right: 0,
     textAlign: 'center',
     color: 'grey'
-  }
+  },
+  signatureLabel: {
+    fontSize: 9,
+    color: '#6b6b6b',
+  },
 });
